@@ -1,6 +1,7 @@
 *.class
 
 # Package Files #
+*Python27*
 *.jar
 *.war
 *.ear

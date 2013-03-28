@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -44,6 +45,7 @@ public class ListUpdater extends Thread {
 			System.out.println("cmd=" + cmd);
 			pr = rt.exec(cmd);
 			BufferedReader br = new BufferedReader(new InputStreamReader(new BufferedInputStream(pr.getInputStream())));
+			BufferedReader br2 = new BufferedReader(new InputStreamReader(new BufferedInputStream(pr.getErrorStream())));
 			try {
 				String line;
 				while((line = br.readLine()) != null) {
@@ -55,6 +57,14 @@ public class ListUpdater extends Thread {
 				if(pr != null) {
 					pr.destroy();
 				}
+				PrintWriter out = new PrintWriter("errors.txt");
+				String line = new String();
+				String all = new String();
+				while((line = br2.readLine()) != null) {
+					all = all + line + "\n";
+				}
+				out.write(all);
+				out.close();
 				text.append("Finished!\n");
 			}
 		} catch (IOException e) {
