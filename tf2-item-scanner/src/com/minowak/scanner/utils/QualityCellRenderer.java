@@ -2,6 +2,7 @@ package com.minowak.scanner.utils;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
@@ -31,6 +32,7 @@ public class QualityCellRenderer extends DefaultListCellRenderer {
 			case 8: setForeground(Color.decode("0xA50F79")); break;
 			default: setForeground(Color.decode("0xB2B2B2")); break;
 		}
+
 		return this;
 	}
 
