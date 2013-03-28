@@ -17,7 +17,7 @@
 
 --------------------------------------------------------------------------------------------------------------------
 
-Scans backpack for certain item.
+Browsing TF2 backpacks
 
 Uses http://git.optf2.com/steamodd/. Python 27 32bit needed for it to run (it should be in the same folder as scanner - it will
 be fixed in the future)

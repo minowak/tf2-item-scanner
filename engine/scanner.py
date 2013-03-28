@@ -45,7 +45,7 @@ def search_for_item(startid, time, items):
         idgen = id_generator()
         idgen.set_start_id((long(startid)-id_generator.v)/2)
 
-        print "items=" + str(items)
+        #print "items=" + str(items)
         sys.stdout.flush()
         limit = 10000
         #if (len(items) == 1 and int(items[0]) == -1):
@@ -72,7 +72,7 @@ def search_for_item(startid, time, items):
 
 if __name__ == "__main__":
         #print "Starting profile=" + sys.argv[1] + " time=" + sys.argv[2] + " items=" + sys.argv[3]
-        print "Searching..."
+        #print "Searching..."
         sys.stdout.flush()
         search_for_item(sys.argv[1], sys.argv[2], sys.argv[3].split(','))
         #search_for_item("76561197992203636", "0", "7,")

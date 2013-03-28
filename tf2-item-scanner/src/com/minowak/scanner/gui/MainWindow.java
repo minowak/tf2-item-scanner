@@ -1,12 +1,18 @@
 package com.minowak.scanner.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Cursor;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -18,10 +24,11 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.border.BevelBorder;
 
 import com.minowak.scanner.schema.SchemaParser;
 import com.minowak.scanner.schema.TF2Item;
@@ -40,27 +47,35 @@ public class MainWindow extends JFrame {
 	private JTextField idTextField;
 	private JTextField filterTextField;
 	private JTextField timeTextField;
-	private JTextArea resultsArea;
+	private JList<String> resultsArea;
 
 	private JLabel idLabel;
 	private JLabel itemListLabel;
 	private JLabel filterLabel;
 	private JLabel timeLabel;
 	private JLabel resultsLabel;
-	private JTextArea selected;
+	private JLabel statusLabel;
+
+	private JList<TF2Item> selected;
 
 	private JButton filterBtn;
 	private JButton selectBtn;
+	private JButton removeBtn;
 	private JButton searchBtn;
 	private JButton stopBtn;
+	private JButton cleanBtn;
+
+	private JPanel statusPanel;
 
 	private JList<TF2Item> itemList;
 
 	DefaultListModel<TF2Item> listModel = new DefaultListModel<>();
+	DefaultListModel<String> resultModel = new DefaultListModel<>();
+	DefaultListModel<TF2Item> selectedListModel = new DefaultListModel<>();
 
 	public MainWindow() {
 		setTitle(TITLE);
-		setSize(800, 400);
+		setSize(800, 500);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -70,6 +85,9 @@ public class MainWindow extends JFrame {
 	private void initGUI() {
 		JPanel panel = new JPanel();
 		getContentPane().add(panel);
+
+		statusLabel = new JLabel("Ready");
+		statusLabel.setHorizontalAlignment(SwingConstants.LEFT);
 
 		panel.setLayout(new BorderLayout());
 
@@ -88,6 +106,20 @@ public class MainWindow extends JFrame {
 		itemList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		itemList.setCellRenderer(new QualityCellRenderer());
 		itemList.setVisibleRowCount(-1);
+		itemList.addMouseListener(new MouseAdapter() {
+		    public void mouseClicked(MouseEvent evt) {
+		        JList list = (JList)evt.getSource();
+		        if (evt.getClickCount() == 2) {
+		            int index = list.locationToIndex(evt.getPoint());
+
+		            itemList.setSelectedIndex(index);
+		            if(!selectedListModel.contains(itemList.getSelectedValue())) {
+		            	selectedListModel.addElement(itemList.getSelectedValue());
+		            	selected.validate();
+		            }
+		        }
+		    }
+		});
 
 		JPanel listPanel = new JPanel();
 		listPanel.setLayout(new FlowLayout());
@@ -95,10 +127,28 @@ public class MainWindow extends JFrame {
 		JScrollPane listScroller = new JScrollPane(itemList);
 		listScroller.setPreferredSize(new Dimension(200, 240));
 
-		selected = new JTextArea(15,18);
-		selected.setEditable(false);
+		selected = new JList<TF2Item>(selectedListModel);
+		selected.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		selected.setCellRenderer(new QualityCellRenderer());
+		selected.setVisibleRowCount(-1);
+		selected.addMouseListener(new MouseAdapter() {
+		    public void mouseClicked(MouseEvent evt) {
+		        JList list = (JList)evt.getSource();
+		        if (evt.getClickCount() == 2) {
+		            int index = list.locationToIndex(evt.getPoint());
+
+		            selected.setSelectedIndex(index);
+		            selectedListModel.removeElement(selected.getSelectedValue());
+		            selected.validate();
+		        }
+		    }
+		});
+
+		JScrollPane selectedScroller = new JScrollPane(selected);
+		selectedScroller.setPreferredSize(new Dimension(200, 240));
+
 		listPanel.add(listScroller);
-		listPanel.add(selected);
+		listPanel.add(selectedScroller);
 
 		JPanel idPanel = new JPanel();
 		idPanel.setLayout(new FlowLayout(2));
@@ -151,17 +201,32 @@ public class MainWindow extends JFrame {
 		filterPanel.add(filterTextField);
 		filterPanel.add(filterBtn);
 
-		selectBtn = new JButton("Select");
+		selectBtn = new JButton(">>");
 		selectBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				List<TF2Item> its = itemList.getSelectedValuesList();
 				for(TF2Item it : its) {
-					if(!selectedItems.contains(it)) {
+					if(!selectedListModel.contains(it)) {
+						selectedListModel.addElement(it);
 						selectedItems.add(it);
-						selected.append(it + "\n");
 					}
 				}
+
+				selected.validate();
+			}
+		});
+
+		removeBtn = new JButton("<<");
+		removeBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				List<TF2Item> its = selected.getSelectedValuesList();
+				for(TF2Item it : its) {
+					selectedListModel.removeElement(it);
+				}
+
+				selected.validate();
 			}
 		});
 
@@ -169,10 +234,11 @@ public class MainWindow extends JFrame {
 		searchBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				lUpdater = new ListUpdater(resultsArea, idTextField.getText().trim(),
+				lUpdater = new ListUpdater(resultModel, statusLabel, idTextField.getText().trim(),
 						Long.parseLong(timeTextField.getText().trim()),
 						selectedItems);
 				lUpdater.start();
+				resultsArea.validate();
 			}
 		});
 
@@ -200,26 +266,71 @@ public class MainWindow extends JFrame {
 		leftPanel.add(itemListLabel);
 		leftPanel.add(filterPanel);
 		leftPanel.add(listPanel);
-		leftPanel.add(selectBtn);
-		leftPanel.add(searchBtn);
-		leftPanel.add(stopBtn);
+
+		JPanel arrowsPanel = new JPanel();
+		arrowsPanel.setLayout(new FlowLayout());
+		arrowsPanel.add(removeBtn);
+		arrowsPanel.add(selectBtn);
+
+		leftPanel.add(arrowsPanel);
+
+		JPanel controlPanel = new JPanel();
+		controlPanel.setLayout(new FlowLayout());
+
+		controlPanel.add(searchBtn);
+		controlPanel.add(stopBtn);
+
+		leftPanel.add(controlPanel);
 		leftPanel.add(timePanel);
 
 		JPanel rightPanel = new JPanel();
 		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
 
 		resultsLabel = new JLabel("Found STEAM_IDs");
+		resultsLabel.setHorizontalAlignment(SwingConstants.LEFT);
 
-		resultsArea = new JTextArea(2, 5);
-		resultsArea.setEditable(false);
+		resultsArea = new JList<String>(resultModel);
 		JScrollPane resultScroll = new JScrollPane (resultsArea,
 				   JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		resultScroll.setPreferredSize(new Dimension(200, 380));
+		resultsArea.addMouseListener(new MouseAdapter() {
+		    public void mouseClicked(MouseEvent evt) {
+		        JList<String> list = (JList<String>)evt.getSource();
+		        if (evt.getClickCount() == 2) {
+		            int index = list.locationToIndex(evt.getPoint());
 
-		rightPanel.add(resultsLabel);
+		            resultsArea.setSelectedIndex(index);
+		            goWebsite("http://steamcommunity.com/profiles/" + resultsArea.getSelectedValue());
+		        }
+		    }
+		});
+
+		cleanBtn = new JButton("Clean");
+		cleanBtn.setHorizontalAlignment(SwingConstants.RIGHT);
+
+		JPanel cleanPanel = new JPanel();
+		cleanPanel.add(resultsLabel);
+		cleanPanel.add(cleanBtn);
+		cleanBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				resultModel.removeAllElements();
+				resultsArea.validate();
+			}
+		});
+
+		rightPanel.add(cleanPanel);
 		rightPanel.add(resultScroll);
+
+		statusPanel = new JPanel();
+		statusPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
+		statusPanel.setLayout(new BoxLayout(statusPanel, BoxLayout.X_AXIS));
+
+		statusPanel.add(statusLabel);
 
 		panel.add(leftPanel, BorderLayout.WEST);
 		panel.add(rightPanel, BorderLayout.CENTER);
+		panel.add(statusPanel, BorderLayout.SOUTH);
 	}
 
 	private TF2Item[] getItemsFromSchema() {
@@ -231,6 +342,14 @@ public class MainWindow extends JFrame {
 		}
 		return new TF2Item[1];
 	}
+
+	private void goWebsite(final String url) {
+        try {
+                Desktop.getDesktop().browse(new URI(url));
+        } catch (URISyntaxException | IOException ex) {
+                //It looks like there's a problem
+        }
+    }
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {

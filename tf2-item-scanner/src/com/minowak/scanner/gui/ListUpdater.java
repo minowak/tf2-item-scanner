@@ -9,18 +9,21 @@ import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.swing.JTextArea;
+import javax.swing.DefaultListModel;
+import javax.swing.JLabel;
 
 import com.minowak.scanner.schema.TF2Item;
 
 public class ListUpdater extends Thread {
-	private JTextArea text;
+	private DefaultListModel<String> list;
 	private String id;
 	private long time;
 	private List<Integer> ids;
+	private JLabel status;
 
-	public ListUpdater(JTextArea list, String id, long time, List<TF2Item> items) {
-		this.text = list;
+	public ListUpdater(DefaultListModel<String> list, JLabel status, String id, long time, List<TF2Item> items) {
+		this.list = list;
+		this.status = status;
 		this.id = id;
 		this.time = time;
 		ids = new LinkedList<Integer>();
@@ -46,10 +49,12 @@ public class ListUpdater extends Thread {
 			pr = rt.exec(cmd);
 			BufferedReader br = new BufferedReader(new InputStreamReader(new BufferedInputStream(pr.getInputStream())));
 			BufferedReader br2 = new BufferedReader(new InputStreamReader(new BufferedInputStream(pr.getErrorStream())));
+			status.setText("Running...");
 			try {
 				String line;
 				while((line = br.readLine()) != null) {
-					text.append("\n" + line);
+					list.addElement(line);
+					System.out.println(line);
 				}
 			} catch(Exception e) {
 				e.printStackTrace();
@@ -65,7 +70,7 @@ public class ListUpdater extends Thread {
 				}
 				out.write(all);
 				out.close();
-				text.append("Finished!\n");
+				status.setText("Finished!");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -74,6 +79,6 @@ public class ListUpdater extends Thread {
 
 	public void stopMe() {
 		super.stop();
-		text.append("Stopped\n");
+		status.setText("Stopped by user");
 	}
 }
