@@ -263,6 +263,7 @@ public class MainWindow extends JFrame {
 				List<TF2Item> its = selected.getSelectedValuesList();
 				for(TF2Item it : its) {
 					selectedListModel.removeElement(it);
+					selectedItems.remove(it);
 				}
 
 				selected.validate();
