@@ -115,6 +115,7 @@ public class MainWindow extends JFrame {
 		            itemList.setSelectedIndex(index);
 		            if(!selectedListModel.contains(itemList.getSelectedValue())) {
 		            	selectedListModel.addElement(itemList.getSelectedValue());
+		            	selectedItems.add(itemList.getSelectedValue());
 		            	selected.validate();
 		            }
 		        }
@@ -139,6 +140,7 @@ public class MainWindow extends JFrame {
 
 		            selected.setSelectedIndex(index);
 		            selectedListModel.removeElement(selected.getSelectedValue());
+		            selectedItems.remove(itemList.getSelectedValue());
 		            selected.validate();
 		        }
 		    }
@@ -236,7 +238,7 @@ public class MainWindow extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				lUpdater = new ListUpdater(resultModel, statusLabel, idTextField.getText().trim(),
 						Long.parseLong(timeTextField.getText().trim()),
-						selectedItems);
+						selectedItems, 10);
 				lUpdater.start();
 				resultsArea.validate();
 			}
