@@ -19,9 +19,6 @@
 
 Browsing TF2 backpacks
 
-Uses http://git.optf2.com/steamodd/. Python 27 32bit needed for it to run (it should be in the same folder as scanner - it will
-be fixed in the future)
-
 Java 1.7 needed.
 
 You provide Sstarting STEAM_ID64 from which scanner starts scanning backpacks
