@@ -21,6 +21,7 @@ Browsing TF2 backpacks
 
 Java 1.7 needed.
 
-You provide Sstarting STEAM_ID64 from which scanner starts scanning backpacks
-in search of selected items (in all qualities). It omits f2p and lets you specify
-time which this person spent on playing TF2
+You provide starting STEAM_ID64 from which scanner starts scanning backpacks of this user, his friends
+and member of groups his in.
+
+It lets you specify item filters and some other options.
