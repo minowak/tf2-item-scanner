@@ -1,10 +1,11 @@
 package com.minowak.scanner.gui;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
-import javax.swing.JLabel;
+import javax.swing.JProgressBar;
 
 import com.minowak.scanner.engine.IDGenerator;
 import com.minowak.scanner.engine.SteamUser;
@@ -16,15 +17,17 @@ public class ListUpdater extends Thread {
 	private SteamUser user;
 	private long time;
 	private List<Integer> ids;
-	private JLabel status;
+	private JProgressBar statusBar;
 	private int count;
+	private long wasOnline;
 
-	public ListUpdater(DefaultListModel<String> list, JLabel status, String id, long time, List<TF2Item> items, int count) {
+	public ListUpdater(DefaultListModel<String> list, JProgressBar progressBar, String id, long time, List<TF2Item> items, int count, long wasOnline) {
 		this.list = list;
-		this.status = status;
+		this.statusBar = progressBar;
 		this.id = id;
 		this.time = time;
 		this.count = count;
+		this.wasOnline = wasOnline;
 		this.ids = new LinkedList<Integer>();
 		for(TF2Item it : items) {
 			this.ids.add(it.getDefinitionIndex());
@@ -37,7 +40,15 @@ public class ListUpdater extends Thread {
 		IDGenerator gen = new IDGenerator(id);
 		boolean found = false;
 
-		while(count-- > 0) {
+		int percent = 0;
+		int max = count;
+
+		while(count > 0) {
+			double d1 = (double)(max - count);
+			double d2 = d1/(double)max;
+
+			statusBar.setValue((int)(d2 * 100.0));
+			count--;
 			user = new SteamUser(currId);
 			System.out.println("Checking id: " + currId);
 			try {
@@ -50,10 +61,8 @@ public class ListUpdater extends Thread {
 				currId = gen.next();
 			}
 			if(user.isPremium()) {
-				System.out.println("is premium");
 				if(time == 0 || user.played() < time) {
-					System.out.println("time under");
-					System.out.println("ids=" + ids);
+					// TODO check date
 					for(int itemId : ids) {
 						if(user.hasItem(itemId)) {
 							found = true;
@@ -72,11 +81,10 @@ public class ListUpdater extends Thread {
 			System.out.println("" + currId);
 		}
 
-		status.setText("Finished");
+		statusBar.setValue(100);
 	}
 
 	public void stopMe() {
 		super.stop();
-		status.setText("Stopped by user");
 	}
 }

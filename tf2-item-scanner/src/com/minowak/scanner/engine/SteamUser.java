@@ -11,22 +11,30 @@ import com.minowak.scanner.utils.Configuration;
 
 public class SteamUser extends SteamEntity {
 	private String apiUrl;
+	private String api2Url;
 	private String id;
 	private Backpack backpack;
 	private long timePlayed;
+	private long online;
 
 	public SteamUser(String id) {
 		this.id = id;
 		this.apiUrl = String.format("http://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key=%s&format=json&SteamID=%s",
 				Configuration.API_KEY, id);
+		this.api2Url = String.format("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=%s&steamids=%s",
+				Configuration.API_KEY, id);
 	}
 
 	public boolean isPremium() {
-		return backpack.getSize() > 50;
+		return backpack.getSize() >= 300;
 	}
 
 	public long played() {
 		return timePlayed;
+	}
+
+	public long lastOnline() {
+		return online;
 	}
 
 	public boolean init() throws ParseException {
@@ -45,6 +53,15 @@ public class SteamUser extends SteamEntity {
 				break;
 			}
 		}
+
+		jsonResponse = super.getJson(api2Url);
+		if(jsonResponse == null) {
+			return false;
+		}
+		responseObj = parser.parse(jsonResponse);
+		response = (JSONObject)((JSONObject) responseObj).get("response");
+		JSONObject player = (JSONObject)((JSONArray) response.get("players")).get(0);
+		online = (long)player.get("lastlogoff");
 
 		backpack = new Backpack(id);
 		return backpack.init();

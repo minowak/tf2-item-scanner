@@ -23,6 +23,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -47,6 +48,8 @@ public class MainWindow extends JFrame {
 	private JTextField idTextField;
 	private JTextField filterTextField;
 	private JTextField timeTextField;
+	private JTextField wasOnlineText;
+	private JTextField profilesCount;
 	private JList<String> resultsArea;
 
 	private JLabel idLabel;
@@ -54,7 +57,8 @@ public class MainWindow extends JFrame {
 	private JLabel filterLabel;
 	private JLabel timeLabel;
 	private JLabel resultsLabel;
-	private JLabel statusLabel;
+	private JLabel profilesToScan;
+	private JLabel[] wasOnlineLabels;
 
 	private JList<TF2Item> selected;
 
@@ -68,6 +72,8 @@ public class MainWindow extends JFrame {
 	private JPanel statusPanel;
 
 	private JList<TF2Item> itemList;
+
+	private JProgressBar progressBar;
 
 	DefaultListModel<TF2Item> listModel = new DefaultListModel<>();
 	DefaultListModel<String> resultModel = new DefaultListModel<>();
@@ -86,8 +92,9 @@ public class MainWindow extends JFrame {
 		JPanel panel = new JPanel();
 		getContentPane().add(panel);
 
-		statusLabel = new JLabel("Ready");
-		statusLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		progressBar = new JProgressBar(0, 100);
+		progressBar.setValue(0);
+		progressBar.setStringPainted(true);
 
 		panel.setLayout(new BorderLayout());
 
@@ -193,11 +200,20 @@ public class MainWindow extends JFrame {
 		timePanel.setLayout(new FlowLayout());
 
 		timeLabel = new JLabel("Played no more than");
-		timeTextField = new JTextField(10);
+		timeTextField = new JTextField(3);
 		timeTextField.setText("0");
+
+		wasOnlineLabels = new JLabel[2];
+		wasOnlineLabels[0] = new JLabel("Was online no more than");
+		wasOnlineLabels[1] = new JLabel("days ago");
+		wasOnlineText = new JTextField(3);
+		wasOnlineText.setText("7");
 
 		timePanel.add(timeLabel);
 		timePanel.add(timeTextField);
+		timePanel.add(wasOnlineLabels[0]);
+		timePanel.add(wasOnlineText);
+		timePanel.add(wasOnlineLabels[1]);
 
 		filterPanel.add(filterLabel);
 		filterPanel.add(filterTextField);
@@ -236,9 +252,9 @@ public class MainWindow extends JFrame {
 		searchBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				lUpdater = new ListUpdater(resultModel, statusLabel, idTextField.getText().trim(),
+				lUpdater = new ListUpdater(resultModel, progressBar, idTextField.getText().trim(),
 						Long.parseLong(timeTextField.getText().trim()),
-						selectedItems, 10);
+						selectedItems, Integer.parseInt(profilesCount.getText()), Long.parseLong(wasOnlineText.getText()));
 				lUpdater.start();
 				resultsArea.validate();
 			}
@@ -279,10 +295,20 @@ public class MainWindow extends JFrame {
 		JPanel controlPanel = new JPanel();
 		controlPanel.setLayout(new FlowLayout());
 
+		profilesToScan = new JLabel("Profiles to scan");
+		profilesCount = new JTextField(3);
+
 		controlPanel.add(searchBtn);
 		controlPanel.add(stopBtn);
 
+		JPanel profilePanel = new JPanel();
+		profilePanel.setLayout(new FlowLayout());
+
+		profilePanel.add(profilesToScan);
+		profilePanel.add(profilesCount);
+
 		leftPanel.add(controlPanel);
+		leftPanel.add(profilePanel);
 		leftPanel.add(timePanel);
 
 		JPanel rightPanel = new JPanel();
@@ -328,7 +354,7 @@ public class MainWindow extends JFrame {
 		statusPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
 		statusPanel.setLayout(new BoxLayout(statusPanel, BoxLayout.X_AXIS));
 
-		statusPanel.add(statusLabel);
+		statusPanel.add(progressBar);
 
 		panel.add(leftPanel, BorderLayout.WEST);
 		panel.add(rightPanel, BorderLayout.CENTER);
