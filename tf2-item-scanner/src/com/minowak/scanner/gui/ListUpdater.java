@@ -22,6 +22,8 @@ public class ListUpdater extends Thread {
 	private int count;
 	private long wasOnline;
 
+	private static final long DAY = 8650000;
+
 	private List<String> steamIds = new LinkedList<String>();
 	private List<String> scanned = new LinkedList<String>();
 
@@ -84,13 +86,14 @@ public class ListUpdater extends Thread {
 			if(user.isPremium()) {
 		//		System.out.println("ispremium");
 				if(time == 0 || user.played() < time) {
-					// TODO check date
+					if(System.currentTimeMillis() - user.played() > wasOnline*DAY) {
 				//	System.out.println("time is good");
-					for(int itemId : ids) {
-						if(user.hasItem(itemId)) {
-						//	System.out.println("FOUND!");
-							found = true;
-							break;
+						for(int itemId : ids) {
+							if(user.hasItem(itemId)) {
+							//	System.out.println("FOUND!");
+								found = true;
+								break;
+							}
 						}
 					}
 				}
