@@ -1,7 +1,6 @@
 package com.minowak.scanner.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Cursor;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -9,8 +8,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.LinkedList;
@@ -22,6 +25,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
@@ -33,6 +40,7 @@ import javax.swing.border.BevelBorder;
 
 import com.minowak.scanner.schema.SchemaParser;
 import com.minowak.scanner.schema.TF2Item;
+import com.minowak.scanner.utils.Configuration;
 import com.minowak.scanner.utils.QualityCellRenderer;
 
 public class MainWindow extends JFrame {
@@ -70,6 +78,7 @@ public class MainWindow extends JFrame {
 	private JButton cleanBtn;
 
 	private JPanel statusPanel;
+	private JPanel panel;
 
 	private JList<TF2Item> itemList;
 
@@ -78,6 +87,11 @@ public class MainWindow extends JFrame {
 	DefaultListModel<TF2Item> listModel = new DefaultListModel<>();
 	DefaultListModel<String> resultModel = new DefaultListModel<>();
 	DefaultListModel<TF2Item> selectedListModel = new DefaultListModel<>();
+
+	/** Menu */
+	private JMenuBar menuBar;
+	private JMenu fileMenu;
+	private JMenuItem webApiItem;
 
 	public MainWindow() {
 		setTitle(TITLE);
@@ -89,7 +103,14 @@ public class MainWindow extends JFrame {
 	}
 
 	private void initGUI() {
-		JPanel panel = new JPanel();
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(new File("steamapi")));
+			Configuration.API_KEY = br.readLine();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+
+		panel = new JPanel();
 		getContentPane().add(panel);
 
 		progressBar = new JProgressBar(0, 100);
@@ -297,6 +318,7 @@ public class MainWindow extends JFrame {
 
 		profilesToScan = new JLabel("Profiles to scan");
 		profilesCount = new JTextField(3);
+		profilesCount.setText("100");
 
 		controlPanel.add(searchBtn);
 		controlPanel.add(stopBtn);
@@ -359,6 +381,48 @@ public class MainWindow extends JFrame {
 		panel.add(leftPanel, BorderLayout.WEST);
 		panel.add(rightPanel, BorderLayout.CENTER);
 		panel.add(statusPanel, BorderLayout.SOUTH);
+
+		initMenu();
+	}
+
+	private void initMenu() {
+		menuBar = new JMenuBar();
+		fileMenu = new JMenu("File");
+		menuBar.add(fileMenu);
+		webApiItem = new JMenuItem("Set API key");
+		webApiItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				JPanel panel = new JPanel();
+				JLabel label = new JLabel("Enter key:");
+				JTextField pass = new JTextField(15);
+				panel.add(label);
+				panel.add(pass);
+				String[] options = new String[]{"OK", "Cancel"};
+				int option = JOptionPane.showOptionDialog(null, panel, "Steam WEB API",
+				                         JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE,
+				                         null, options, options[1]);
+				if(option == 0) // pressing OK button
+				{
+				    String password = pass.getText();
+				    System.out.println("inputed " + password);
+				    PrintWriter pw;
+					try {
+						pw = new PrintWriter(new File("steamapi"));
+						System.out.println("writingapi to file");
+						pw.write(password);
+						pw.close();
+						Configuration.API_KEY = password;
+					} catch (FileNotFoundException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+
+		fileMenu.add(webApiItem);
+
+		setJMenuBar(menuBar);
 	}
 
 	private TF2Item[] getItemsFromSchema() {

@@ -10,6 +10,7 @@ import javax.swing.JProgressBar;
 import com.minowak.scanner.engine.IDGenerator;
 import com.minowak.scanner.engine.SteamUser;
 import com.minowak.scanner.schema.TF2Item;
+import com.minowak.scanner.utils.Configuration;
 
 public class ListUpdater extends Thread {
 	private DefaultListModel<String> list;
@@ -33,6 +34,7 @@ public class ListUpdater extends Thread {
 			this.ids.add(it.getDefinitionIndex());
 		}
 		System.out.println("ids=" + ids);
+		System.out.println("apikey=" + Configuration.API_KEY);
 	}
 
 	public void run() {
@@ -53,16 +55,17 @@ public class ListUpdater extends Thread {
 			System.out.println("Checking id: " + currId);
 			try {
 				if(!user.init()) {
+					currId = gen.next();
 					continue;
 				}
 			} catch(Exception e) {
 				e.printStackTrace();
-			} finally {
-				currId = gen.next();
 			}
 			if(user.isPremium()) {
+				System.out.println("ispremium");
 				if(time == 0 || user.played() < time) {
 					// TODO check date
+					System.out.println("time is good");
 					for(int itemId : ids) {
 						if(user.hasItem(itemId)) {
 							found = true;
