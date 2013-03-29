@@ -22,6 +22,9 @@ public class ListUpdater extends Thread {
 	private int count;
 	private long wasOnline;
 
+	private List<String> steamIds = new LinkedList<String>();
+	private List<String> scanned = new LinkedList<String>();
+
 	public ListUpdater(DefaultListModel<String> list, JProgressBar progressBar, String id, long time, List<TF2Item> items, int count, long wasOnline) {
 		this.list = list;
 		this.statusBar = progressBar;
@@ -52,22 +55,40 @@ public class ListUpdater extends Thread {
 			statusBar.setValue((int)(d2 * 100.0));
 			count--;
 			user = new SteamUser(currId);
+
 			System.out.println("Checking id: " + currId);
 			try {
 				if(!user.init()) {
-					currId = gen.next();
+					if(steamIds.size() > 0) {
+						currId = steamIds.get(0);
+						steamIds.remove(0);
+						if(scanned.contains(currId)){
+							continue;
+						}
+						scanned.add(currId);
+					} else {
+						currId = gen.next();
+					}
 					continue;
 				}
 			} catch(Exception e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
+
+			for(String s : user.getFriendsIds()) {
+				if(!scanned.contains(s) && !steamIds.contains(s)) {
+					steamIds.add(s);
+				}
+			}
+
 			if(user.isPremium()) {
-				System.out.println("ispremium");
+		//		System.out.println("ispremium");
 				if(time == 0 || user.played() < time) {
 					// TODO check date
-					System.out.println("time is good");
+				//	System.out.println("time is good");
 					for(int itemId : ids) {
 						if(user.hasItem(itemId)) {
+						//	System.out.println("FOUND!");
 							found = true;
 							break;
 						}
@@ -77,10 +98,23 @@ public class ListUpdater extends Thread {
 
 			if(found) {
 				list.addElement(currId);
+				found = false;
 			}
 
+			scanned.add(currId);
+			steamIds.remove(currId);
+
 			System.out.println("Getting next id...");
-			currId = gen.next();
+			if(steamIds.size() > 0) {
+				currId = steamIds.get(0);
+				steamIds.remove(0);
+				while(steamIds.size() > 0 && scanned.contains(currId)) {
+					currId = steamIds.get(0);
+					steamIds.remove(0);
+				}
+			} else {
+				currId = gen.next();
+			}
 			System.out.println("" + currId);
 		}
 

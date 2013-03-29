@@ -45,6 +45,7 @@ public class Backpack extends SteamEntity {
 	}
 
 	public boolean hasItem(long itemId) {
+		//System.out.println("Searching " + itemId + " in " + items);
 		return items.contains(itemId);
 	}
 

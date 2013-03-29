@@ -351,7 +351,7 @@ public class MainWindow extends JFrame {
 		            int index = list.locationToIndex(evt.getPoint());
 
 		            resultsArea.setSelectedIndex(index);
-		            goWebsite("http://steamcommunity.com/profiles/" + resultsArea.getSelectedValue());
+		            goWebsite("http://backpack.tf/id/" + resultsArea.getSelectedValue());
 		        }
 		    }
 		});
