@@ -335,7 +335,7 @@ public class MainWindow extends JFrame {
 
 	private TF2Item[] getItemsFromSchema() {
 		try {
-			return new SchemaParser(new File("schema\\item_schema.txt").getCanonicalFile())
+			return new SchemaParser(new File("schema" + File.separator + "item_schema.txt").getCanonicalFile())
 				.parse();
 		} catch (IOException e) {
 			e.printStackTrace();
