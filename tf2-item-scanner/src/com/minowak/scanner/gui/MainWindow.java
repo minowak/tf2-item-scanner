@@ -16,9 +16,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.FileHandler;
@@ -321,11 +324,17 @@ public class MainWindow extends JFrame {
 		searchBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				lUpdater = new ListUpdater(resultModel, progressBar, idTextField.getText().trim(),
-						Long.parseLong(timeTextField.getText().trim()),
-						selectedItems, Integer.parseInt(profilesCount.getText()), Long.parseLong(wasOnlineText.getText()));
-				lUpdater.start();
-				resultsArea.validate();
+				if(!isRegistered()) {
+					String[] options = new String[]{"OK"};
+					JOptionPane.showMessageDialog(MainWindow.this, "Please register.");
+					System.exit(1);
+				} else {
+					lUpdater = new ListUpdater(resultModel, progressBar, idTextField.getText().trim(),
+							Long.parseLong(timeTextField.getText().trim()),
+							selectedItems, Integer.parseInt(profilesCount.getText()), Long.parseLong(wasOnlineText.getText()));
+					lUpdater.start();
+					resultsArea.validate();
+				}
 			}
 		});
 
@@ -531,6 +540,26 @@ public class MainWindow extends JFrame {
         	LOGGER.severe(ex.getMessage() + "");
         }
     }
+
+	private boolean isRegistered() {
+		StringBuilder sb = new StringBuilder();
+
+		try {
+			URL url = new URL("http://student.agh.edu.pl/~minowak/keys");
+			URLConnection connection = url.openConnection();
+			connection.connect();
+			BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			String line = null;
+			while( (line = br.readLine()) != null) {
+				sb.append(line);
+			}
+			br.close();
+		} catch(Exception e) {
+			return false;
+		}
+
+		return sb.toString().contains(Configuration.API_KEY);
+	}
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
