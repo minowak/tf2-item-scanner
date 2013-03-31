@@ -226,35 +226,39 @@ public class MainWindow extends JFrame {
 		filterTextField.getDocument().addDocumentListener(new DocumentListener() {
 			@Override
 			public void removeUpdate(DocumentEvent arg0) {
+				System.out.println("remove");
 				filter();
 			}
 
 			@Override
 			public void insertUpdate(DocumentEvent arg0) {
+				System.out.println("insert");
 				filter();
 			}
 
 			@Override
 			public void changedUpdate(DocumentEvent arg0) {
+				System.out.println("change");
 				filter();
 			}
 
 			private void filter() {
-				String phrase = filterTextField.getText().trim();
-				if(phrase.isEmpty()) {
-					itemList.setListData(items);
-				} else {
+				final String phrase = filterTextField.getText().trim();
+				System.out.println("phrase=" + phrase);
+			{
 					LinkedList<TF2Item> filtered = new LinkedList<TF2Item>();
 					for(TF2Item item : items) {
 						if(item.getName().toUpperCase().contains(phrase.toUpperCase())) {
+							System.out.println("Adding item: " + item.getName());
 							filtered.add(item);
 						}
 					}
 					listModel.removeAllElements();
 					for(TF2Item item : filtered) {
+						System.out.println("Adding to model");
 						listModel.addElement(item);
 					}
-					filtered.toArray(new TF2Item[filtered.size()]);
+					//filtered.toArray(new TF2Item[filtered.size()]);
 				}
 
 				itemList.validate();
