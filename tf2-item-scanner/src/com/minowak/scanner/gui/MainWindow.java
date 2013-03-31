@@ -330,7 +330,7 @@ public class MainWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if(lUpdater != null) {
-					lUpdater.stopMe();
+					idTextField.setText(lUpdater.stopMe());
 					lUpdater = null;
 
 					try {

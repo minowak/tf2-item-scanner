@@ -27,6 +27,8 @@ public class ListUpdater extends Thread {
 	private List<String> steamIds = new LinkedList<String>();
 	private List<String> scanned = new LinkedList<String>();
 
+	private String currId;
+
 	public ListUpdater(DefaultListModel<String> list, JProgressBar progressBar, String id, long time, List<TF2Item> items, int count, long wasOnline) {
 		this.list = list;
 		this.statusBar = progressBar;
@@ -38,11 +40,10 @@ public class ListUpdater extends Thread {
 	}
 
 	public void run() {
-		String currId = id;
+		currId = id;
 		IDGenerator gen = new IDGenerator(id);
 		boolean found = false;
 
-		int percent = 0;
 		int max = count;
 
 		while(count > 0) {
@@ -80,7 +81,7 @@ public class ListUpdater extends Thread {
 
 			if(user.isPremium()) {
 				if(time == 0 || user.played() < time) {
-					if(System.currentTimeMillis() - user.played() > wasOnline*DAY) {
+					if(System.currentTimeMillis() - user.lastOnline() > wasOnline*DAY) {
 						for(TF2Item itemId : items) {
 							if(user.hasItem(itemId.getDefinitionIndex(), itemId.getQuality())) {
 								found = true;
@@ -116,7 +117,8 @@ public class ListUpdater extends Thread {
 		statusBar.setValue(100);
 	}
 
-	public void stopMe() {
+	public String stopMe() {
 		super.stop();
+		return currId;
 	}
 }
