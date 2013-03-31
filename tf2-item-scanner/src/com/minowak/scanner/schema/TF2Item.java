@@ -2,14 +2,14 @@ package com.minowak.scanner.schema;
 
 public class TF2Item {
 	private String name;
-	private int definitionIndex;
-	private int quality = 0;
+	private long definitionIndex;
+	private ItemQuality quality = ItemQuality.NORMAL;
 
-	public int getQuality() {
+	public ItemQuality getQuality() {
 		return quality;
 	}
 
-	public int getDefinitionIndex() {
+	public long getDefinitionIndex() {
 		return definitionIndex;
 	}
 
@@ -17,7 +17,7 @@ public class TF2Item {
 		return name;
 	}
 
-	public void setQuality(int quality) {
+	public void setQuality(ItemQuality quality) {
 		this.quality = quality;
 	}
 
@@ -29,7 +29,7 @@ public class TF2Item {
 		this.name = name;
 	}
 
-	public TF2Item(String name, int definitionIndex, int quality) {
+	public TF2Item(String name, long definitionIndex, ItemQuality quality) {
 		this.name = name;
 		this.definitionIndex = definitionIndex;
 		this.quality = quality;
@@ -38,5 +38,15 @@ public class TF2Item {
 	@Override
 	public String toString() {
 		return name;
+	}
+
+	@Override
+	public boolean equals(Object o2) {
+		if(o2 instanceof TF2Item) {
+			TF2Item it = (TF2Item) o2;
+			return (definitionIndex == it.getDefinitionIndex()) &&
+					(quality == it.getQuality());
+		}
+		return false;
 	}
 }

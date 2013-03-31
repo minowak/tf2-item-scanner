@@ -22,7 +22,6 @@ public class SchemaParser {
 
 		String line = null;
 		int defindex = 0;
-		int quality = 0;
 		String name = new String("");
 		boolean added = false;
 		while((line = br.readLine()) != null) {
@@ -38,14 +37,10 @@ public class SchemaParser {
 				}
 				String tmp2 = tmp.substring(0, tmp.length() - 1).trim();
 				name = tmp2.substring(1, tmp2.length() - 1);
-			}
-			if(line.contains("item_quality")) {
-				String tmp = line.split(":")[1];
-				quality = Integer.parseInt(tmp.substring(0, tmp.length() - 1).trim());
 				added = true;
 			}
 			if(added) {
-				list.add(new TF2Item(name, defindex, quality));
+				list.add(new TF2Item(name, defindex, ItemQuality.UNIQUE));
 				added = false;
 			}
 		}

@@ -10,6 +10,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import com.minowak.scanner.schema.ItemQuality;
 import com.minowak.scanner.utils.Configuration;
 
 public class SteamUser extends SteamEntity {
@@ -94,7 +95,7 @@ public class SteamUser extends SteamEntity {
 		return friends;
 	}
 
-	public boolean hasItem(int itemId) {
-		return backpack.hasItem(itemId);
+	public boolean hasItem(long itemId, ItemQuality quality) {
+		return backpack.hasItem(itemId, quality);
 	}
 }

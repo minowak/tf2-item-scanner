@@ -17,7 +17,7 @@ public class ListUpdater extends Thread {
 	private String id;
 	private SteamUser user;
 	private long time;
-	private List<Integer> ids;
+	private List<TF2Item> items;
 	private JProgressBar statusBar;
 	private int count;
 	private long wasOnline;
@@ -34,12 +34,7 @@ public class ListUpdater extends Thread {
 		this.time = time;
 		this.count = count;
 		this.wasOnline = wasOnline;
-		this.ids = new LinkedList<Integer>();
-		for(TF2Item it : items) {
-			this.ids.add(it.getDefinitionIndex());
-		}
-		System.out.println("ids=" + ids);
-		System.out.println("apikey=" + Configuration.API_KEY);
+		this.items = items;
 	}
 
 	public void run() {
@@ -84,13 +79,10 @@ public class ListUpdater extends Thread {
 			}
 
 			if(user.isPremium()) {
-		//		System.out.println("ispremium");
 				if(time == 0 || user.played() < time) {
 					if(System.currentTimeMillis() - user.played() > wasOnline*DAY) {
-				//	System.out.println("time is good");
-						for(int itemId : ids) {
-							if(user.hasItem(itemId)) {
-							//	System.out.println("FOUND!");
+						for(TF2Item itemId : items) {
+							if(user.hasItem(itemId.getDefinitionIndex(), itemId.getQuality())) {
 								found = true;
 								break;
 							}

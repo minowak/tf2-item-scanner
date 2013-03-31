@@ -6,22 +6,30 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -30,6 +38,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -40,12 +49,14 @@ import javax.swing.border.BevelBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import com.minowak.scanner.schema.ItemQuality;
 import com.minowak.scanner.schema.SchemaParser;
 import com.minowak.scanner.schema.TF2Item;
 import com.minowak.scanner.utils.Configuration;
 import com.minowak.scanner.utils.QualityCellRenderer;
 
 public class MainWindow extends JFrame {
+	private final static Logger LOGGER = Logger.getLogger(MainWindow.class .getName());
 	private static final long serialVersionUID = -3981477621230432928L;
 	private final static String TITLE = "TF2 Item Scanner";
 
@@ -66,7 +77,6 @@ public class MainWindow extends JFrame {
 	private JLabel itemListLabel;
 	private JLabel filterLabel;
 	private JLabel timeLabel;
-	private JLabel resultsLabel;
 	private JLabel profilesToScan;
 	private JLabel[] wasOnlineLabels;
 
@@ -77,6 +87,7 @@ public class MainWindow extends JFrame {
 	private JButton searchBtn;
 	private JButton stopBtn;
 	private JButton cleanBtn;
+	private JButton saveBtn;
 
 	private JPanel statusPanel;
 	private JPanel panel;
@@ -99,6 +110,17 @@ public class MainWindow extends JFrame {
 		setSize(800, 500);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		LOGGER.setLevel(Level.ALL);
+		FileHandler fileTxt = null;
+		try {
+			fileTxt = new FileHandler("scanner.log");
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		fileTxt.setFormatter(new SimpleFormatter());
+		LOGGER.addHandler(fileTxt);
 
 		initGUI();
 	}
@@ -108,7 +130,7 @@ public class MainWindow extends JFrame {
 			BufferedReader br = new BufferedReader(new FileReader(new File("steamapi")));
 			Configuration.API_KEY = br.readLine();
 		} catch(Exception e) {
-			e.printStackTrace();
+			LOGGER.severe(e.getMessage() + "");
 		}
 
 		panel = new JPanel();
@@ -127,18 +149,21 @@ public class MainWindow extends JFrame {
 
 		items = getItemsFromSchema();
 
+		System.out.println("Loaded " + items.length + " items");
+
 		for(TF2Item item : items) {
+
 			listModel.addElement(item);
 		}
 
 		itemList = new JList<TF2Item>(listModel);
 		itemList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		itemList.setCellRenderer(new QualityCellRenderer());
 		itemList.setVisibleRowCount(-1);
 		itemList.addMouseListener(new MouseAdapter() {
 		    public void mouseClicked(MouseEvent evt) {
 		        JList list = (JList)evt.getSource();
 		        if (evt.getClickCount() == 2) {
+		        	// Double click
 		            int index = list.locationToIndex(evt.getPoint());
 
 		            itemList.setSelectedIndex(index);
@@ -164,6 +189,12 @@ public class MainWindow extends JFrame {
 		selected.addMouseListener(new MouseAdapter() {
 		    public void mouseClicked(MouseEvent evt) {
 		        JList list = (JList)evt.getSource();
+		        if((evt.getModifiers() & InputEvent.BUTTON3_MASK) == InputEvent.BUTTON3_MASK) {
+		        	// Right click
+		        	JPopupMenu popup = createItemPopup(selected.locationToIndex(evt.getPoint()));
+		        	popup.show(evt.getComponent(), evt.getX(), evt.getY());
+		        	selected.validate();
+		        } else
 		        if (evt.getClickCount() == 2) {
 		            int index = list.locationToIndex(evt.getPoint());
 
@@ -306,7 +337,7 @@ public class MainWindow extends JFrame {
 						Runtime.getRuntime().exec("Taskkill /F /IM python.exe");
 						Runtime.getRuntime().exec("Taskkill /F /IM pythonw.exe");
 					} catch (IOException e) {
-						e.printStackTrace();
+						LOGGER.severe(e.getMessage() + "");
 					}
 				}
 			}
@@ -349,9 +380,6 @@ public class MainWindow extends JFrame {
 		JPanel rightPanel = new JPanel();
 		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
 
-		resultsLabel = new JLabel("Found STEAM_IDs");
-		resultsLabel.setHorizontalAlignment(SwingConstants.LEFT);
-
 		resultsArea = new JList<String>(resultModel);
 		JScrollPane resultScroll = new JScrollPane (resultsArea,
 				   JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -371,9 +399,32 @@ public class MainWindow extends JFrame {
 		cleanBtn = new JButton("Clean");
 		cleanBtn.setHorizontalAlignment(SwingConstants.RIGHT);
 
+		saveBtn = new JButton("Save");
+		saveBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser fc = new JFileChooser();
+				fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				int returnVal = fc.showSaveDialog(panel);
+
+				if(returnVal == JFileChooser.APPROVE_OPTION) {
+					File file = fc.getSelectedFile();
+					try {
+						BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+						for(int i = 0 ; i < resultModel.size() ; i++) {
+							bw.write(resultModel.getElementAt(i) + "\n");
+						}
+						bw.close();
+					} catch (IOException e) {
+						LOGGER.severe(e.getMessage() + "");
+					}
+				}
+			}
+		});
+
 		JPanel cleanPanel = new JPanel();
-		cleanPanel.add(resultsLabel);
 		cleanPanel.add(cleanBtn);
+		cleanPanel.add(saveBtn);
 		cleanBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -396,6 +447,27 @@ public class MainWindow extends JFrame {
 		panel.add(statusPanel, BorderLayout.SOUTH);
 
 		initMenu();
+	}
+
+	private JPopupMenu createItemPopup(int index) {
+		final int in = index;
+		JPopupMenu popup = new JPopupMenu();
+    	JMenu qualityMenu = new JMenu("Quality");
+    	for(ItemQuality quality : ItemQuality.values()) {
+    		JMenuItem menuItem = new JMenuItem(quality.getName());
+    		final ItemQuality qu = quality;
+    		menuItem.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					selectedItems.get(in).setQuality(qu);
+				}
+			});
+    		qualityMenu.add(menuItem);
+    	}
+
+    	popup.add(qualityMenu);
+
+    	return popup;
 	}
 
 	private void initMenu() {
@@ -427,7 +499,7 @@ public class MainWindow extends JFrame {
 						pw.close();
 						Configuration.API_KEY = password;
 					} catch (FileNotFoundException e) {
-						e.printStackTrace();
+						LOGGER.severe(e.getMessage() + "");
 					}
 				}
 			}
@@ -443,16 +515,16 @@ public class MainWindow extends JFrame {
 			return new SchemaParser(new File("schema" + File.separator + "item_schema.txt").getCanonicalFile())
 				.parse();
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.severe(e.getMessage() + "");
 		}
-		return new TF2Item[1];
+		return null;
 	}
 
 	private void goWebsite(final String url) {
         try {
                 Desktop.getDesktop().browse(new URI(url));
         } catch (URISyntaxException | IOException ex) {
-                //It looks like there's a problem
+        	LOGGER.severe(ex.getMessage() + "");
         }
     }
 
