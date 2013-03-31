@@ -37,6 +37,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.BevelBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import com.minowak.scanner.schema.SchemaParser;
 import com.minowak.scanner.schema.TF2Item;
@@ -70,7 +72,6 @@ public class MainWindow extends JFrame {
 
 	private JList<TF2Item> selected;
 
-	private JButton filterBtn;
 	private JButton selectBtn;
 	private JButton removeBtn;
 	private JButton searchBtn;
@@ -122,7 +123,7 @@ public class MainWindow extends JFrame {
 		idTextField = new JTextField(20);
 		idTextField.setText("76561197992203636");
 		idLabel = new JLabel("Starting STEAM_ID64");
-		itemListLabel = new JLabel("Items");
+		itemListLabel = new JLabel("Select Items");
 
 		items = getItemsFromSchema();
 
@@ -191,11 +192,23 @@ public class MainWindow extends JFrame {
 
 		filterLabel = new JLabel("Filter: ");
 		filterTextField = new JTextField(20);
-
-		filterBtn = new JButton("Filter");
-		filterBtn.addActionListener(new ActionListener() {
+		filterTextField.getDocument().addDocumentListener(new DocumentListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void removeUpdate(DocumentEvent arg0) {
+				filter();
+			}
+
+			@Override
+			public void insertUpdate(DocumentEvent arg0) {
+				filter();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent arg0) {
+				filter();
+			}
+
+			private void filter() {
 				String phrase = filterTextField.getText().trim();
 				if(phrase.isEmpty()) {
 					itemList.setListData(items);
@@ -238,7 +251,6 @@ public class MainWindow extends JFrame {
 
 		filterPanel.add(filterLabel);
 		filterPanel.add(filterTextField);
-		filterPanel.add(filterBtn);
 
 		selectBtn = new JButton(">>");
 		selectBtn.addActionListener(new ActionListener() {
