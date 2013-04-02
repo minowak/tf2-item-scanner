@@ -96,6 +96,7 @@ public class MainWindow extends JFrame {
 	private JButton stopBtn;
 	private JButton cleanBtn;
 	private JButton saveBtn;
+	private JButton loadBtn;
 
 	private JPanel statusPanel;
 	private JPanel panel;
@@ -453,7 +454,8 @@ public class MainWindow extends JFrame {
 					try {
 						BufferedWriter bw = new BufferedWriter(new FileWriter(file));
 						for(int i = 0 ; i < resultModel.size() ; i++) {
-							bw.write(resultModel.getElementAt(i) + "\n");
+							SteamProfile sp = resultModel.getElementAt(i);
+							bw.write(sp.serialize() + "\n");
 						}
 						bw.close();
 					} catch (IOException e) {
@@ -463,9 +465,37 @@ public class MainWindow extends JFrame {
 			}
 		});
 
+		loadBtn = new JButton("Load");
+		loadBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser fc = new JFileChooser();
+				fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				int returnVal = fc.showOpenDialog(panel);
+
+				if(returnVal == JFileChooser.APPROVE_OPTION) {
+					File file = fc.getSelectedFile();
+					try {
+						BufferedReader br = new BufferedReader(new FileReader(file));
+						String line = null;
+						while((line = br.readLine()) != null) {
+							SteamProfile sp = SteamProfile.deserialize(line);
+							resultModel.addElement(sp);
+						}
+						br.close();
+					} catch (IOException e) {
+						LOGGER.severe(e.getMessage() + "");
+					} finally {
+						resultsArea.validate();
+					}
+				}
+			}
+		});
+
 		JPanel cleanPanel = new JPanel();
 		cleanPanel.add(cleanBtn);
 		cleanPanel.add(saveBtn);
+		cleanPanel.add(loadBtn);
 		cleanBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

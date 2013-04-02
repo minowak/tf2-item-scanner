@@ -32,6 +32,15 @@ public class SteamProfile {
 		return name + " (" + id + ")";
 	}
 
+	public String serialize() {
+		return name+";"+id;
+	}
+
+	public static SteamProfile deserialize(String str) {
+		String[] ss = str.split(";");
+		return new SteamProfile(ss[0], ss[1]);
+	}
+
 	public boolean isVisited() {
 		return visited;
 	}
