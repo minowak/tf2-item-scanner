@@ -123,10 +123,9 @@ public class MainWindow extends JFrame {
 		FileHandler fileTxt = null;
 		try {
 			fileTxt = new FileHandler("scanner.log");
-		} catch (SecurityException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			LOGGER.severe(e.getMessage());
+			showErrorDialog(e.getMessage());
 		}
 		fileTxt.setFormatter(new SimpleFormatter());
 		LOGGER.addHandler(fileTxt);
@@ -139,6 +138,7 @@ public class MainWindow extends JFrame {
 			setIconImage(icon);
 		} catch (IOException e) {
 			LOGGER.severe(e.getMessage());
+			showErrorDialog(e.getMessage() + "");
 		}
 	}
 
@@ -159,6 +159,7 @@ public class MainWindow extends JFrame {
 			Configuration.API_KEY = br.readLine();
 		} catch(Exception e) {
 			LOGGER.severe(e.getMessage() + "");
+			showErrorDialog(e.getMessage() + "");
 		}
 
 		panel = new JPanel();
@@ -376,6 +377,7 @@ public class MainWindow extends JFrame {
 						Runtime.getRuntime().exec("Taskkill /F /IM pythonw.exe");
 					} catch (IOException e) {
 						LOGGER.severe(e.getMessage() + "");
+						showErrorDialog(e.getMessage() + "");
 					}
 				}
 			}
@@ -460,6 +462,7 @@ public class MainWindow extends JFrame {
 						bw.close();
 					} catch (IOException e) {
 						LOGGER.severe(e.getMessage() + "");
+						showErrorDialog(e.getMessage() + "");
 					}
 				}
 			}
@@ -485,6 +488,7 @@ public class MainWindow extends JFrame {
 						br.close();
 					} catch (IOException e) {
 						LOGGER.severe(e.getMessage() + "");
+						showErrorDialog(e.getMessage() + "");
 					} finally {
 						resultsArea.validate();
 					}
@@ -569,6 +573,7 @@ public class MainWindow extends JFrame {
 						Configuration.API_KEY = password;
 					} catch (FileNotFoundException e) {
 						LOGGER.severe(e.getMessage() + "");
+						showErrorDialog(e.getMessage() + "");
 					}
 				}
 			}
@@ -585,6 +590,7 @@ public class MainWindow extends JFrame {
 				.parse();
 		} catch (IOException e) {
 			LOGGER.severe(e.getMessage() + "");
+			showErrorDialog(e.getMessage() + "");
 		}
 		return null;
 	}
@@ -594,6 +600,7 @@ public class MainWindow extends JFrame {
                 Desktop.getDesktop().browse(new URI(url));
         } catch (URISyntaxException | IOException ex) {
         	LOGGER.severe(ex.getMessage() + "");
+        	showErrorDialog(ex.getMessage() + "");
         }
     }
 
@@ -615,6 +622,10 @@ public class MainWindow extends JFrame {
 		}
 
 		return sb.toString().contains(Configuration.API_KEY);
+	}
+
+	private void showErrorDialog(String msg) {
+		JOptionPane.showMessageDialog(MainWindow.this, msg);
 	}
 
 	public static void main(String[] args) {
