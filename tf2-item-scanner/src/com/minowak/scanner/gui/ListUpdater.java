@@ -1,6 +1,5 @@
 package com.minowak.scanner.gui;
 
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -8,12 +7,12 @@ import javax.swing.DefaultListModel;
 import javax.swing.JProgressBar;
 
 import com.minowak.scanner.engine.IDGenerator;
+import com.minowak.scanner.engine.SteamProfile;
 import com.minowak.scanner.engine.SteamUser;
 import com.minowak.scanner.schema.TF2Item;
-import com.minowak.scanner.utils.Configuration;
 
 public class ListUpdater extends Thread {
-	private DefaultListModel<String> list;
+	private DefaultListModel<SteamProfile> list;
 	private String id;
 	private SteamUser user;
 	private long time;
@@ -29,7 +28,7 @@ public class ListUpdater extends Thread {
 
 	private String currId;
 
-	public ListUpdater(DefaultListModel<String> list, JProgressBar progressBar, String id, long time, List<TF2Item> items, int count, long wasOnline) {
+	public ListUpdater(DefaultListModel<SteamProfile> list, JProgressBar progressBar, String id, long time, List<TF2Item> items, int count, long wasOnline) {
 		this.list = list;
 		this.statusBar = progressBar;
 		this.id = id;
@@ -85,6 +84,7 @@ public class ListUpdater extends Thread {
 						for(TF2Item itemId : items) {
 							if(user.hasItem(itemId.getDefinitionIndex(), itemId.getQuality())) {
 								found = true;
+								System.out.println("GOT IT");
 								break;
 							}
 						}
@@ -93,7 +93,7 @@ public class ListUpdater extends Thread {
 			}
 
 			if(found) {
-				list.addElement(currId);
+				list.addElement(new SteamProfile(user.getName(), currId));
 				found = false;
 			}
 

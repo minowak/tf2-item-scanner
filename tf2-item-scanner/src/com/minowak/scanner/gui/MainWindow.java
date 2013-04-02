@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
@@ -29,8 +30,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -52,11 +55,13 @@ import javax.swing.border.BevelBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import com.minowak.scanner.engine.SteamProfile;
 import com.minowak.scanner.schema.ItemQuality;
 import com.minowak.scanner.schema.SchemaParser;
 import com.minowak.scanner.schema.TF2Item;
 import com.minowak.scanner.utils.Configuration;
 import com.minowak.scanner.utils.QualityCellRenderer;
+import com.minowak.scanner.utils.VisitedCellRenderer;
 
 public class MainWindow extends JFrame {
 	private final static Logger LOGGER = Logger.getLogger(MainWindow.class .getName());
@@ -74,7 +79,7 @@ public class MainWindow extends JFrame {
 	private JTextField timeTextField;
 	private JTextField wasOnlineText;
 	private JTextField profilesCount;
-	private JList<String> resultsArea;
+	private JList<SteamProfile> resultsArea;
 
 	private JLabel idLabel;
 	private JLabel itemListLabel;
@@ -100,7 +105,7 @@ public class MainWindow extends JFrame {
 	private JProgressBar progressBar;
 
 	DefaultListModel<TF2Item> listModel = new DefaultListModel<>();
-	DefaultListModel<String> resultModel = new DefaultListModel<>();
+	DefaultListModel<SteamProfile> resultModel = new DefaultListModel<>();
 	DefaultListModel<TF2Item> selectedListModel = new DefaultListModel<>();
 
 	/** Menu */
@@ -126,6 +131,25 @@ public class MainWindow extends JFrame {
 		LOGGER.addHandler(fileTxt);
 
 		initGUI();
+		initMenu();
+
+		try {
+			Image icon = ImageIO.read(new File("images/zegoggles.png"));
+			setIconImage(icon);
+		} catch (IOException e) {
+			LOGGER.severe(e.getMessage());
+		}
+	}
+
+	protected ImageIcon createImageIcon(String path,
+            String description) {
+		java.net.URL imgURL = getClass().getResource(path);
+		if (imgURL != null) {
+			return new ImageIcon(imgURL, description);
+		} else {
+			System.err.println("Couldn't find file: " + path);
+			return null;
+		}
 	}
 
 	private void initGUI() {
@@ -330,7 +354,7 @@ public class MainWindow extends JFrame {
 					System.exit(1);
 				} else {
 					lUpdater = new ListUpdater(resultModel, progressBar, idTextField.getText().trim(),
-							Long.parseLong(timeTextField.getText().trim()),
+							(long)(Double.parseDouble(timeTextField.getText().trim()) * 60),
 							selectedItems, Integer.parseInt(profilesCount.getText()), Long.parseLong(wasOnlineText.getText()));
 					lUpdater.start();
 					resultsArea.validate();
@@ -393,18 +417,22 @@ public class MainWindow extends JFrame {
 		JPanel rightPanel = new JPanel();
 		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
 
-		resultsArea = new JList<String>(resultModel);
+		resultsArea = new JList<SteamProfile>(resultModel);
 		JScrollPane resultScroll = new JScrollPane (resultsArea,
 				   JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		resultScroll.setPreferredSize(new Dimension(200, 380));
+		resultsArea.setCellRenderer(new VisitedCellRenderer());
 		resultsArea.addMouseListener(new MouseAdapter() {
 		    public void mouseClicked(MouseEvent evt) {
-		        JList<String> list = (JList<String>)evt.getSource();
+		        JList<SteamProfile> list = (JList<SteamProfile>)evt.getSource();
 		        if (evt.getClickCount() == 2) {
 		            int index = list.locationToIndex(evt.getPoint());
+		            SteamProfile sp = (SteamProfile)resultsArea.getSelectedValue();
 
 		            resultsArea.setSelectedIndex(index);
-		            goWebsite("http://backpack.tf/id/" + resultsArea.getSelectedValue());
+		            goWebsite("http://backpack.tf/id/" + sp.getId());
+		            sp.visit();
+		            resultsArea.validate();
 		        }
 		    }
 		});
@@ -458,8 +486,6 @@ public class MainWindow extends JFrame {
 		panel.add(leftPanel, BorderLayout.WEST);
 		panel.add(rightPanel, BorderLayout.CENTER);
 		panel.add(statusPanel, BorderLayout.SOUTH);
-
-		initMenu();
 	}
 
 	private JPopupMenu createItemPopup(int index) {

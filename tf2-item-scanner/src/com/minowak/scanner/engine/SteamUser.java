@@ -22,6 +22,7 @@ public class SteamUser extends SteamEntity {
 	private long timePlayed;
 	private long online;
 	private List<String> friends = new LinkedList<String>();
+	private String name;
 
 	public SteamUser(String id) {
 		this.id = id;
@@ -43,6 +44,10 @@ public class SteamUser extends SteamEntity {
 
 	public long lastOnline() {
 		return online;
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	public boolean init() throws ParseException {
@@ -73,6 +78,7 @@ public class SteamUser extends SteamEntity {
 		response = (JSONObject)((JSONObject) responseObj).get("response");
 		JSONObject player = (JSONObject)((JSONArray) response.get("players")).get(0);
 		online = (long)player.get("lastlogoff");
+		name = (String)player.get("personaname");
 
 		jsonResponse = super.getJson(api3Url);
 		if(jsonResponse == null) {
