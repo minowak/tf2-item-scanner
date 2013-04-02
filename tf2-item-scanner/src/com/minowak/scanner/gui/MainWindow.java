@@ -112,7 +112,9 @@ public class MainWindow extends JFrame {
 	/** Menu */
 	private JMenuBar menuBar;
 	private JMenu fileMenu;
+	private JMenu helpMenu;
 	private JMenuItem webApiItem;
+	private JMenuItem aboutItem;
 
 	public MainWindow() {
 		setTitle(TITLE);
@@ -545,8 +547,11 @@ public class MainWindow extends JFrame {
 
 	private void initMenu() {
 		menuBar = new JMenuBar();
+		helpMenu = new JMenu("Help");
 		fileMenu = new JMenu("File");
 		menuBar.add(fileMenu);
+		menuBar.add(helpMenu);
+		aboutItem = new JMenuItem("About");
 		webApiItem = new JMenuItem("Set API key");
 		webApiItem.addActionListener(new ActionListener() {
 			@Override
@@ -579,7 +584,19 @@ public class MainWindow extends JFrame {
 			}
 		});
 
+		aboutItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				JPanel panel = new JPanel();
+				JLabel label = new JLabel("Writen by News. Enjoy!");
+				panel.add(label);
+				String[] options = new String[]{"OK"};
+				JOptionPane.showMessageDialog(MainWindow.this, "Written by News. Enjoy!");
+			}
+		});
+
 		fileMenu.add(webApiItem);
+		helpMenu.add(aboutItem);
 
 		setJMenuBar(menuBar);
 	}
