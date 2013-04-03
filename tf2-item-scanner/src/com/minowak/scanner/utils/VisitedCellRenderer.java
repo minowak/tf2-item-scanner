@@ -19,9 +19,9 @@ public class VisitedCellRenderer extends DefaultListCellRenderer {
 		SteamProfile sp = (SteamProfile)arg1;
 		StringBuilder sb = new StringBuilder();
 
+		sb.append("<html><b>Found:</b><br>");
 		for(TF2Item item : sp.getSearchedFor()) {
-			sb.append("<html>Found:<br>");
-			sb.append(item);
+			sb.append("<i>" + item + "</i>");
 			sb.append("<br>");
 		}
 		sb.append("</html>");
