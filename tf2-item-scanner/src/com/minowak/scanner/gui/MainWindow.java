@@ -51,6 +51,7 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
 import javax.swing.event.DocumentEvent;
@@ -124,6 +125,7 @@ public class MainWindow extends JFrame {
 			Image icon = ImageIO.read(new File("images/zegoggles.png"));
 			setIconImage(icon);
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			ToolTipManager.sharedInstance().setInitialDelay(0);
 		} catch (Exception e) {
 			LOGGER.severe(e.getMessage());
 		}
@@ -258,39 +260,32 @@ public class MainWindow extends JFrame {
 		filterTextField.getDocument().addDocumentListener(new DocumentListener() {
 			@Override
 			public void removeUpdate(DocumentEvent arg0) {
-				System.out.println("remove");
 				filter();
 			}
 
 			@Override
 			public void insertUpdate(DocumentEvent arg0) {
-				System.out.println("insert");
 				filter();
 			}
 
 			@Override
 			public void changedUpdate(DocumentEvent arg0) {
-				System.out.println("change");
 				filter();
 			}
 
 			private void filter() {
 				final String phrase = filterTextField.getText().trim();
-				System.out.println("phrase=" + phrase);
 			{
 					LinkedList<TF2Item> filtered = new LinkedList<TF2Item>();
 					for(TF2Item item : items) {
 						if(item.getName().toUpperCase().contains(phrase.toUpperCase())) {
-							System.out.println("Adding item: " + item.getName());
 							filtered.add(item);
 						}
 					}
 					listModel.removeAllElements();
 					for(TF2Item item : filtered) {
-						System.out.println("Adding to model");
 						listModel.addElement(item);
 					}
-					//filtered.toArray(new TF2Item[filtered.size()]);
 				}
 
 				itemList.validate();
@@ -570,11 +565,9 @@ public class MainWindow extends JFrame {
 				if(option == 0) // pressing OK button
 				{
 				    String password = pass.getText();
-				    System.out.println("inputed " + password);
 				    PrintWriter pw;
 					try {
 						pw = new PrintWriter(new File("steamapi"));
-						System.out.println("writingapi to file");
 						pw.write(password);
 						pw.close();
 						Configuration.API_KEY = password;

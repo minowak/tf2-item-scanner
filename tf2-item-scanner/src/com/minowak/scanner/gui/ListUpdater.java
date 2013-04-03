@@ -1,7 +1,9 @@
 package com.minowak.scanner.gui;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JProgressBar;
@@ -55,7 +57,6 @@ public class ListUpdater extends Thread {
 			count--;
 			user = new SteamUser(currId);
 
-			System.out.println("Checking id: " + currId);
 			try {
 				if(!user.init()) {
 					if(steamIds.size() > 0) {
@@ -80,17 +81,17 @@ public class ListUpdater extends Thread {
 				}
 			}
 
+			Set<TF2Item> searchedFor = new HashSet<TF2Item>();
 			if(user.isPremium()) {
 				double bpValue = user.getValue();
-				System.out.println("bp=" + bpValue + " =? " + maxVal);
 				if(time == 0 || user.played() < time) {
 					if((System.currentTimeMillis() - user.lastOnline() > wasOnline*DAY )
 							&& (maxVal == 0.0 || bpValue <= maxVal)) {
 						for(TF2Item itemId : items) {
 							if(user.hasItem(itemId.getDefinitionIndex(), itemId.getQuality())) {
 								found = true;
-								System.out.println("GOT IT");
-								break;
+								searchedFor.add(itemId);
+								//break;
 							}
 						}
 					}
@@ -98,14 +99,15 @@ public class ListUpdater extends Thread {
 			}
 
 			if(found) {
-				list.addElement(new SteamProfile(user.getName(), currId));
+				SteamProfile sp = new SteamProfile(user.getName(), currId);
+				sp.putSearchedFor(searchedFor);
+				list.addElement(sp);
 				found = false;
 			}
 
 			scanned.add(currId);
 			steamIds.remove(currId);
 
-			System.out.println("Getting next id...");
 			if(steamIds.size() > 0) {
 				currId = steamIds.get(0);
 				steamIds.remove(0);
@@ -116,7 +118,6 @@ public class ListUpdater extends Thread {
 			} else {
 				currId = gen.next();
 			}
-			System.out.println("" + currId);
 		}
 
 		statusBar.setValue(100);
