@@ -4,6 +4,7 @@ public class TF2Item {
 	private String name;
 	private long definitionIndex;
 	private ItemQuality quality = ItemQuality.NORMAL;
+	private String imgUrl;
 
 	public ItemQuality getQuality() {
 		return quality;
@@ -19,6 +20,15 @@ public class TF2Item {
 
 	public void setQuality(ItemQuality quality) {
 		this.quality = quality;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
+
+	public String getImageUrl() {
+		System.out.println("returning imgurl=" + imgUrl);
+		return imgUrl;
 	}
 
 	public void setDefinitionIndex(int definitionIndex) {
