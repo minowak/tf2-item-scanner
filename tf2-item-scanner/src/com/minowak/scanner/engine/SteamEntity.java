@@ -15,7 +15,7 @@ public class SteamEntity {
 		super();
 	}
 
-	protected String getJson(String apiUrl) {
+	protected static String getJson(String apiUrl) {
 		StringBuilder sb = new StringBuilder();
 
 		try {

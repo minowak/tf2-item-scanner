@@ -51,6 +51,7 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -117,6 +118,16 @@ public class MainWindow extends JFrame {
 	private JMenuItem aboutItem;
 
 	public MainWindow() {
+		try {
+			Image icon = ImageIO.read(new File("images/zegoggles.png"));
+			setIconImage(icon);
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+			LOGGER.severe(e.getMessage());
+		}
+
+		items = getItemsFromSchema();
+
 		setTitle(TITLE);
 		setSize(800, 500);
 		setLocationRelativeTo(null);
@@ -127,21 +138,12 @@ public class MainWindow extends JFrame {
 			fileTxt = new FileHandler("scanner.log");
 		} catch (Exception e) {
 			LOGGER.severe(e.getMessage());
-			showErrorDialog(e.getMessage());
 		}
 		fileTxt.setFormatter(new SimpleFormatter());
 		LOGGER.addHandler(fileTxt);
 
 		initGUI();
 		initMenu();
-
-		try {
-			Image icon = ImageIO.read(new File("images/zegoggles.png"));
-			setIconImage(icon);
-		} catch (IOException e) {
-			LOGGER.severe(e.getMessage());
-			showErrorDialog(e.getMessage() + "");
-		}
 	}
 
 	protected ImageIcon createImageIcon(String path,
@@ -161,7 +163,6 @@ public class MainWindow extends JFrame {
 			Configuration.API_KEY = br.readLine();
 		} catch(Exception e) {
 			LOGGER.severe(e.getMessage() + "");
-			showErrorDialog(e.getMessage() + "");
 		}
 
 		panel = new JPanel();
@@ -177,8 +178,6 @@ public class MainWindow extends JFrame {
 		idTextField.setText("76561197992203636");
 		idLabel = new JLabel("Starting STEAM_ID64");
 		itemListLabel = new JLabel("Select Items");
-
-		items = getItemsFromSchema();
 
 		System.out.println("Loaded " + items.length + " items");
 
@@ -373,14 +372,6 @@ public class MainWindow extends JFrame {
 				if(lUpdater != null) {
 					idTextField.setText(lUpdater.stopMe());
 					lUpdater = null;
-
-					try {
-						Runtime.getRuntime().exec("Taskkill /F /IM python.exe");
-						Runtime.getRuntime().exec("Taskkill /F /IM pythonw.exe");
-					} catch (IOException e) {
-						LOGGER.severe(e.getMessage() + "");
-						showErrorDialog(e.getMessage() + "");
-					}
 				}
 			}
 		});
@@ -605,7 +596,7 @@ public class MainWindow extends JFrame {
 		try {
 			return new SchemaParser(new File("schema" + File.separator + "item_schema.txt").getCanonicalFile())
 				.parse();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			LOGGER.severe(e.getMessage() + "");
 			showErrorDialog(e.getMessage() + "");
 		}

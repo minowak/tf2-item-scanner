@@ -104,4 +104,8 @@ public class SteamUser extends SteamEntity {
 	public boolean hasItem(long itemId, ItemQuality quality) {
 		return backpack.hasItem(itemId, quality);
 	}
+
+	public double getValue() {
+		return backpack.getValue();
+	}
 }
