@@ -106,6 +106,10 @@ public class SteamUser extends SteamEntity {
 	}
 
 	public double getValue() {
-		return backpack.getValue();
+		try {
+			return Backpack.getValue(id);
+		} catch (ParseException e) {
+			return 0.0;
+		}
 	}
 }

@@ -38,7 +38,7 @@ public class SteamProfile {
 
 	@Override
 	public String toString() {
-		return name + " (" + id + ") - " + value + "$";
+		return name + " (" + id + ") - " + String.format("%.2f", value) + "$";
 	}
 
 	public String serialize() {

@@ -13,15 +13,14 @@ import com.minowak.scanner.schema.TF2Item;
 import com.minowak.scanner.utils.Configuration;
 
 public class Backpack extends SteamEntity {
-	private String id;
 	private String apiUrl;
 	private String api2Url;
 	private long bpSize = 0;
 	private List<TF2Item> items;
+	private static final Double REFINED_PRICE = 0.39;
 	private Double value;
 
 	public Backpack(String id) {
-		this.id = id;
 		apiUrl = String.format("http://api.steampowered.com/IEconItems_440/GetPlayerItems/v0001/?key=%s&format=json&SteamID=%s",
 				Configuration.API_KEY, id);
 		api2Url = String.format("http://backpack.tf/api/IGetUsers/v2/?steamids=%s&format=json", id);
@@ -57,16 +56,6 @@ public class Backpack extends SteamEntity {
 			items.add(new TF2Item("N/A", (long)it.get("defindex"), cQuality));
 		}
 
-		jsonResponse = super.getJson(api2Url);
-		if(jsonResponse == null) {
-			return false;
-		}
-		responseObj = parser.parse(jsonResponse);
-		JSONObject response = (JSONObject)((JSONObject) responseObj).get("response");
-		JSONObject players = (JSONObject)response.get("players");
-		JSONObject player = (JSONObject)players.get("0");
-		value = (double)player.get("backpack_value");
-
 		return true;
 	}
 
@@ -94,6 +83,6 @@ public class Backpack extends SteamEntity {
 		JSONObject players = (JSONObject)response.get("players");
 		JSONObject player = (JSONObject)players.get("0");
 
-		return (double)player.get("backpack_value");
+		return ((double)player.get("backpack_value")) * REFINED_PRICE;
 	}
 }

@@ -20,6 +20,7 @@ public class ListUpdater extends Thread {
 	private JProgressBar statusBar;
 	private int count;
 	private long wasOnline;
+	private double maxVal;
 
 	private static final long DAY = 8650000;
 
@@ -28,7 +29,7 @@ public class ListUpdater extends Thread {
 
 	private String currId;
 
-	public ListUpdater(DefaultListModel<SteamProfile> list, JProgressBar progressBar, String id, long time, List<TF2Item> items, int count, long wasOnline) {
+	public ListUpdater(DefaultListModel<SteamProfile> list, JProgressBar progressBar, String id, long time, List<TF2Item> items, int count, long wasOnline, double maxVal) {
 		this.list = list;
 		this.statusBar = progressBar;
 		this.id = id;
@@ -36,6 +37,7 @@ public class ListUpdater extends Thread {
 		this.count = count;
 		this.wasOnline = wasOnline;
 		this.items = items;
+		this.maxVal = maxVal;
 	}
 
 	public void run() {
@@ -79,8 +81,11 @@ public class ListUpdater extends Thread {
 			}
 
 			if(user.isPremium()) {
+				double bpValue = user.getValue();
+				System.out.println("bp=" + bpValue + " =? " + maxVal);
 				if(time == 0 || user.played() < time) {
-					if(System.currentTimeMillis() - user.lastOnline() > wasOnline*DAY) {
+					if((System.currentTimeMillis() - user.lastOnline() > wasOnline*DAY )
+							&& (maxVal == 0.0 || bpValue <= maxVal)) {
 						for(TF2Item itemId : items) {
 							if(user.hasItem(itemId.getDefinitionIndex(), itemId.getQuality())) {
 								found = true;

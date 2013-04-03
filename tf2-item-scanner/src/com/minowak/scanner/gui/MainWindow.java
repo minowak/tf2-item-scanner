@@ -80,6 +80,7 @@ public class MainWindow extends JFrame {
 	private JTextField timeTextField;
 	private JTextField wasOnlineText;
 	private JTextField profilesCount;
+	private JTextField valueTextField;
 	private JList<SteamProfile> resultsArea;
 
 	private JLabel idLabel;
@@ -87,6 +88,7 @@ public class MainWindow extends JFrame {
 	private JLabel filterLabel;
 	private JLabel timeLabel;
 	private JLabel profilesToScan;
+	private JLabel valueLabel;
 	private JLabel[] wasOnlineLabels;
 
 	private JList<TF2Item> selected;
@@ -210,7 +212,7 @@ public class MainWindow extends JFrame {
 		listPanel.setLayout(new FlowLayout());
 
 		JScrollPane listScroller = new JScrollPane(itemList);
-		listScroller.setPreferredSize(new Dimension(200, 240));
+		listScroller.setPreferredSize(new Dimension(200, 230));
 
 		selected = new JList<TF2Item>(selectedListModel);
 		selected.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -237,7 +239,7 @@ public class MainWindow extends JFrame {
 		});
 
 		JScrollPane selectedScroller = new JScrollPane(selected);
-		selectedScroller.setPreferredSize(new Dimension(200, 240));
+		selectedScroller.setPreferredSize(new Dimension(200, 230));
 
 		listPanel.add(listScroller);
 		listPanel.add(selectedScroller);
@@ -310,6 +312,7 @@ public class MainWindow extends JFrame {
 
 		timePanel.add(timeLabel);
 		timePanel.add(timeTextField);
+		timePanel.add(new JLabel("hours. "));
 		timePanel.add(wasOnlineLabels[0]);
 		timePanel.add(wasOnlineText);
 		timePanel.add(wasOnlineLabels[1]);
@@ -358,7 +361,8 @@ public class MainWindow extends JFrame {
 				} else {
 					lUpdater = new ListUpdater(resultModel, progressBar, idTextField.getText().trim(),
 							(long)(Double.parseDouble(timeTextField.getText().trim()) * 60),
-							selectedItems, Integer.parseInt(profilesCount.getText()), Long.parseLong(wasOnlineText.getText()));
+							selectedItems, Integer.parseInt(profilesCount.getText()), Long.parseLong(wasOnlineText.getText()),
+							Double.parseDouble(valueTextField.getText()));
 					lUpdater.start();
 					resultsArea.validate();
 				}
@@ -397,6 +401,10 @@ public class MainWindow extends JFrame {
 		profilesCount = new JTextField(3);
 		profilesCount.setText("100");
 
+		valueTextField = new JTextField(3);
+		valueTextField.setText("0");
+		valueLabel = new JLabel("Maximum BP value ");
+
 		controlPanel.add(searchBtn);
 		controlPanel.add(stopBtn);
 
@@ -405,6 +413,9 @@ public class MainWindow extends JFrame {
 
 		profilePanel.add(profilesToScan);
 		profilePanel.add(profilesCount);
+		profilePanel.add(valueLabel);
+		profilePanel.add(valueTextField);
+		profilePanel.add(new JLabel("$"));
 
 		leftPanel.add(controlPanel);
 		leftPanel.add(profilePanel);
