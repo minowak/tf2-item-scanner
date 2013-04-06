@@ -11,6 +11,7 @@ import javax.swing.JProgressBar;
 import com.minowak.scanner.engine.IDGenerator;
 import com.minowak.scanner.engine.SteamProfile;
 import com.minowak.scanner.engine.SteamUser;
+import com.minowak.scanner.schema.ItemQuality;
 import com.minowak.scanner.schema.TF2Item;
 
 public class ListUpdater extends Thread {
@@ -49,19 +50,18 @@ public class ListUpdater extends Thread {
 		this.wasOnline = wasOnline;
 		this.items = items;
 		this.maxVal = maxVal;
-		this.hasOP = hasOP;
+		this.hasOP = hasOp;
 	}
 
 	public void run() {
+		MainWindow.getInstance().showInfoDialog("Started");
 		currId = id;
 		IDGenerator gen = new IDGenerator(id);
 		boolean found = false;
-		boolean started = false;
 
 		int max = count;
 
 		while(count > 0) {
-			MainWindow.getInstance().showInfoDialog("Started");
 			double d1 = (double)(max - count);
 			double d2 = d1/(double)max;
 
@@ -103,12 +103,18 @@ public class ListUpdater extends Thread {
 					long ss = System.currentTimeMillis();
 					if((ss - (ss - wasOnline*DAY) > ss-user.lastOnline()*1000)
 							&& (maxVal == 0.0 || bpValue <= maxVal)) {
-						for(TF2Item itemId : items) {
-							if(user.hasUnusual() || user.hasItem(itemId.getDefinitionIndex(), itemId.getQuality())) {
-								found = true;
-								searchedFor.add(itemId);
-								MainWindow.LOGGER.info("Found item");
-								break;
+						if(user.hasUnusual()) {
+							found = true;
+							searchedFor.add(new TF2Item("UNUSUAL", 0, ItemQuality.UNUSUAL));
+
+						} else {
+							for(TF2Item itemId : items) {
+								if(user.hasItem(itemId.getDefinitionIndex(), itemId.getQuality())) {
+									found = true;
+									searchedFor.add(itemId);
+									MainWindow.LOGGER.info("Found item");
+									break;
+								}
 							}
 						}
 					}
