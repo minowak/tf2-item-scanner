@@ -35,6 +35,7 @@ import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -65,7 +66,16 @@ import com.minowak.scanner.utils.Configuration;
 import com.minowak.scanner.utils.QualityCellRenderer;
 import com.minowak.scanner.utils.VisitedCellRenderer;
 
+/**
+ * Main class for GUI. Singleton.
+ *
+ * @author minowak
+ *
+ */
 public class MainWindow extends JFrame {
+	/**
+	 * Logger.
+	 */
 	public final static Logger LOGGER = Logger.getLogger(MainWindow.class .getName());
 	private static final long serialVersionUID = -3981477621230432928L;
 	private final static String TITLE = "TF2 Item Scanner";
@@ -90,6 +100,7 @@ public class MainWindow extends JFrame {
 	private JLabel timeLabel;
 	private JLabel profilesToScan;
 	private JLabel valueLabel;
+	private JLabel tf2opLabel;
 	private JLabel[] wasOnlineLabels;
 
 	private JList<TF2Item> selected;
@@ -105,13 +116,15 @@ public class MainWindow extends JFrame {
 	private JPanel statusPanel;
 	private JPanel panel;
 
+	private JCheckBox tf2opCheckBox;
+
 	private JList<TF2Item> itemList;
 
 	private JProgressBar progressBar;
 
-	DefaultListModel<TF2Item> listModel = new DefaultListModel<>();
-	DefaultListModel<SteamProfile> resultModel = new DefaultListModel<>();
-	DefaultListModel<TF2Item> selectedListModel = new DefaultListModel<>();
+	private DefaultListModel<TF2Item> listModel = new DefaultListModel<>();
+	private DefaultListModel<SteamProfile> resultModel = new DefaultListModel<>();
+	private DefaultListModel<TF2Item> selectedListModel = new DefaultListModel<>();
 
 	/** Menu */
 	private JMenuBar menuBar;
@@ -122,6 +135,10 @@ public class MainWindow extends JFrame {
 
 	private static MainWindow instance = null;
 
+	/**
+	 * Returns instance of this class.
+	 * @return instance
+	 */
 	public static MainWindow getInstance() {
 		if(instance == null) {
 			instance = new MainWindow();
@@ -207,7 +224,7 @@ public class MainWindow extends JFrame {
 		itemList.setVisibleRowCount(-1);
 		itemList.addMouseListener(new MouseAdapter() {
 		    public void mouseClicked(MouseEvent evt) {
-		        JList list = (JList)evt.getSource();
+		        JList<?> list = (JList<?>)evt.getSource();
 		        if (evt.getClickCount() == 2) {
 		        	// Double click
 		            int index = list.locationToIndex(evt.getPoint());
@@ -234,7 +251,7 @@ public class MainWindow extends JFrame {
 		selected.setVisibleRowCount(-1);
 		selected.addMouseListener(new MouseAdapter() {
 		    public void mouseClicked(MouseEvent evt) {
-		        JList list = (JList)evt.getSource();
+		        JList<?> list = (JList<?>)evt.getSource();
 		        if((evt.getModifiers() & InputEvent.BUTTON3_MASK) == InputEvent.BUTTON3_MASK) {
 		        	// Right click
 		        	JPopupMenu popup = createItemPopup(selected.locationToIndex(evt.getPoint()));
@@ -362,7 +379,6 @@ public class MainWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if(!isRegistered()) {
-					String[] options = new String[]{"OK"};
 					JOptionPane.showMessageDialog(MainWindow.this, "Please register.");
 					System.exit(1);
 				} else {
@@ -370,9 +386,11 @@ public class MainWindow extends JFrame {
 						lUpdater = new ListUpdater(resultModel, progressBar, idTextField.getText().trim(),
 								(long)(Double.parseDouble(timeTextField.getText().trim()) * 60),
 								selectedItems, Integer.parseInt(profilesCount.getText()), Long.parseLong(wasOnlineText.getText()),
-								Double.parseDouble(valueTextField.getText()));
+								Double.parseDouble(valueTextField.getText()),
+								tf2opCheckBox.isSelected());
 						lUpdater.start();
 					} catch(Exception e) {
+						LOGGER.severe("Error starting search: " + e.getMessage());
 						showErrorDialog(e.getMessage());
 					}
 					resultsArea.validate();
@@ -412,6 +430,9 @@ public class MainWindow extends JFrame {
 		profilesCount = new JTextField(3);
 		profilesCount.setText("100");
 
+		tf2opLabel = new JLabel("Dont have tf2outpost");
+		tf2opCheckBox = new JCheckBox();
+
 		valueTextField = new JTextField(3);
 		valueTextField.setText("0");
 		valueLabel = new JLabel("Maximum BP value ");
@@ -427,6 +448,8 @@ public class MainWindow extends JFrame {
 		profilePanel.add(valueLabel);
 		profilePanel.add(valueTextField);
 		profilePanel.add(new JLabel("$"));
+		profilePanel.add(tf2opLabel);
+		profilePanel.add(tf2opCheckBox);
 
 		leftPanel.add(controlPanel);
 		leftPanel.add(profilePanel);
@@ -442,7 +465,8 @@ public class MainWindow extends JFrame {
 		resultsArea.setCellRenderer(new VisitedCellRenderer());
 		resultsArea.addMouseListener(new MouseAdapter() {
 		    public void mouseClicked(MouseEvent evt) {
-		        JList<SteamProfile> list = (JList<SteamProfile>)evt.getSource();
+		        @SuppressWarnings("unchecked")
+				JList<SteamProfile> list = (JList<SteamProfile>)evt.getSource();
 		        if (evt.getClickCount() == 2) {
 		            int index = list.locationToIndex(evt.getPoint());
 		            SteamProfile sp = (SteamProfile)resultsArea.getSelectedValue();
@@ -558,6 +582,15 @@ public class MainWindow extends JFrame {
     	return popup;
 	}
 
+	/**
+	 * Shows simple info dialog with message and one OK button.
+	 * @param msg
+	 * 		message to be shown
+	 */
+	public void showInfoDialog(String msg) {
+		JOptionPane.showMessageDialog(MainWindow.this, msg);
+	}
+
 	private void initMenu() {
 		menuBar = new JMenuBar();
 		helpMenu = new JMenu("Help");
@@ -601,8 +634,7 @@ public class MainWindow extends JFrame {
 				JPanel panel = new JPanel();
 				JLabel label = new JLabel("Writen by News. Enjoy!");
 				panel.add(label);
-				String[] options = new String[]{"OK"};
-				JOptionPane.showMessageDialog(MainWindow.this, "Written by News. Enjoy!");
+				showInfoDialog("Written by News. Enjoy!");
 			}
 		});
 
@@ -632,6 +664,10 @@ public class MainWindow extends JFrame {
         }
     }
 
+	/**
+	 * Checks if users API KEY is registered.
+	 * @return true if registered, false if not
+	 */
 	private boolean isRegistered() {
 		StringBuilder sb = new StringBuilder();
 
@@ -652,10 +688,20 @@ public class MainWindow extends JFrame {
 		return sb.toString().contains(Configuration.API_KEY);
 	}
 
+	/**
+	 * Shows simple error dialog with one OK button.
+	 * Its now deprecated. Use showInfoDialog instead.
+	 * @param msg
+	 */
+	@Deprecated
 	public void showErrorDialog(String msg) {
 		JOptionPane.showMessageDialog(instance, msg);
 	}
 
+	/**
+	 * Main entry point.
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {

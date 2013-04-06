@@ -1,14 +1,12 @@
 package com.minowak.scanner.engine;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 public class SteamEntity {
 	public SteamEntity() {
@@ -33,6 +31,14 @@ public class SteamEntity {
 		}
 
 		return sb.toString();
+	}
+
+	protected static int getResponseCode(String urlString) throws MalformedURLException, IOException {
+	    URL u = new URL(urlString);
+	    HttpURLConnection huc =  (HttpURLConnection)  u.openConnection();
+	    huc.setRequestMethod("GET");
+	    huc.connect();
+	    return huc.getResponseCode();
 	}
 
 }

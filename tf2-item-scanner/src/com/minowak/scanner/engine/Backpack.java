@@ -14,16 +14,13 @@ import com.minowak.scanner.utils.Configuration;
 
 public class Backpack extends SteamEntity {
 	private String apiUrl;
-	private String api2Url;
 	private long bpSize = 0;
 	private List<TF2Item> items;
 	private static final Double REFINED_PRICE = 0.35;
-	private Double value;
 
 	public Backpack(String id) {
 		apiUrl = String.format("http://api.steampowered.com/IEconItems_440/GetPlayerItems/v0001/?key=%s&format=json&SteamID=%s",
 				Configuration.API_KEY, id);
-		api2Url = String.format("http://backpack.tf/api/IGetUsers/v2/?steamids=%s&format=json", id);
 		items = new LinkedList<TF2Item>();
 	}
 
@@ -63,12 +60,17 @@ public class Backpack extends SteamEntity {
 		return items.contains(new TF2Item("N/A", itemId, quality));
 	}
 
-	public long getSize() {
-		return bpSize;
+	public boolean hasUnusual() {
+		for(TF2Item item : items) {
+			if(item.getQuality().equals(ItemQuality.UNUSUAL)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
-	public Double getValue() {
-		return value;
+	public long getSize() {
+		return bpSize;
 	}
 
 	public static Double getValue(String id) throws ParseException {

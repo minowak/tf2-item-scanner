@@ -23,6 +23,7 @@ public class ListUpdater extends Thread {
 	private int count;
 	private long wasOnline;
 	private double maxVal;
+	private boolean hasOP;
 
 	private static final long DAY = 86400000;
 
@@ -31,7 +32,15 @@ public class ListUpdater extends Thread {
 
 	private String currId;
 
-	public ListUpdater(DefaultListModel<SteamProfile> list, JProgressBar progressBar, String id, long time, List<TF2Item> items, int count, long wasOnline, double maxVal) {
+	public ListUpdater(DefaultListModel<SteamProfile> list,
+			JProgressBar progressBar,
+			String id,
+			long time,
+			List<TF2Item> items,
+			int count,
+			long wasOnline,
+			double maxVal,
+			boolean hasOp) {
 		this.list = list;
 		this.statusBar = progressBar;
 		this.id = id;
@@ -40,16 +49,19 @@ public class ListUpdater extends Thread {
 		this.wasOnline = wasOnline;
 		this.items = items;
 		this.maxVal = maxVal;
+		this.hasOP = hasOP;
 	}
 
 	public void run() {
 		currId = id;
 		IDGenerator gen = new IDGenerator(id);
 		boolean found = false;
+		boolean started = false;
 
 		int max = count;
 
 		while(count > 0) {
+			MainWindow.getInstance().showInfoDialog("Started");
 			double d1 = (double)(max - count);
 			double d2 = d1/(double)max;
 
@@ -59,6 +71,7 @@ public class ListUpdater extends Thread {
 
 			try {
 				if(!user.init()) {
+					MainWindow.LOGGER.info("Cannot initialize user: " + currId);
 					if(steamIds.size() > 0) {
 						currId = steamIds.get(0);
 						steamIds.remove(0);
@@ -72,8 +85,8 @@ public class ListUpdater extends Thread {
 					continue;
 				}
 			} catch(Exception e) {
-				if(e.getMessage() != null)
-					MainWindow.getInstance().showErrorDialog(e.getMessage() + "");
+				MainWindow.LOGGER.severe("Error getting new user: " + e.getMessage());
+				MainWindow.getInstance().showErrorDialog(e.getMessage() + "");
 			}
 
 			for(String s : user.getFriendsIds()) {
@@ -83,19 +96,19 @@ public class ListUpdater extends Thread {
 			}
 
 			Set<TF2Item> searchedFor = new HashSet<TF2Item>();
-			if(user.isPremium()) {
+			if(user.isPremium() && !hasOP == user.hasOutpost()) {
+				MainWindow.LOGGER.info("Checking " + currId);
 				double bpValue = user.getValue();
 				if(time == 0 || user.played() < time) {
 					long ss = System.currentTimeMillis();
-					System.out.println("today-flag  =" + (ss - (ss - wasOnline*DAY)));
-					System.out.println("today-logoff=" + (ss-user.lastOnline()*1000));
 					if((ss - (ss - wasOnline*DAY) > ss-user.lastOnline()*1000)
 							&& (maxVal == 0.0 || bpValue <= maxVal)) {
 						for(TF2Item itemId : items) {
-							if(user.hasItem(itemId.getDefinitionIndex(), itemId.getQuality())) {
+							if(user.hasUnusual() || user.hasItem(itemId.getDefinitionIndex(), itemId.getQuality())) {
 								found = true;
 								searchedFor.add(itemId);
-								//break;
+								MainWindow.LOGGER.info("Found item");
+								break;
 							}
 						}
 					}
@@ -108,9 +121,6 @@ public class ListUpdater extends Thread {
 				list.addElement(sp);
 				found = false;
 			}
-
-			scanned.add(currId);
-			steamIds.remove(currId);
 
 			if(steamIds.size() > 0) {
 				currId = steamIds.get(0);
@@ -127,6 +137,7 @@ public class ListUpdater extends Thread {
 		statusBar.setValue(100);
 	}
 
+	@SuppressWarnings("deprecation")
 	public String stopMe() {
 		super.stop();
 		return currId;

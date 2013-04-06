@@ -1,7 +1,6 @@
 package com.minowak.scanner.engine;
 
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import org.json.simple.parser.ParseException;
