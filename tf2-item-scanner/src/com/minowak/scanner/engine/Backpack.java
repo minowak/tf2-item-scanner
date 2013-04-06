@@ -17,7 +17,7 @@ public class Backpack extends SteamEntity {
 	private String api2Url;
 	private long bpSize = 0;
 	private List<TF2Item> items;
-	private static final Double REFINED_PRICE = 0.39;
+	private static final Double REFINED_PRICE = 0.35;
 	private Double value;
 
 	public Backpack(String id) {
@@ -83,6 +83,10 @@ public class Backpack extends SteamEntity {
 		JSONObject players = (JSONObject)response.get("players");
 		JSONObject player = (JSONObject)players.get("0");
 
-		return ((double)player.get("backpack_value")) * REFINED_PRICE;
+		if(player.get("backpack_value").getClass().equals(Long.class)) {
+			return (((double)(long)player.get("backpack_value")) * REFINED_PRICE);
+		} else {
+			return (((double)player.get("backpack_value")) * REFINED_PRICE);
+		}
 	}
 }

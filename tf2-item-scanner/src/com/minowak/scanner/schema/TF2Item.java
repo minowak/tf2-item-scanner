@@ -27,7 +27,6 @@ public class TF2Item {
 	}
 
 	public String getImageUrl() {
-		System.out.println("returning imgurl=" + imgUrl);
 		return imgUrl;
 	}
 

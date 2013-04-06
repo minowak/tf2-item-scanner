@@ -66,7 +66,7 @@ import com.minowak.scanner.utils.QualityCellRenderer;
 import com.minowak.scanner.utils.VisitedCellRenderer;
 
 public class MainWindow extends JFrame {
-	private final static Logger LOGGER = Logger.getLogger(MainWindow.class .getName());
+	public final static Logger LOGGER = Logger.getLogger(MainWindow.class .getName());
 	private static final long serialVersionUID = -3981477621230432928L;
 	private final static String TITLE = "TF2 Item Scanner";
 
@@ -120,7 +120,24 @@ public class MainWindow extends JFrame {
 	private JMenuItem webApiItem;
 	private JMenuItem aboutItem;
 
-	public MainWindow() {
+	private static MainWindow instance = null;
+
+	public static MainWindow getInstance() {
+		if(instance == null) {
+			instance = new MainWindow();
+		}
+		return instance;
+	}
+
+	private MainWindow() {
+		FileHandler fileTxt = null;
+		try {
+			fileTxt = new FileHandler("scanner.log");
+		} catch (Exception e) {
+			LOGGER.severe(e.getMessage());
+		}
+		fileTxt.setFormatter(new SimpleFormatter());
+		LOGGER.addHandler(fileTxt);
 		try {
 			Image icon = ImageIO.read(new File("images/zegoggles.png"));
 			setIconImage(icon);
@@ -131,20 +148,15 @@ public class MainWindow extends JFrame {
 		}
 
 		items = getItemsFromSchema();
+		if(items == null) {
+			showErrorDialog("Error while loading schema file");
+		}
 
 		setTitle(TITLE);
 		setSize(800, 500);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		LOGGER.setLevel(Level.ALL);
-		FileHandler fileTxt = null;
-		try {
-			fileTxt = new FileHandler("scanner.log");
-		} catch (Exception e) {
-			LOGGER.severe(e.getMessage());
-		}
-		fileTxt.setFormatter(new SimpleFormatter());
-		LOGGER.addHandler(fileTxt);
 
 		initGUI();
 		initMenu();
@@ -275,7 +287,7 @@ public class MainWindow extends JFrame {
 
 			private void filter() {
 				final String phrase = filterTextField.getText().trim();
-			{
+				{
 					LinkedList<TF2Item> filtered = new LinkedList<TF2Item>();
 					for(TF2Item item : items) {
 						if(item.getName().toUpperCase().contains(phrase.toUpperCase())) {
@@ -354,11 +366,15 @@ public class MainWindow extends JFrame {
 					JOptionPane.showMessageDialog(MainWindow.this, "Please register.");
 					System.exit(1);
 				} else {
-					lUpdater = new ListUpdater(resultModel, progressBar, idTextField.getText().trim(),
-							(long)(Double.parseDouble(timeTextField.getText().trim()) * 60),
-							selectedItems, Integer.parseInt(profilesCount.getText()), Long.parseLong(wasOnlineText.getText()),
-							Double.parseDouble(valueTextField.getText()));
-					lUpdater.start();
+					try {
+						lUpdater = new ListUpdater(resultModel, progressBar, idTextField.getText().trim(),
+								(long)(Double.parseDouble(timeTextField.getText().trim()) * 60),
+								selectedItems, Integer.parseInt(profilesCount.getText()), Long.parseLong(wasOnlineText.getText()),
+								Double.parseDouble(valueTextField.getText()));
+						lUpdater.start();
+					} catch(Exception e) {
+						showErrorDialog(e.getMessage());
+					}
 					resultsArea.validate();
 				}
 			}
@@ -636,14 +652,14 @@ public class MainWindow extends JFrame {
 		return sb.toString().contains(Configuration.API_KEY);
 	}
 
-	private void showErrorDialog(String msg) {
-		JOptionPane.showMessageDialog(MainWindow.this, msg);
+	public void showErrorDialog(String msg) {
+		JOptionPane.showMessageDialog(instance, msg);
 	}
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				MainWindow mw = new MainWindow();
+				MainWindow mw = MainWindow.getInstance();
 				mw.setVisible(true);
 			}
 		});

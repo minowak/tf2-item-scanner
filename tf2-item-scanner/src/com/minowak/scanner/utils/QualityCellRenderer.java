@@ -21,7 +21,6 @@ public class QualityCellRenderer extends DefaultListCellRenderer {
 		TF2Item item = (TF2Item)arg1;
 
 		String tt = "<html>" +"<img src=\"" + item.getImageUrl() + "\"/>" + "</html>";
-		System.out.println(tt);
 		setToolTipText(tt);
 
 		setForeground(item.getQuality().getColor());

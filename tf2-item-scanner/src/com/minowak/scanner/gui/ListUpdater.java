@@ -24,7 +24,7 @@ public class ListUpdater extends Thread {
 	private long wasOnline;
 	private double maxVal;
 
-	private static final long DAY = 8650000;
+	private static final long DAY = 86400000;
 
 	private List<String> steamIds = new LinkedList<String>();
 	private List<String> scanned = new LinkedList<String>();
@@ -72,7 +72,8 @@ public class ListUpdater extends Thread {
 					continue;
 				}
 			} catch(Exception e) {
-				//e.printStackTrace();
+				if(e.getMessage() != null)
+					MainWindow.getInstance().showErrorDialog(e.getMessage() + "");
 			}
 
 			for(String s : user.getFriendsIds()) {
@@ -85,7 +86,10 @@ public class ListUpdater extends Thread {
 			if(user.isPremium()) {
 				double bpValue = user.getValue();
 				if(time == 0 || user.played() < time) {
-					if((System.currentTimeMillis() - user.lastOnline() > wasOnline*DAY )
+					long ss = System.currentTimeMillis();
+					System.out.println("today-flag  =" + (ss - (ss - wasOnline*DAY)));
+					System.out.println("today-logoff=" + (ss-user.lastOnline()*1000));
+					if((ss - (ss - wasOnline*DAY) > ss-user.lastOnline()*1000)
 							&& (maxVal == 0.0 || bpValue <= maxVal)) {
 						for(TF2Item itemId : items) {
 							if(user.hasItem(itemId.getDefinitionIndex(), itemId.getQuality())) {
