@@ -466,6 +466,12 @@ public class MainWindow extends JFrame {
 		    public void mouseClicked(MouseEvent evt) {
 		        @SuppressWarnings("unchecked")
 				JList<SteamProfile> list = (JList<SteamProfile>)evt.getSource();
+		        if((evt.getModifiers() & InputEvent.BUTTON3_MASK) == InputEvent.BUTTON3_MASK) {
+		        	// Right click
+		        	JPopupMenu popup = createResultPopup(resultsArea.locationToIndex(evt.getPoint()));
+		        	popup.show(evt.getComponent(), evt.getX(), evt.getY());
+		        	resultsArea.validate();
+		        } else
 		        if (evt.getClickCount() == 2) {
 		            int index = list.locationToIndex(evt.getPoint());
 		            SteamProfile sp = (SteamProfile)resultsArea.getSelectedValue();
@@ -558,6 +564,50 @@ public class MainWindow extends JFrame {
 		panel.add(leftPanel, BorderLayout.WEST);
 		panel.add(rightPanel, BorderLayout.CENTER);
 		panel.add(statusPanel, BorderLayout.SOUTH);
+	}
+
+	private JPopupMenu createResultPopup(int index) {
+		final int in = index;
+		JPopupMenu popup = new JPopupMenu();
+
+		JMenuItem bpMenu = new JMenuItem("Show backpack");
+		JMenuItem profileMenu = new JMenuItem("Show profile");
+		JMenuItem removeMenu = new JMenuItem("Remove");
+
+		bpMenu.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				SteamProfile sp = (SteamProfile)resultsArea.getSelectedValue();
+	            resultsArea.setSelectedIndex(in);
+	            goWebsite("http://backpack.tf/id/" + sp.getId());
+	            sp.visit();
+			}
+		});
+
+		profileMenu.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SteamProfile sp = (SteamProfile)resultsArea.getSelectedValue();
+	            resultsArea.setSelectedIndex(in);
+	            goWebsite("http://steamcommunity.com/profiles/" + sp.getId());
+	            sp.visit();
+			}
+		});
+
+		removeMenu.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				resultsArea.remove(in);
+				resultModel.remove(in);
+				resultsArea.validate();
+			}
+		});
+
+		popup.add(bpMenu);
+		popup.add(profileMenu);
+		popup.add(removeMenu);
+
+    	return popup;
 	}
 
 	private JPopupMenu createItemPopup(int index) {
