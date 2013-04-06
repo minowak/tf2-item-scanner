@@ -230,11 +230,10 @@ public class MainWindow extends JFrame {
 		            int index = list.locationToIndex(evt.getPoint());
 
 		            itemList.setSelectedIndex(index);
-		            if(!selectedListModel.contains(itemList.getSelectedValue())) {
-		            	selectedListModel.addElement(itemList.getSelectedValue());
-		            	selectedItems.add(itemList.getSelectedValue());
-		            	selected.validate();
-		            }
+		            TF2Item copyOf = new TF2Item(itemList.getSelectedValue());
+	            	selectedListModel.addElement(copyOf);
+	            	selectedItems.add(copyOf);
+	            	selected.validate();
 		        }
 		    }
 		});

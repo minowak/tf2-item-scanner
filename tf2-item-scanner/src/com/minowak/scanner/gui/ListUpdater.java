@@ -86,7 +86,7 @@ public class ListUpdater extends Thread {
 				}
 			} catch(Exception e) {
 				MainWindow.LOGGER.severe("Error getting new user: " + e.getMessage());
-				MainWindow.getInstance().showErrorDialog(e.getMessage() + "");
+				MainWindow.getInstance().showInfoDialog(e.getMessage() + "");
 			}
 
 			for(String s : user.getFriendsIds()) {
@@ -106,7 +106,6 @@ public class ListUpdater extends Thread {
 						if(user.hasUnusual()) {
 							found = true;
 							searchedFor.add(new TF2Item("UNUSUAL", 0, ItemQuality.UNUSUAL));
-
 						} else {
 							for(TF2Item itemId : items) {
 								if(user.hasItem(itemId.getDefinitionIndex(), itemId.getQuality())) {

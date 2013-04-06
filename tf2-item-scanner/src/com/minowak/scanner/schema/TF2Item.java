@@ -38,6 +38,13 @@ public class TF2Item {
 		this.name = name;
 	}
 
+	public TF2Item(TF2Item copyOf) {
+		this.name = copyOf.name;
+		this.definitionIndex = copyOf.definitionIndex;
+		this.quality = copyOf.quality;
+		this.imgUrl = copyOf.imgUrl;
+	}
+
 	public TF2Item(String name, long definitionIndex, ItemQuality quality) {
 		this.name = name;
 		this.definitionIndex = definitionIndex;

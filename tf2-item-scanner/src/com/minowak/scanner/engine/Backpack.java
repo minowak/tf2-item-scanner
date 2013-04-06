@@ -62,7 +62,8 @@ public class Backpack extends SteamEntity {
 
 	public boolean hasUnusual() {
 		for(TF2Item item : items) {
-			if(item.getQuality().equals(ItemQuality.UNUSUAL)) {
+			// don care for unusual scrap metal
+			if(item.getQuality().equals(ItemQuality.UNUSUAL) && item.getDefinitionIndex() != 267) {
 				return true;
 			}
 		}
