@@ -32,6 +32,10 @@ public class VisitedCellRenderer extends DefaultListCellRenderer {
 		} else {
 			setForeground(Color.BLACK);
 		}
+
+		if(sp.isF2P()) {
+			setBackground(Color.GRAY);
+		}
 		return this;
 	}
 }

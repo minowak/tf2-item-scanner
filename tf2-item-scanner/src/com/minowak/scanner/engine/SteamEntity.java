@@ -8,6 +8,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import com.minowak.scanner.gui.MainWindow;
+
 public class SteamEntity {
 	public SteamEntity() {
 		super();
@@ -27,6 +29,7 @@ public class SteamEntity {
 			}
 			br.close();
 		} catch(Exception e) {
+			MainWindow.LOGGER.info("Error while trying to connect to " + apiUrl + "(" + e.getMessage() + ")");
 			return null;
 		}
 

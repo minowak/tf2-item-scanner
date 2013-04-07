@@ -12,6 +12,7 @@ public class SteamProfile {
 	private String id;
 	private Double value;
 	private boolean visited;
+	private boolean ftp = false;
 	private Set<TF2Item> searchedFor = new HashSet<TF2Item>();
 
 	public String getName() {
@@ -27,7 +28,7 @@ public class SteamProfile {
 	}
 
 	public SteamProfile(String name, String id) {
-		this(name, id, false);
+		this(name, id, false, false);
 	}
 
 	public void putSearchedFor(Set<TF2Item> map) {
@@ -38,10 +39,11 @@ public class SteamProfile {
 		return searchedFor;
 	}
 
-	public SteamProfile(String name, String id, boolean visited) {
+	public SteamProfile(String name, String id, boolean visited, boolean f2p) {
 		this.name = name;
 		this.id = id;
 		this.visited = visited;
+		ftp = f2p;
 
 		try {
 			value = Backpack.getValue(id);
@@ -61,7 +63,11 @@ public class SteamProfile {
 
 	public static SteamProfile deserialize(String str) {
 		String[] ss = str.split(";");
-		return new SteamProfile(ss[0], ss[1], Boolean.parseBoolean(ss[2]));
+		return new SteamProfile(ss[0], ss[1], Boolean.parseBoolean(ss[2]), false);
+	}
+
+	public boolean isF2P() {
+		return ftp;
 	}
 
 	public boolean isVisited() {

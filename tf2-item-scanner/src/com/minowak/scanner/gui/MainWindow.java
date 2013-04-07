@@ -101,6 +101,7 @@ public class MainWindow extends JFrame {
 	private JLabel profilesToScan;
 	private JLabel valueLabel;
 	private JLabel tf2opLabel;
+	private JLabel status;
 	private JLabel[] wasOnlineLabels;
 
 	private JList<TF2Item> selected;
@@ -204,6 +205,9 @@ public class MainWindow extends JFrame {
 		progressBar = new JProgressBar(0, 100);
 		progressBar.setValue(0);
 		progressBar.setStringPainted(true);
+
+		status = new JLabel("Ready");
+		status.setPreferredSize(new Dimension(100, status.getPreferredSize().height));
 
 		panel.setLayout(new BorderLayout());
 
@@ -559,11 +563,17 @@ public class MainWindow extends JFrame {
 		statusPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
 		statusPanel.setLayout(new BoxLayout(statusPanel, BoxLayout.X_AXIS));
 
+		statusPanel.add(status);
 		statusPanel.add(progressBar);
 
 		panel.add(leftPanel, BorderLayout.WEST);
 		panel.add(rightPanel, BorderLayout.CENTER);
 		panel.add(statusPanel, BorderLayout.SOUTH);
+	}
+
+	public void changeStatus(String msg) {
+		status.setText(msg);
+		status.validate();
 	}
 
 	private JPopupMenu createResultPopup(int index) {
@@ -671,7 +681,7 @@ public class MainWindow extends JFrame {
 						Configuration.API_KEY = password;
 					} catch (FileNotFoundException e) {
 						LOGGER.severe(e.getMessage() + "");
-						showErrorDialog(e.getMessage() + "");
+						showInfoDialog(e.getMessage() + "");
 					}
 				}
 			}

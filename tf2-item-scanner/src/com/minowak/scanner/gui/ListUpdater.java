@@ -54,7 +54,7 @@ public class ListUpdater extends Thread {
 	}
 
 	public void run() {
-		MainWindow.getInstance().showInfoDialog("Started");
+		MainWindow.getInstance().changeStatus("Started");
 		currId = id;
 		IDGenerator gen = new IDGenerator(id);
 		boolean found = false;
@@ -68,35 +68,47 @@ public class ListUpdater extends Thread {
 			statusBar.setValue((int)(d2 * 100.0));
 			count--;
 			user = new SteamUser(currId);
+			MainWindow.getInstance().changeStatus("Checking user");
 
 			try {
 				if(!user.init()) {
-					MainWindow.LOGGER.info("Cannot initialize user: " + currId);
-					if(steamIds.size() > 0) {
-						currId = steamIds.get(0);
-						steamIds.remove(0);
-						if(scanned.contains(currId)){
-							continue;
-						}
-						scanned.add(currId);
-					} else {
-						currId = gen.next();
-					}
+					MainWindow.LOGGER.info("Cannot initialize user: " + currId + "(maybe private)");
 					continue;
+				} else {
+					for(String s : user.getFriendsIds()) {
+						if(!scanned.contains(s) && !steamIds.contains(s)) {
+							steamIds.add(s);
+						}
+					}
+					MainWindow.getInstance().changeStatus("Added his friends to queue");
+					MainWindow.LOGGER.info("Adding friends (size=" + steamIds.size() + ")");
 				}
 			} catch(Exception e) {
 				MainWindow.LOGGER.severe("Error getting new user: " + e.getMessage());
-				MainWindow.getInstance().showInfoDialog(e.getMessage() + "");
-			}
-
-			for(String s : user.getFriendsIds()) {
-				if(!scanned.contains(s) && !steamIds.contains(s)) {
-					steamIds.add(s);
+				MainWindow.getInstance().changeStatus("Cannot get user info");
+				continue;
+			} finally {
+				boolean newFound = false;
+				while(steamIds.size() > 0) {
+					currId = steamIds.get(0);
+					steamIds.remove(0);
+					if(scanned.contains(currId)){
+						continue;
+					}
+					scanned.add(currId);
+					newFound = true;
+					break;
 				}
+				if(!newFound && (steamIds.size()) == 0) {
+					MainWindow.LOGGER.info("Friends tree ended early: size=" + steamIds.size() + " newFound=" + newFound);
+					MainWindow.getInstance().showInfoDialog("Friends tree ended early");
+					this.stopMe();
+				}
+				MainWindow.LOGGER.info("Getting new id: " + currId);
 			}
 
 			Set<TF2Item> searchedFor = new HashSet<TF2Item>();
-			if(user.isPremium() && !hasOP == user.hasOutpost()) {
+			if(!hasOP == user.hasOutpost()) {
 				MainWindow.LOGGER.info("Checking " + currId);
 				double bpValue = user.getValue();
 				if(time == 0 || user.played() < time) {
@@ -121,7 +133,7 @@ public class ListUpdater extends Thread {
 			}
 
 			if(found) {
-				SteamProfile sp = new SteamProfile(user.getName(), currId);
+				SteamProfile sp = new SteamProfile(user.getName(), user.getId(), false, !user.isPremium());
 				sp.putSearchedFor(searchedFor);
 				list.addElement(sp);
 				found = false;
@@ -145,6 +157,7 @@ public class ListUpdater extends Thread {
 	@SuppressWarnings("deprecation")
 	public String stopMe() {
 		super.stop();
+		MainWindow.getInstance().changeStatus("Stopped");
 		return currId;
 	}
 }

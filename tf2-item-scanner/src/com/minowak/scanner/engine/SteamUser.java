@@ -38,6 +38,11 @@ public class SteamUser extends SteamEntity {
 		this.api3Url = String.format("http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=%s&steamid=%s&relationship=friend",
 				Configuration.API_KEY, id);
 		this.tf2opUrl = "http://www.tf2outpost.com/user/";
+		this.id = id;
+	}
+
+	public String getId() {
+		return id;
 	}
 
 	public boolean isPremium() {

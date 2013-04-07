@@ -8,6 +8,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import com.minowak.scanner.gui.MainWindow;
 import com.minowak.scanner.schema.ItemQuality;
 import com.minowak.scanner.schema.TF2Item;
 import com.minowak.scanner.utils.Configuration;
@@ -62,8 +63,10 @@ public class Backpack extends SteamEntity {
 
 	public boolean hasUnusual() {
 		for(TF2Item item : items) {
-			// don care for unusual scrap metal
-			if(item.getQuality().equals(ItemQuality.UNUSUAL) && item.getDefinitionIndex() != 267) {
+			// don care for unusual scrap metal and HHH
+			if(item.getQuality().equals(ItemQuality.UNUSUAL)
+					&& item.getDefinitionIndex() != 267
+					&& item.getDefinitionIndex() != 266) {
 				return true;
 			}
 		}
@@ -86,10 +89,14 @@ public class Backpack extends SteamEntity {
 		JSONObject players = (JSONObject)response.get("players");
 		JSONObject player = (JSONObject)players.get("0");
 
+		double price = 0;
 		if(player.get("backpack_value").getClass().equals(Long.class)) {
-			return (((double)(long)player.get("backpack_value")) * REFINED_PRICE);
+			price = (((double)(long)player.get("backpack_value")) * REFINED_PRICE);
 		} else {
-			return (((double)player.get("backpack_value")) * REFINED_PRICE);
+			price = (((double)player.get("backpack_value")) * REFINED_PRICE);
 		}
+
+		MainWindow.LOGGER.info("Price is " + price);
+		return price;
 	}
 }
