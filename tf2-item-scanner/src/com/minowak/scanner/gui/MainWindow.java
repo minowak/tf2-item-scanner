@@ -13,7 +13,9 @@ import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -29,13 +31,15 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.InvalidPreferencesFormatException;
+import java.util.prefs.Preferences;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -391,8 +395,10 @@ public class MainWindow extends JFrame {
 					} catch(Exception e) {
 						LOGGER.severe("Error starting search: " + e.getMessage());
 						showErrorDialog(e.getMessage());
+					} finally {
+						resultsArea.validate();
+						savePrefs();
 					}
-					resultsArea.validate();
 				}
 			}
 		});
@@ -560,6 +566,12 @@ public class MainWindow extends JFrame {
 		panel.add(leftPanel, BorderLayout.WEST);
 		panel.add(rightPanel, BorderLayout.CENTER);
 		panel.add(statusPanel, BorderLayout.SOUTH);
+
+		try {
+			loadPrefs();
+		} catch (IOException | InvalidPreferencesFormatException e1) {
+			LOGGER.severe(e1.getMessage());
+		}
 	}
 
 	public void changeStatus(String msg) {
@@ -759,5 +771,52 @@ public class MainWindow extends JFrame {
 				mw.setVisible(true);
 			}
 		});
+	}
+
+	private void loadPrefs() throws IOException, InvalidPreferencesFormatException {
+		Preferences.importPreferences(new FileInputStream(new File("preferences.xml")));
+
+		Preferences prefs = Preferences.userNodeForPackage(getClass());
+
+		// starting id
+		idTextField.setText(prefs.get("STARTING_ID", ""));
+
+		// list
+		String col = prefs.get("SELECTED", "");
+		if(col.length() > 0) {
+			for(String item : col.split("$")) {
+				TF2Item tf2Item = TF2Item.deserialize(item);
+				selectedListModel.addElement(tf2Item);
+				selectedItems.add(tf2Item);
+			}
+		}
+		profilesCount.setText(prefs.get("PROFILES_COUNT", "100"));
+		valueTextField.setText(prefs.get("PRICE", "0"));
+		wasOnlineText.setText(prefs.get("WAS_ONLINE", "7"));
+		timeTextField.setText(prefs.get("TIME_SPENT", "0"));
+	}
+
+	private void savePrefs() {
+		Preferences prefs = Preferences.userNodeForPackage(getClass());
+
+		// starting id
+		prefs.put("STARTING_ID", idTextField.getText());
+
+		// list
+		StringBuilder sb = new StringBuilder();
+		for(int i = 0 ; i < selectedListModel.size() ; i++) {
+			sb.append(selectedListModel.getElementAt(i).serialize());
+			sb.append("$");
+		}
+		prefs.put("SELECTED", sb.toString().substring(0, sb.toString().length() - 2));
+		prefs.put("PROFILES_COUNT", profilesCount.getText());
+		prefs.put("PRICE", valueTextField.getText());
+		prefs.put("WAS_ONLINE", wasOnlineText.getText());
+		prefs.put("TIME_SPENT", timeTextField.getText());
+		try {
+			prefs.exportNode(new FileOutputStream(new File("preferences.xml")));
+		} catch (IOException | BackingStoreException e) {
+			LOGGER.severe("Error while saving preferences");
+		}
 	}
 }

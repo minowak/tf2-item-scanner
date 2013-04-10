@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE preferences SYSTEM "http://java.sun.com/dtd/preferences.dtd">
+<preferences EXTERNAL_XML_VERSION="1.0">
+  <root type="user">
+    <map/>
+    <node name="com">
+      <map/>
+      <node name="minowak">
+        <map/>
+        <node name="scanner">
+          <map/>
+          <node name="gui">
+            <map>
+              <entry key="STARTING_ID" value="7656119799"/>
+              <entry key="SELECTED" value=""/>
+            </map>
+          </node>
+        </node>
+      </node>
+    </node>
+  </root>
+</preferences>

@@ -27,4 +27,39 @@ public enum ItemQuality {
 		name = n;
 		color = c;
 	}
+
+	@Override
+	public String toString() {
+		return name;
+	}
+
+	public static ItemQuality fromName(String name) {
+		if(name.equals("Stock")) {
+			return NORMAL;
+		}
+		if(name.equals("Unique")) {
+			return UNIQUE;
+		}
+		if(name.equals("Vintage")) {
+			return VINTAGE;
+		}
+		if(name.equals("Strange")) {
+			return STRANGE;
+		}
+		if(name.equals("Genuine")) {
+			return GENUINE;
+		}
+		if(name.equals("Haunted")) {
+			return HAUNTED;
+		}
+		if(name.equals("Unusual")) {
+			return UNUSUAL;
+		}
+		if(name.equals("Selfmade")) {
+			return SELFMADE;
+		}
+		if(name.equals("Valve")) {
+			return VALVE;
+		} else return UNIQUE;
+	}
 }

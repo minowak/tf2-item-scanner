@@ -1,5 +1,7 @@
 package com.minowak.scanner.schema;
 
+import java.io.Serializable;
+
 public class TF2Item {
 	private String name;
 	private long definitionIndex;
@@ -64,5 +66,18 @@ public class TF2Item {
 					(quality == it.getQuality());
 		}
 		return false;
+	}
+
+	public String serialize() {
+		return name + ";" + quality + ";" + definitionIndex + ";" + imgUrl;
+	}
+
+	public static TF2Item deserialize(String serialized) {
+		if(serialized.length() == 0)
+			return null;
+		String [] attrs = serialized.split(";");
+		TF2Item item = new TF2Item(attrs[0], Long.parseLong(attrs[2]), ItemQuality.fromName(attrs[1]));
+		item.setImgUrl(attrs[3]);
+		return item;
 	}
 }
