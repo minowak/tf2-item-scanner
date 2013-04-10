@@ -20,14 +20,12 @@ public class SteamUser extends SteamEntity {
 	private String apiUrl;
 	private String api2Url;
 	private String api3Url;
-	private String tf2opUrl;
 	private String id;
 	private Backpack backpack;
 	private long timePlayed;
 	private long online;
 	private List<String> friends = new LinkedList<String>();
 	private String name;
-	private boolean hasOP;
 
 	public SteamUser(String id) {
 		this.id = id;
@@ -37,7 +35,6 @@ public class SteamUser extends SteamEntity {
 				Configuration.API_KEY, id);
 		this.api3Url = String.format("http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=%s&steamid=%s&relationship=friend",
 				Configuration.API_KEY, id);
-		this.tf2opUrl = "http://www.tf2outpost.com/user/";
 		this.id = id;
 	}
 
@@ -108,27 +105,12 @@ public class SteamUser extends SteamEntity {
 			friends.add((String)friend.get("steamid"));
 		}
 
-		try {
-			if(getResponseCode(tf2opUrl + id) == 404) {
-				hasOP = false;
-			} else {
-				hasOP = true;
-			}
-		} catch (IOException e) {
-			hasOP = false;
-			MainWindow.LOGGER.info("Error while checking tf2op. Assuming he dont have it");
-		}
-
 		backpack = new Backpack(id);
 		return backpack.init();
 	}
 
 	public List<String> getFriendsIds() {
 		return friends;
-	}
-
-	public boolean hasOutpost() {
-		return hasOP;
 	}
 
 	public boolean hasItem(long itemId, ItemQuality quality) {

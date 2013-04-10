@@ -24,7 +24,6 @@ public class ListUpdater extends Thread {
 	private int count;
 	private long wasOnline;
 	private double maxVal;
-	private boolean hasOP;
 
 	private static final long DAY = 86400000;
 
@@ -40,8 +39,7 @@ public class ListUpdater extends Thread {
 			List<TF2Item> items,
 			int count,
 			long wasOnline,
-			double maxVal,
-			boolean hasOp) {
+			double maxVal) {
 		this.list = list;
 		this.statusBar = progressBar;
 		this.id = id;
@@ -50,7 +48,6 @@ public class ListUpdater extends Thread {
 		this.wasOnline = wasOnline;
 		this.items = items;
 		this.maxVal = maxVal;
-		this.hasOP = hasOp;
 	}
 
 	public void run() {
@@ -108,29 +105,28 @@ public class ListUpdater extends Thread {
 			}
 
 			Set<TF2Item> searchedFor = new HashSet<TF2Item>();
-			if(!hasOP == user.hasOutpost()) {
-				MainWindow.LOGGER.info("Checking " + currId);
-				double bpValue = user.getValue();
-				if(time == 0 || user.played() < time) {
-					long ss = System.currentTimeMillis();
-					if((ss - (ss - wasOnline*DAY) > ss-user.lastOnline()*1000)
-							&& (maxVal == 0.0 || bpValue <= maxVal)) {
-						if(user.hasUnusual()) {
-							found = true;
-							searchedFor.add(new TF2Item("UNUSUAL", 0, ItemQuality.UNUSUAL));
-						} else {
-							for(TF2Item itemId : items) {
-								if(user.hasItem(itemId.getDefinitionIndex(), itemId.getQuality())) {
-									found = true;
-									searchedFor.add(itemId);
-									MainWindow.LOGGER.info("Found item");
-									break;
-								}
+			MainWindow.LOGGER.info("Checking " + currId);
+			double bpValue = user.getValue();
+			if(time == 0 || user.played() < time) {
+				long ss = System.currentTimeMillis();
+				if((ss - (ss - wasOnline*DAY) > ss-user.lastOnline()*1000)
+						&& (maxVal == 0.0 || bpValue <= maxVal)) {
+					if(user.hasUnusual()) {
+						found = true;
+						searchedFor.add(new TF2Item("UNUSUAL", 0, ItemQuality.UNUSUAL));
+					} else {
+						for(TF2Item itemId : items) {
+							if(user.hasItem(itemId.getDefinitionIndex(), itemId.getQuality())) {
+								found = true;
+								searchedFor.add(itemId);
+								MainWindow.LOGGER.info("Found item");
+								break;
 							}
 						}
 					}
 				}
 			}
+
 
 			if(found) {
 				SteamProfile sp = new SteamProfile(user.getName(), user.getId(), false, !user.isPremium());

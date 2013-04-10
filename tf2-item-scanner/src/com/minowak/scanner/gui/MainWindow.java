@@ -100,7 +100,6 @@ public class MainWindow extends JFrame {
 	private JLabel timeLabel;
 	private JLabel profilesToScan;
 	private JLabel valueLabel;
-	private JLabel tf2opLabel;
 	private JLabel status;
 	private JLabel[] wasOnlineLabels;
 
@@ -116,8 +115,6 @@ public class MainWindow extends JFrame {
 
 	private JPanel statusPanel;
 	private JPanel panel;
-
-	private JCheckBox tf2opCheckBox;
 
 	private JList<TF2Item> itemList;
 
@@ -389,8 +386,7 @@ public class MainWindow extends JFrame {
 						lUpdater = new ListUpdater(resultModel, progressBar, idTextField.getText().trim(),
 								(long)(Double.parseDouble(timeTextField.getText().trim()) * 60),
 								selectedItems, Integer.parseInt(profilesCount.getText()), Long.parseLong(wasOnlineText.getText()),
-								Double.parseDouble(valueTextField.getText()),
-								tf2opCheckBox.isSelected());
+								Double.parseDouble(valueTextField.getText()));
 						lUpdater.start();
 					} catch(Exception e) {
 						LOGGER.severe("Error starting search: " + e.getMessage());
@@ -433,9 +429,6 @@ public class MainWindow extends JFrame {
 		profilesCount = new JTextField(3);
 		profilesCount.setText("100");
 
-		tf2opLabel = new JLabel("Dont have tf2outpost");
-		tf2opCheckBox = new JCheckBox();
-
 		valueTextField = new JTextField(3);
 		valueTextField.setText("0");
 		valueLabel = new JLabel("Maximum BP value ");
@@ -451,8 +444,6 @@ public class MainWindow extends JFrame {
 		profilePanel.add(valueLabel);
 		profilePanel.add(valueTextField);
 		profilePanel.add(new JLabel("$"));
-		profilePanel.add(tf2opLabel);
-		profilePanel.add(tf2opCheckBox);
 
 		leftPanel.add(controlPanel);
 		leftPanel.add(profilePanel);
