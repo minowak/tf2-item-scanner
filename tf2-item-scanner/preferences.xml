@@ -11,12 +11,12 @@
           <map/>
           <node name="gui">
             <map>
-              <entry key="STARTING_ID" value="76561197990782124"/>
-              <entry key="SELECTED" value="Bat;Unique;0;http://media.steampowered.com/apps/440/icons/c_bat.d037d6a40ec30ab4aa009387d476dca889b6f7dc.$Kritzkrieg$Kritzkr"/>
-              <entry key="PROFILES_COUNT" value="1000"/>
-              <entry key="PRICE" value="2000"/>
+              <entry key="STARTING_ID" value="76561197992203636"/>
+              <entry key="SELECTED" value="Bonesaw;Unique;8;http://media.steampowered.com/apps/440/icons/c_bonesaw.3ea746d98dc8e42f2a0b85c8381cebd775eb97be.png$Shotgun;Unique;10;http://media.steampowered.com/apps/440/icons/w_shotgun.1d9c8ea9d8b2b14b331ae22427c5e624f6d5d60c.png$Fire Axe;Unique;2;http://media.steampowered.com/apps/440/icons/c_fireaxe_pyro.f1743d06c5ad3ed4cccbfb1a5ff844c6ef84ac3f.png"/>
+              <entry key="PROFILES_COUNT" value="100"/>
+              <entry key="PRICE" value="0"/>
               <entry key="WAS_ONLINE" value="7"/>
-              <entry key="TIME_SPENT" value="2000"/>
+              <entry key="TIME_SPENT" value="0"/>
             </map>
           </node>
         </node>

@@ -169,7 +169,7 @@ public class MainWindow extends JFrame {
 
 		items = getItemsFromSchema();
 		if(items == null) {
-			showErrorDialog("Error while loading schema file");
+			showInfoDialog("Error while loading schema file");
 		}
 
 		setTitle(TITLE);
@@ -387,6 +387,7 @@ public class MainWindow extends JFrame {
 					JOptionPane.showMessageDialog(MainWindow.this, "Please register.");
 					System.exit(1);
 				} else {
+					savePrefs();
 					try {
 						MainWindow.LOGGER.info("id in text field: " + idTextField.getText().trim());
 						String startId = SteamIdConverter.getInstance().getId(idTextField.getText().trim());
@@ -398,10 +399,8 @@ public class MainWindow extends JFrame {
 					} catch(Exception e) {
 						LOGGER.severe("Error starting search: " + e.getMessage());
 						showInfoDialog(e.getMessage());
-					} finally {
-						resultsArea.validate();
-						savePrefs();
 					}
+					resultsArea.validate();
 				}
 			}
 		});
@@ -787,7 +786,7 @@ public class MainWindow extends JFrame {
 		// list
 		String col = prefs.get("SELECTED", "");
 		if(col.length() > 0) {
-			for(String item : col.split("$")) {
+			for(String item : col.split("\\$")) {
 				TF2Item tf2Item = TF2Item.deserialize(item);
 				selectedListModel.addElement(tf2Item);
 				selectedItems.add(tf2Item);
@@ -811,7 +810,7 @@ public class MainWindow extends JFrame {
 			sb.append(selectedListModel.getElementAt(i).serialize());
 			sb.append("$");
 		}
-		prefs.put("SELECTED", sb.toString().substring(0, sb.toString().length() - 2));
+		prefs.put("SELECTED", sb.toString().substring(0, sb.toString().length()));
 		prefs.put("PROFILES_COUNT", profilesCount.getText());
 		prefs.put("PRICE", valueTextField.getText());
 		prefs.put("WAS_ONLINE", wasOnlineText.getText());
