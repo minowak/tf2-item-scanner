@@ -1,12 +1,76 @@
-Apr 17, 2013 11:26:28 AM com.minowak.scanner.gui.ListUpdater run
+Apr 17, 2013 11:41:14 AM com.minowak.scanner.gui.MainWindow$6 actionPerformed
+INFO: id in text field: sebqu
+Apr 17, 2013 11:41:14 AM com.minowak.scanner.gui.ListUpdater run
 INFO: Starting id is 76561198065636379
-Apr 17, 2013 11:26:31 AM com.minowak.scanner.gui.ListUpdater run
+Apr 17, 2013 11:41:17 AM com.minowak.scanner.gui.ListUpdater run
 INFO: Adding friends (size=65)
-Apr 17, 2013 11:26:31 AM com.minowak.scanner.gui.ListUpdater run
+Apr 17, 2013 11:41:17 AM com.minowak.scanner.gui.ListUpdater run
 INFO: Getting new id: 76561197960686711
-Apr 17, 2013 11:26:31 AM com.minowak.scanner.gui.ListUpdater run
+Apr 17, 2013 11:41:17 AM com.minowak.scanner.gui.ListUpdater run
 INFO: Checking 76561197960686711
-Apr 17, 2013 11:26:31 AM com.minowak.scanner.engine.Backpack getValue
-INFO: Price is 106.652
-Apr 17, 2013 11:26:32 AM com.minowak.scanner.gui.ListUpdater run
+Apr 17, 2013 11:41:17 AM com.minowak.scanner.engine.Backpack getValue
+INFO: Price is 106.67299999999999
+Apr 17, 2013 11:41:18 AM com.minowak.scanner.gui.ListUpdater run
 INFO: Getting new id: 76561197969585220
+Apr 17, 2013 11:41:20 AM com.minowak.scanner.gui.MainWindow$6 actionPerformed
+INFO: id in text field: 76561197967610865
+Apr 17, 2013 11:41:20 AM com.minowak.scanner.gui.ListUpdater run
+INFO: Starting id is 76561197967610865
+Apr 17, 2013 11:41:22 AM com.minowak.scanner.gui.ListUpdater run
+INFO: Adding friends (size=146)
+Apr 17, 2013 11:41:22 AM com.minowak.scanner.gui.ListUpdater run
+INFO: Getting new id: 76561197970704994
+Apr 17, 2013 11:41:22 AM com.minowak.scanner.gui.ListUpdater run
+INFO: Checking 76561197970704994
+Apr 17, 2013 11:41:22 AM com.minowak.scanner.engine.Backpack getValue
+INFO: Price is 22.392999999999997
+Apr 17, 2013 11:41:23 AM com.minowak.scanner.gui.ListUpdater run
+INFO: Adding friends (size=361)
+Apr 17, 2013 11:41:23 AM com.minowak.scanner.gui.ListUpdater run
+INFO: Getting new id: 76561197972783103
+Apr 17, 2013 11:41:23 AM com.minowak.scanner.gui.ListUpdater run
+INFO: Checking 76561197972783103
+Apr 17, 2013 11:41:24 AM com.minowak.scanner.engine.Backpack getValue
+INFO: Price is 13.034
+Apr 17, 2013 11:41:24 AM com.minowak.scanner.gui.ListUpdater run
+INFO: Getting new id: 76561197976417041
+Apr 17, 2013 11:41:25 AM com.minowak.scanner.gui.MainWindow$6 actionPerformed
+INFO: id in text field: 76561197974111523
+Apr 17, 2013 11:41:26 AM com.minowak.scanner.gui.ListUpdater run
+INFO: Starting id is 76561197974111523
+Apr 17, 2013 11:41:27 AM com.minowak.scanner.gui.ListUpdater run
+INFO: Getting new id: 76561197978108418
+Apr 17, 2013 11:41:28 AM com.minowak.scanner.gui.MainWindow$6 actionPerformed
+INFO: id in text field: 76561197974111523
+Apr 17, 2013 11:41:28 AM com.minowak.scanner.gui.ListUpdater run
+INFO: Starting id is 76561197974111523
+Apr 17, 2013 11:41:30 AM com.minowak.scanner.gui.ListUpdater run
+INFO: Adding friends (size=438)
+Apr 17, 2013 11:41:30 AM com.minowak.scanner.gui.ListUpdater run
+INFO: Getting new id: 76561197978336782
+Apr 17, 2013 11:41:30 AM com.minowak.scanner.gui.ListUpdater run
+INFO: Checking 76561197978336782
+Apr 17, 2013 11:41:30 AM com.minowak.scanner.engine.Backpack getValue
+INFO: Price is 1.1829999999999998
+Apr 17, 2013 11:41:32 AM com.minowak.scanner.gui.ListUpdater run
+INFO: Adding friends (size=457)
+Apr 17, 2013 11:41:32 AM com.minowak.scanner.gui.ListUpdater run
+INFO: Getting new id: 76561197988404087
+Apr 17, 2013 11:41:32 AM com.minowak.scanner.gui.ListUpdater run
+INFO: Checking 76561197988404087
+Apr 17, 2013 11:41:32 AM com.minowak.scanner.engine.Backpack getValue
+INFO: Price is 53.102
+Apr 17, 2013 11:41:34 AM com.minowak.scanner.gui.ListUpdater run
+INFO: Getting new id: 76561197992203636
+Apr 17, 2013 11:41:34 AM com.minowak.scanner.gui.MainWindow$6 actionPerformed
+INFO: id in text field: 76561197990782124
+Apr 17, 2013 11:41:35 AM com.minowak.scanner.gui.ListUpdater run
+INFO: Starting id is 76561197990782124
+Apr 17, 2013 11:41:36 AM com.minowak.scanner.gui.ListUpdater run
+INFO: Getting new id: 76561197994721414
+Apr 17, 2013 11:41:39 AM com.minowak.scanner.gui.MainWindow$6 actionPerformed
+INFO: id in text field: 76561197990782124
+Apr 17, 2013 11:41:39 AM com.minowak.scanner.gui.ListUpdater run
+INFO: Starting id is 76561197990782124
+Apr 17, 2013 11:41:40 AM com.minowak.scanner.gui.ListUpdater run
+INFO: Getting new id: 76561197995139810

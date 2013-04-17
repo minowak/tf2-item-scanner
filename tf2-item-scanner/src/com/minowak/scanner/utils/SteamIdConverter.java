@@ -36,7 +36,6 @@ public class SteamIdConverter {
 	 * @return steamid64
 	 */
 	public String getId(String vanity) {
-		String ret = null;
 		String apiUrl = String.format("http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key=%s&vanityurl=%s",
 				Configuration.API_KEY, vanity);
 
@@ -53,7 +52,7 @@ public class SteamIdConverter {
 			}
 			br.close();
 		} catch(Exception e) {
-			MainWindow.LOGGER.info("Error while retrieving steamid64");
+			MainWindow.LOGGER.info("Error while retrieving steamid64: " + vanity);
 			return vanity;
 		}
 
@@ -61,9 +60,13 @@ public class SteamIdConverter {
 			JSONParser parser = new JSONParser();
 			Object response = parser.parse(sb.toString());
 			JSONObject result = (JSONObject) ((JSONObject) response).get("response");
-			return (String)result.get("steamid");
+			String getId = (String)result.get("steamid");
+			if(getId == null || getId.length() == 0) {
+				return vanity;
+			}
+			return getId;
 		} catch(ParseException e) {
-			MainWindow.LOGGER.info("Error while retrieving steamid64");
+			MainWindow.LOGGER.info("Error while retrieving steamid64: " + vanity);
 			return vanity;
 		}
 	}

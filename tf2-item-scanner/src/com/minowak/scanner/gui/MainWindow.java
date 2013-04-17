@@ -388,6 +388,7 @@ public class MainWindow extends JFrame {
 					System.exit(1);
 				} else {
 					try {
+						MainWindow.LOGGER.info("id in text field: " + idTextField.getText().trim());
 						String startId = SteamIdConverter.getInstance().getId(idTextField.getText().trim());
 						lUpdater = new ListUpdater(resultModel, progressBar, startId,
 								(long)(Double.parseDouble(timeTextField.getText().trim()) * 60),

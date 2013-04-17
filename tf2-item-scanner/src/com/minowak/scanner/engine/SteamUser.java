@@ -29,7 +29,7 @@ public class SteamUser extends SteamEntity {
 
 	public SteamUser(String id) {
 		this.id = id;
-		this.apiUrl = String.format("http://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key=%s&format=json&SteamID=%s",
+		this.apiUrl = String.format("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=%s&format=json&SteamID=%s",
 				Configuration.API_KEY, id);
 		this.api2Url = String.format("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=%s&steamids=%s",
 				Configuration.API_KEY, id);
