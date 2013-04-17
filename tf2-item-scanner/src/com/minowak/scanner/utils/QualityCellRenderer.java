@@ -15,7 +15,7 @@ public class QualityCellRenderer extends DefaultListCellRenderer {
 	}
 
 	@Override
-	public Component getListCellRendererComponent(JList arg0, Object arg1,
+	public Component getListCellRendererComponent(JList<?> arg0, Object arg1,
 			int arg2, boolean arg3, boolean arg4) {
 		super.getListCellRendererComponent(arg0, arg1, arg2, arg3, arg4);
 		TF2Item item = (TF2Item)arg1;

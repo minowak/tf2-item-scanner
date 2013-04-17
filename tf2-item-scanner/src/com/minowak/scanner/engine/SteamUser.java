@@ -2,8 +2,6 @@ package com.minowak.scanner.engine;
 
 
 
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.LinkedList;
 import java.util.List;
 

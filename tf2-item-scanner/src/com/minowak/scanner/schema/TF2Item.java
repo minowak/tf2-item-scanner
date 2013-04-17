@@ -1,6 +1,5 @@
 package com.minowak.scanner.schema;
 
-import java.io.Serializable;
 
 public class TF2Item {
 	private String name;
