@@ -68,6 +68,7 @@ import com.minowak.scanner.schema.SchemaParser;
 import com.minowak.scanner.schema.TF2Item;
 import com.minowak.scanner.utils.Configuration;
 import com.minowak.scanner.utils.QualityCellRenderer;
+import com.minowak.scanner.utils.SteamIdConverter;
 import com.minowak.scanner.utils.VisitedCellRenderer;
 
 /**
@@ -387,14 +388,15 @@ public class MainWindow extends JFrame {
 					System.exit(1);
 				} else {
 					try {
-						lUpdater = new ListUpdater(resultModel, progressBar, idTextField.getText().trim(),
+						String startId = SteamIdConverter.getInstance().getId(idTextField.getText().trim());
+						lUpdater = new ListUpdater(resultModel, progressBar, startId,
 								(long)(Double.parseDouble(timeTextField.getText().trim()) * 60),
 								selectedItems, Integer.parseInt(profilesCount.getText()), Long.parseLong(wasOnlineText.getText()),
 								Double.parseDouble(valueTextField.getText()));
 						lUpdater.start();
 					} catch(Exception e) {
 						LOGGER.severe("Error starting search: " + e.getMessage());
-						showErrorDialog(e.getMessage());
+						showInfoDialog(e.getMessage());
 					} finally {
 						resultsArea.validate();
 						savePrefs();

@@ -11,12 +11,12 @@
           <map/>
           <node name="gui">
             <map>
-              <entry key="STARTING_ID" value="7656119799220"/>
-              <entry key="SELECTED" value="Bat;Unique;0;http://media.steampowered.com/apps/440/icons/c_bat.d037d6a40ec30ab4aa009387d476dca889b6f7dc.pn"/>
+              <entry key="STARTING_ID" value="sebqu"/>
+              <entry key="SELECTED" value="Bat;Unique;0;http://media.steampowered.com/apps/440/icons/c_bat.d037d6a40ec30ab4aa009387d476dca889b6f7dc."/>
               <entry key="PROFILES_COUNT" value="1000"/>
               <entry key="PRICE" value="20"/>
               <entry key="WAS_ONLINE" value="7"/>
-              <entry key="TIME_SPENT" value="15"/>
+              <entry key="TIME_SPENT" value="2000"/>
             </map>
           </node>
         </node>

@@ -27,11 +27,31 @@ public class ListUpdater extends Thread {
 
 	private static final long DAY = 86400000;
 
-	private List<String> steamIds = new LinkedList<String>();
-	private List<String> scanned = new LinkedList<String>();
+	private static List<String> steamIds = new LinkedList<String>();
+	private static List<String> scanned = new LinkedList<String>();
 
 	private String currId;
 
+	/**
+	 * Consructor.
+	 *
+	 * @param list
+	 * 		model to update
+	 * @param progressBar
+	 * 		progress bar to update
+	 * @param id
+	 * 		id to start with
+	 * @param time
+	 * 		time spent playing
+	 * @param items
+	 * 		which items to search
+	 * @param count
+	 * 		how many profiles
+	 * @param wasOnline
+	 * 		when was last online
+	 * @param maxVal
+	 * 		maximum backpack value
+	 */
 	public ListUpdater(DefaultListModel<SteamProfile> list,
 			JProgressBar progressBar,
 			String id,
@@ -52,6 +72,7 @@ public class ListUpdater extends Thread {
 
 	public void run() {
 		MainWindow.getInstance().changeStatus("Started");
+		MainWindow.LOGGER.info("Starting id is " + id);
 		currId = id;
 		IDGenerator gen = new IDGenerator(id);
 		boolean found = false;
