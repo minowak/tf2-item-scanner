@@ -1,14 +1,16 @@
-Apr 18, 2013 4:48:04 PM com.minowak.scanner.gui.MainWindow$6 actionPerformed
+Apr 18, 2013 5:10:33 PM com.minowak.scanner.gui.MainWindow$6 actionPerformed
 INFO: id in text field: 76561197992203636
-Apr 18, 2013 4:48:04 PM com.minowak.scanner.gui.ListUpdater run
+Apr 18, 2013 5:10:34 PM com.minowak.scanner.gui.ListUpdater run
 INFO: Starting id is 76561197992203636
-Apr 18, 2013 4:48:07 PM com.minowak.scanner.gui.ListUpdater run
+Apr 18, 2013 5:10:36 PM com.minowak.scanner.gui.ListUpdater run
 INFO: Adding friends (size=111)
-Apr 18, 2013 4:48:07 PM com.minowak.scanner.gui.ListUpdater run
+Apr 18, 2013 5:10:36 PM com.minowak.scanner.gui.ListUpdater run
 INFO: Getting new id: 76561197966528125
-Apr 18, 2013 4:48:07 PM com.minowak.scanner.gui.ListUpdater run
+Apr 18, 2013 5:10:36 PM com.minowak.scanner.gui.ListUpdater run
 INFO: Checking 76561197966528125
-Apr 18, 2013 4:48:07 PM com.minowak.scanner.engine.Backpack getValue
+Apr 18, 2013 5:10:36 PM com.minowak.scanner.engine.Backpack getValue
 INFO: Price is 241.479
-Apr 18, 2013 4:48:08 PM com.minowak.scanner.gui.ListUpdater run
-INFO: Getting new id: 76561197970349274
+Apr 18, 2013 5:10:36 PM com.minowak.scanner.gui.ListUpdater run
+INFO: Found item
+Apr 18, 2013 5:10:37 PM com.minowak.scanner.engine.Backpack getValue
+INFO: Price is 241.479

@@ -130,4 +130,8 @@ public class SteamUser extends SteamEntity {
 	public long bpSize() {
 		return backpack.getSize();
 	}
+
+	public boolean hasMedals() {
+		return backpack.hasMedal();
+	}
 }

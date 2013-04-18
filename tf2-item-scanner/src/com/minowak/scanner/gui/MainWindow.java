@@ -40,6 +40,7 @@ import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -98,6 +99,9 @@ public class MainWindow extends JFrame {
 	private JTextField profilesCount;
 	private JTextField valueTextField;
 	private JTextField itemCountTextField;
+
+	private JCheckBox ignoreMedalsCB;
+
 	private JList<SteamProfile> resultsArea;
 
 	private JLabel idLabel;
@@ -336,10 +340,12 @@ public class MainWindow extends JFrame {
 		timeTextField.setText("0");
 
 		wasOnlineLabels = new JLabel[2];
-		wasOnlineLabels[0] = new JLabel("Was online no more than");
+		wasOnlineLabels[0] = new JLabel("Online");
 		wasOnlineLabels[1] = new JLabel("days ago");
 		wasOnlineText = new JTextField(3);
 		wasOnlineText.setText("7");
+
+		ignoreMedalsCB = new JCheckBox("Ignore medals");
 
 		timePanel.add(timeLabel);
 		timePanel.add(timeTextField);
@@ -347,6 +353,7 @@ public class MainWindow extends JFrame {
 		timePanel.add(wasOnlineLabels[0]);
 		timePanel.add(wasOnlineText);
 		timePanel.add(wasOnlineLabels[1]);
+		timePanel.add(ignoreMedalsCB);
 
 		filterPanel.add(filterLabel);
 		filterPanel.add(filterTextField);
@@ -402,7 +409,8 @@ public class MainWindow extends JFrame {
 							.count(Integer.parseInt(profilesCount.getText()))
 							.wasOnline(Long.parseLong(wasOnlineText.getText()))
 							.maxVal(Double.parseDouble(valueTextField.getText()))
-							.itemsCount(Long.parseLong(itemCountTextField.getText())).build();
+							.itemsCount(Long.parseLong(itemCountTextField.getText()))
+							.medals(ignoreMedalsCB.isSelected()).build();
 						lUpdater.start();
 					} catch(Exception e) {
 						LOGGER.severe("Error starting search: " + e.getMessage());
@@ -810,6 +818,7 @@ public class MainWindow extends JFrame {
 		wasOnlineText.setText(prefs.get("WAS_ONLINE", "7"));
 		timeTextField.setText(prefs.get("TIME_SPENT", "0"));
 		itemCountTextField.setText(prefs.get("ITEMS_COUNT", "0"));
+		ignoreMedalsCB.setSelected(Boolean.parseBoolean(prefs.get("IGNORE_MEDALS", "true")));
 	}
 
 	private void savePrefs() {
@@ -830,6 +839,7 @@ public class MainWindow extends JFrame {
 		prefs.put("WAS_ONLINE", wasOnlineText.getText());
 		prefs.put("TIME_SPENT", timeTextField.getText());
 		prefs.put("ITEMS_COUNT", itemCountTextField.getText());
+		prefs.put("IGNORE_MEDALS", "" + ignoreMedalsCB.isSelected());
 		try {
 			prefs.exportNode(new FileOutputStream(new File("preferences.xml")));
 		} catch (IOException | BackingStoreException e) {

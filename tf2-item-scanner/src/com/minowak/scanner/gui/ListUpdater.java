@@ -25,6 +25,7 @@ public class ListUpdater extends Thread {
 	private long wasOnline;
 	private double maxVal;
 	private long itemsCount;
+	private boolean medals = false;
 
 	private static final long DAY = 86400000;
 
@@ -63,7 +64,8 @@ public class ListUpdater extends Thread {
 			int count,
 			long wasOnline,
 			double maxVal,
-			long itemsCount) {
+			long itemsCount,
+			boolean m) {
 		this.list = list;
 		this.statusBar = progressBar;
 		this.id = id;
@@ -73,6 +75,7 @@ public class ListUpdater extends Thread {
 		this.items = items;
 		this.maxVal = maxVal;
 		this.itemsCount = itemsCount;
+		this.medals = m;
 	}
 
 	public void run() {
@@ -137,7 +140,8 @@ public class ListUpdater extends Thread {
 				long ss = System.currentTimeMillis();
 				if((ss - (ss - wasOnline*DAY) > ss-user.lastOnline()*1000)
 						&& (maxVal == 0.0 || bpValue <= maxVal)
-						&& (itemsCount == 0 || itemsCount >= user.bpSize())) {
+						&& (itemsCount == 0 || itemsCount >= user.bpSize())
+						&& !(medals && user.hasMedals())) {
 					if(user.hasUnusual()) {
 						found = true;
 						searchedFor.add(new TF2Item("UNUSUAL", 0, ItemQuality.UNUSUAL));
@@ -198,9 +202,15 @@ public class ListUpdater extends Thread {
 		private long wasOnline;
 		private double maxVal;
 		private long itemsCount;
+		private boolean medals;
 
 		public Builder list(DefaultListModel<SteamProfile> list) {
 			this.list = list;
+			return this;
+		}
+
+		public Builder medals(boolean m) {
+			this.medals = m;
 			return this;
 		}
 
@@ -245,7 +255,7 @@ public class ListUpdater extends Thread {
 		}
 
 		public ListUpdater build() {
-			return new ListUpdater(list, progressBar, id, time, items, count, wasOnline, maxVal, itemsCount);
+			return new ListUpdater(list, progressBar, id, time, items, count, wasOnline, maxVal, itemsCount, medals);
 		}
 	}
 }

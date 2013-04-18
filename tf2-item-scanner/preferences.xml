@@ -17,7 +17,8 @@
               <entry key="PRICE" value="0"/>
               <entry key="WAS_ONLINE" value="7"/>
               <entry key="TIME_SPENT" value="0"/>
-              <entry key="ITEMS_COUNT" value="5"/>
+              <entry key="ITEMS_COUNT" value="0"/>
+              <entry key="IGNORE_MEDALS" value="true"/>
             </map>
           </node>
         </node>

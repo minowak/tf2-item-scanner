@@ -99,4 +99,13 @@ public class Backpack extends SteamEntity {
 		MainWindow.LOGGER.info("Price is " + price);
 		return price;
 	}
+
+	public boolean hasMedal() {
+		for(TF2Item item : items) {
+			if(item.getName().contains("ETF2l") || item.getName().contains("UGC")) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
