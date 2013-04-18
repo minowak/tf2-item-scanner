@@ -97,6 +97,7 @@ public class MainWindow extends JFrame {
 	private JTextField wasOnlineText;
 	private JTextField profilesCount;
 	private JTextField valueTextField;
+	private JTextField itemCountTextField;
 	private JList<SteamProfile> resultsArea;
 
 	private JLabel idLabel;
@@ -106,6 +107,7 @@ public class MainWindow extends JFrame {
 	private JLabel profilesToScan;
 	private JLabel valueLabel;
 	private JLabel status;
+	private JLabel itemsCount;
 	private JLabel[] wasOnlineLabels;
 
 	private JList<TF2Item> selected;
@@ -391,10 +393,16 @@ public class MainWindow extends JFrame {
 					try {
 						MainWindow.LOGGER.info("id in text field: " + idTextField.getText().trim());
 						String startId = SteamIdConverter.getInstance().getId(idTextField.getText().trim());
-						lUpdater = new ListUpdater(resultModel, progressBar, startId,
-								(long)(Double.parseDouble(timeTextField.getText().trim()) * 60),
-								selectedItems, Integer.parseInt(profilesCount.getText()), Long.parseLong(wasOnlineText.getText()),
-								Double.parseDouble(valueTextField.getText()));
+						lUpdater = new ListUpdater.Builder()
+							.list(resultModel)
+							.progressBar(progressBar)
+							.id(startId)
+							.time((long)(Double.parseDouble(timeTextField.getText().trim()) * 60))
+							.items(selectedItems)
+							.count(Integer.parseInt(profilesCount.getText()))
+							.wasOnline(Long.parseLong(wasOnlineText.getText()))
+							.maxVal(Double.parseDouble(valueTextField.getText()))
+							.itemsCount(Long.parseLong(itemCountTextField.getText())).build();
 						lUpdater.start();
 					} catch(Exception e) {
 						LOGGER.severe("Error starting search: " + e.getMessage());
@@ -441,6 +449,9 @@ public class MainWindow extends JFrame {
 		valueTextField.setText("0");
 		valueLabel = new JLabel("Maximum BP value ");
 
+		itemsCount = new JLabel("Items count ");
+		itemCountTextField = new JTextField(4);
+
 		controlPanel.add(searchBtn);
 		controlPanel.add(stopBtn);
 
@@ -451,7 +462,9 @@ public class MainWindow extends JFrame {
 		profilePanel.add(profilesCount);
 		profilePanel.add(valueLabel);
 		profilePanel.add(valueTextField);
-		profilePanel.add(new JLabel("$"));
+		profilePanel.add(new JLabel("$ "));
+		profilePanel.add(itemsCount);
+		profilePanel.add(itemCountTextField);
 
 		leftPanel.add(controlPanel);
 		leftPanel.add(profilePanel);
@@ -796,6 +809,7 @@ public class MainWindow extends JFrame {
 		valueTextField.setText(prefs.get("PRICE", "0"));
 		wasOnlineText.setText(prefs.get("WAS_ONLINE", "7"));
 		timeTextField.setText(prefs.get("TIME_SPENT", "0"));
+		itemCountTextField.setText(prefs.get("ITEMS_COUNT", "0"));
 	}
 
 	private void savePrefs() {
@@ -815,6 +829,7 @@ public class MainWindow extends JFrame {
 		prefs.put("PRICE", valueTextField.getText());
 		prefs.put("WAS_ONLINE", wasOnlineText.getText());
 		prefs.put("TIME_SPENT", timeTextField.getText());
+		prefs.put("ITEMS_COUNT", itemCountTextField.getText());
 		try {
 			prefs.exportNode(new FileOutputStream(new File("preferences.xml")));
 		} catch (IOException | BackingStoreException e) {

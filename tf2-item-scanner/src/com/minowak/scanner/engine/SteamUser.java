@@ -126,4 +126,8 @@ public class SteamUser extends SteamEntity {
 			return 0.0;
 		}
 	}
+
+	public long bpSize() {
+		return backpack.getSize();
+	}
 }

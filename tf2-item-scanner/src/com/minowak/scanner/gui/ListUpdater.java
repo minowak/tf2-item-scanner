@@ -24,6 +24,7 @@ public class ListUpdater extends Thread {
 	private int count;
 	private long wasOnline;
 	private double maxVal;
+	private long itemsCount;
 
 	private static final long DAY = 86400000;
 
@@ -51,15 +52,18 @@ public class ListUpdater extends Thread {
 	 * 		when was last online
 	 * @param maxVal
 	 * 		maximum backpack value
+	 * @param itemsCount
+	 * 		maximum items count
 	 */
-	public ListUpdater(DefaultListModel<SteamProfile> list,
+	private ListUpdater(DefaultListModel<SteamProfile> list,
 			JProgressBar progressBar,
 			String id,
 			long time,
 			List<TF2Item> items,
 			int count,
 			long wasOnline,
-			double maxVal) {
+			double maxVal,
+			long itemsCount) {
 		this.list = list;
 		this.statusBar = progressBar;
 		this.id = id;
@@ -68,6 +72,7 @@ public class ListUpdater extends Thread {
 		this.wasOnline = wasOnline;
 		this.items = items;
 		this.maxVal = maxVal;
+		this.itemsCount = itemsCount;
 	}
 
 	public void run() {
@@ -131,7 +136,8 @@ public class ListUpdater extends Thread {
 			if(time == 0 || user.played() < time) {
 				long ss = System.currentTimeMillis();
 				if((ss - (ss - wasOnline*DAY) > ss-user.lastOnline()*1000)
-						&& (maxVal == 0.0 || bpValue <= maxVal)) {
+						&& (maxVal == 0.0 || bpValue <= maxVal)
+						&& (itemsCount == 0 || itemsCount >= user.bpSize())) {
 					if(user.hasUnusual()) {
 						found = true;
 						searchedFor.add(new TF2Item("UNUSUAL", 0, ItemQuality.UNUSUAL));
@@ -176,5 +182,70 @@ public class ListUpdater extends Thread {
 		super.stop();
 		MainWindow.getInstance().changeStatus("Stopped");
 		return currId;
+	}
+
+	public Builder builder() {
+		return new Builder();
+	}
+
+	public static class Builder {
+		private DefaultListModel<SteamProfile> list;
+		private JProgressBar progressBar;
+		private String id;
+		private long time;
+		private List<TF2Item> items;
+		private int count;
+		private long wasOnline;
+		private double maxVal;
+		private long itemsCount;
+
+		public Builder list(DefaultListModel<SteamProfile> list) {
+			this.list = list;
+			return this;
+		}
+
+		public Builder progressBar(JProgressBar pb) {
+			this.progressBar = pb;
+			return this;
+		}
+
+		public Builder id(String id) {
+			this.id = id;
+			return this;
+		}
+
+		public Builder time(long time) {
+			this.time = time;
+			return this;
+		}
+
+		public Builder items(List<TF2Item> items) {
+			this.items = items;
+			return this;
+		}
+
+		public Builder count(int count) {
+			this.count = count;
+			return this;
+		}
+
+		public Builder wasOnline(long online) {
+			this.wasOnline = online;
+			return this;
+		}
+
+		public Builder maxVal(double val) {
+			this.maxVal = val;
+			return this;
+		}
+
+		public Builder itemsCount(long itemsCount) {
+			this.itemsCount = itemsCount;
+			return this;
+		}
+
+		public ListUpdater build() {
+			return new ListUpdater(list, progressBar, id, time, items, count, wasOnline, maxVal, itemsCount);
+		}
 	}
 }
