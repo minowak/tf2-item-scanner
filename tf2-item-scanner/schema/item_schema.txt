@@ -1,7 +1,7 @@
 {
 	"result": {
 		"status": 1,
-		"items_game_url": "http:\/\/media.steampowered.com\/apps\/440\/scripts\/items\/items_game.591fd9abd1710bd044f7c823c01a87783d56c20e.txt",
+		"items_game_url": "http:\/\/media.steampowered.com\/apps\/440\/scripts\/items\/items_game.9d60c4b5f1152c6789fab1b0b1a27380e2a942d2.txt",
 		"qualities": {
 			"Normal": 0,
 			"rarity1": 1,
@@ -9737,7 +9737,7 @@
 				"defindex": 319,
 				"item_class": "tf_wearable",
 				"item_type_name": "Hat",
-				"item_name": "DÈtective Noir",
+				"item_name": "D√©tective Noir",
 				"proper_name": false,
 				"item_slot": "head",
 				"model_player": "models\/player\/items\/spy\/spy_detective_noir.mdl",
@@ -10000,7 +10000,7 @@
 				"defindex": 327,
 				"item_class": "tf_weapon_sword",
 				"item_type_name": "Sword",
-				"item_name": "Claidheamh MÚr",
+				"item_name": "Claidheamh M√≤r",
 				"proper_name": true,
 				"item_slot": "melee",
 				"model_player": "models\/weapons\/c_models\/c_claidheamohmor\/c_claidheamohmor.mdl",
@@ -12686,7 +12686,7 @@
 				"item_class": "tf_weapon_syringegun_medic",
 				"item_type_name": "Syringe Gun Prototype",
 				"item_name": "Overdose",
-				"item_description": "Movement speed increases based on ‹berCharge percentage to a maximum of +10%",
+				"item_description": "Movement speed increases based on √úberCharge percentage to a maximum of +10%",
 				"proper_name": true,
 				"item_slot": "primary",
 				"model_player": "models\/weapons\/c_models\/c_proto_syringegun\/c_proto_syringegun.mdl",
@@ -13203,7 +13203,7 @@
 				"item_class": "tf_wearable",
 				"item_type_name": "Hat",
 				"item_name": "Capo's Capper",
-				"item_description": "This dashing number will help you commit crimes of all kindsóexcept against fashion.",
+				"item_description": "This dashing number will help you commit crimes of all kinds‚Äîexcept against fashion.",
 				"proper_name": true,
 				"item_slot": "head",
 				"model_player": "models\/player\/items\/heavy\/capones_capper.mdl",
@@ -13468,7 +13468,7 @@
 				"item_class": "tf_wearable",
 				"item_type_name": "Hat",
 				"item_name": "Hetman's Headpiece",
-				"item_description": "Cossacks and war go together like golabki and wÛdka.",
+				"item_description": "Cossacks and war go together like go≈ÇƒÖbki and w√≥dka.",
 				"proper_name": true,
 				"item_slot": "head",
 				"model_player": "models\/player\/items\/engineer\/mbsf_engineer.mdl",
@@ -15351,7 +15351,7 @@
 				"item_class": "tf_wearable",
 				"item_type_name": "Hat",
 				"item_name": "Summer Hat",
-				"item_description": "E hele makou i kahakai.",
+				"item_description": "E hele mƒÅkou i kahakai.",
 				"proper_name": false,
 				"item_slot": "head",
 				"model_player": "models\/player\/items\/scout\/summer_hat_scout.mdl",
@@ -19286,7 +19286,7 @@
 				"item_class": "tf_wearable",
 				"item_type_name": "Fuel Tank",
 				"item_name": "Moonman Backpack",
-				"item_description": "Being a repository of the foundational ingredients necessary for a body to live a life of leisure in spaceónamely one part oxygen, one part mercury, and twelve parts laudanum.",
+				"item_description": "Being a repository of the foundational ingredients necessary for a body to live a life of leisure in space‚Äînamely one part oxygen, one part mercury, and twelve parts laudanum.",
 				"proper_name": true,
 				"item_slot": "misc",
 				"model_player": "models\/player\/items\/pyro\/drg_pyro_fuelTank.mdl",
@@ -23382,7 +23382,7 @@
 				"item_class": "tf_wearable",
 				"item_type_name": "Shirt",
 				"item_name": "Fast Learner",
-				"item_description": "Read a book ñ or at least look like you can ñ with this vintage educational ensemble. Be the B.M.O.C. (Big Mouth on Campus) of your own make-believe Ivy League!",
+				"item_description": "Read a book ‚Äì or at least look like you can ‚Äì with this vintage educational ensemble. Be the B.M.O.C. (Big Mouth on Campus) of your own make-believe Ivy League!",
 				"proper_name": true,
 				"item_slot": "misc",
 				"model_player": "models\/player\/items\/scout\/scout_prep_shirt.mdl",
@@ -23713,7 +23713,7 @@
 				"item_class": "tf_wearable",
 				"item_type_name": "Robot",
 				"item_name": "RoBro 3000",
-				"item_description": "The RoBro 3000 doesn't just watch your back in battle! Whether you're on the battlefield, out on the town, sleeping in bed or on the toilet, you'll always have a friend in the RoBro, which comes with no \"OFF\" switch and cannot be shut down. The RoBro even tapes everything you do, whether you want it to or not. It's not even a feature we installed on the RoBroóit's just something it does for its own mysterious reasons!",
+				"item_description": "The RoBro 3000 doesn't just watch your back in battle! Whether you're on the battlefield, out on the town, sleeping in bed or on the toilet, you'll always have a friend in the RoBro, which comes with no \"OFF\" switch and cannot be shut down. The RoBro even tapes everything you do, whether you want it to or not. It's not even a feature we installed on the RoBro‚Äîit's just something it does for its own mysterious reasons!",
 				"proper_name": true,
 				"item_slot": "misc",
 				"model_player": "models\/player\/items\/all_class\/pet_robro.mdl",
@@ -24568,7 +24568,7 @@
 				"item_class": "tf_wearable",
 				"item_type_name": "Hat",
 				"item_name": "Bolt Action Blitzer",
-				"item_description": "Take a knee, boys. Now, any helmet will protect your head when you're wearing it ñ but what about when you're NOT? The Bolt Action Blitzer solves that problem by securing it to your skull with three one-and-a-quarter-inch coarse-thread galvanized crown bolts. Make sure it's in your favorite color, 'cause you WILL be buried in it.",
+				"item_description": "Take a knee, boys. Now, any helmet will protect your head when you're wearing it ‚Äì but what about when you're NOT? The Bolt Action Blitzer solves that problem by securing it to your skull with three one-and-a-quarter-inch coarse-thread galvanized crown bolts. Make sure it's in your favorite color, 'cause you WILL be buried in it.",
 				"proper_name": true,
 				"item_slot": "head",
 				"model_player": "models\/player\/items\/all_class\/crimecraft_helmet_scout.mdl",
@@ -24718,7 +24718,7 @@
 				"item_class": "tf_wearable",
 				"item_type_name": "Hat",
 				"item_name": "Front Runner",
-				"item_description": "This commemorative sweatband is a loving tribute to the heroes ñ and we don't use that word lightly ñ who live their lives like sweaty candles in the wind.",
+				"item_description": "This commemorative sweatband is a loving tribute to the heroes ‚Äì and we don't use that word lightly ‚Äì who live their lives like sweaty candles in the wind.",
 				"proper_name": true,
 				"item_slot": "head",
 				"model_player": "models\/player\/items\/scout\/scout_headband.mdl",
@@ -25392,7 +25392,7 @@
 				"item_class": "tf_wearable",
 				"item_type_name": "TF_Wearable_Animal",
 				"item_name": "Bird-Man of Aberdeen",
-				"item_description": "This shoulder-mounted feathered friend comes in any color you like, and is so full of whiskey it couldn't fly off if it wanted to. Great to have around if you decide to eat itójust turn your head and bite!",
+				"item_description": "This shoulder-mounted feathered friend comes in any color you like, and is so full of whiskey it couldn't fly off if it wanted to. Great to have around if you decide to eat it‚Äîjust turn your head and bite!",
 				"proper_name": true,
 				"item_slot": "misc",
 				"model_player": "models\/player\/items\/demo\/demo_parrot.mdl",
@@ -27128,7 +27128,7 @@
 				"item_class": "tf_wearable",
 				"item_type_name": "Hat",
 				"item_name": "Lone Star",
-				"item_description": "You're runnin' the show in these here parts; you deserve a big hat with a star. The size of the hat is indicative of how much of the show you're running ñ which is all of it, by the way. Honestly, we really don't know how people get respect without this hat.",
+				"item_description": "You're runnin' the show in these here parts; you deserve a big hat with a star. The size of the hat is indicative of how much of the show you're running ‚Äì which is all of it, by the way. Honestly, we really don't know how people get respect without this hat.",
 				"proper_name": true,
 				"item_slot": "head",
 				"model_player": "models\/player\/items\/sniper\/awes_hat.mdl",
@@ -27368,7 +27368,7 @@
 				"item_class": "tf_wearable",
 				"item_type_name": "Mask",
 				"item_name": "Medi-Mask",
-				"item_description": "As a thought experiment, Medic has taken to wearing this mask, releasing innocuous gas into a room and screaming, \"Dear god ñ the poison tanker has burst!\" to see what people will do. So far, the tests have been inconclusive. Although, a couple people have died. So that's interesting.",
+				"item_description": "As a thought experiment, Medic has taken to wearing this mask, releasing innocuous gas into a room and screaming, \"Dear god ‚Äì the poison tanker has burst!\" to see what people will do. So far, the tests have been inconclusive. Although, a couple people have died. So that's interesting.",
 				"proper_name": false,
 				"item_slot": "misc",
 				"model_player": "models\/player\/items\/medic\/medic_gasmask.mdl",
@@ -28136,7 +28136,7 @@
 				"item_class": "tf_wearable",
 				"item_type_name": "Hat",
 				"item_name": "Tin Pot",
-				"item_description": "The great thing about this helmet is that it stops bullets (no it doesn't)! Look at it ñ it's made of robot metal! Bullets can't go through robot metal (they definitely can)! There really is no way you could be harmed while wearing this helmet (there absolutely is).",
+				"item_description": "The great thing about this helmet is that it stops bullets (no it doesn't)! Look at it ‚Äì it's made of robot metal! Bullets can't go through robot metal (they definitely can)! There really is no way you could be harmed while wearing this helmet (there absolutely is).",
 				"proper_name": true,
 				"item_slot": "head",
 				"model_player": null,
@@ -28281,7 +28281,7 @@
 				"item_class": "tf_wearable",
 				"item_type_name": "Hat",
 				"item_name": "Tin-1000",
-				"item_description": "Are people bothering you while you're trying to work? Just strap on The Tin-1000, stare at them unflinchingly with your soulless, red, robot eyes, and watch as they slink away in terror. It's a great way to thin out your friend circle ñ fast!",
+				"item_description": "Are people bothering you while you're trying to work? Just strap on The Tin-1000, stare at them unflinchingly with your soulless, red, robot eyes, and watch as they slink away in terror. It's a great way to thin out your friend circle ‚Äì fast!",
 				"proper_name": true,
 				"item_slot": "head",
 				"model_player": "models\/player\/items\/mvm_loot\/engineer\/robo_engy_hat.mdl",
@@ -28528,7 +28528,7 @@
 				"item_class": "tf_wearable",
 				"item_type_name": "Backpack",
 				"item_name": "Pyrotechnic Tote",
-				"item_description": "Any day can be the Fourth of July if you just believe. It also helps if you have a bag of fireworks ñ like the Pyrotechnic Tote - you can set off to distract people when they try to tell you that you can't take the day off to eat hot dogs and get drunk at the park. Is this not America, Samuel?  Do we not have the freedom to vomit in our own shoes?",
+				"item_description": "Any day can be the Fourth of July if you just believe. It also helps if you have a bag of fireworks ‚Äì like the Pyrotechnic Tote - you can set off to distract people when they try to tell you that you can't take the day off to eat hot dogs and get drunk at the park. Is this not America, Samuel?  Do we not have the freedom to vomit in our own shoes?",
 				"proper_name": true,
 				"item_slot": "misc",
 				"model_player": "models\/player\/items\/pyro\/pyro_fireworksbag.mdl",
@@ -31406,6 +31406,8 @@
 				"craft_class": "weapon",
 				"craft_material_type": "weapon",
 				"capabilities": {
+					"nameable": true,
+					"can_gift_wrap": true,
 					"can_craft_mark": true,
 					"can_be_restored": true,
 					"strange_parts": true,
@@ -31898,8 +31900,8 @@
 				"defindex": 947,
 				"item_class": "tf_weapon_invis",
 				"item_type_name": "Invis Watch",
-				"item_name": "Qu‰ckenbirdt",
-				"item_description": "A marvel of German engineering, the Qu‰ckenbirdt is a classically handsome two-tone Australium and tungsten spywatch for the European assassin who likes to be reminded how rich he is every time he turns invisible.",
+				"item_name": "Qu√§ckenbirdt",
+				"item_description": "A marvel of German engineering, the Qu√§ckenbirdt is a classically handsome two-tone Australium and tungsten spywatch for the European assassin who likes to be reminded how rich he is every time he turns invisible.",
 				"proper_name": true,
 				"item_slot": "pda2",
 				"model_player": "models\/weapons\/v_models\/v_hm_watch\/v_hm_watch.mdl",
@@ -32161,7 +32163,7 @@
 				"item_class": "tf_wearable",
 				"item_type_name": "Badge",
 				"item_name": "Saxxy Clapper Badge",
-				"item_description": "Harness the seductive black magic of Hollywood with this commemorative clapper boardóthe same used by actual movie directors. Now YOU can tell Ryan Reynolds what to do!",
+				"item_description": "Harness the seductive black magic of Hollywood with this commemorative clapper board‚Äîthe same used by actual movie directors. Now YOU can tell Ryan Reynolds what to do!",
 				"proper_name": true,
 				"item_slot": "misc",
 				"model_player": "models\/player\/items\/all_class\/all_clacker_badge.mdl",
@@ -32198,7 +32200,7 @@
 				"item_class": "saxxy",
 				"item_type_name": "Camera",
 				"item_name": "Memory Maker",
-				"item_description": "The memories you made as a Saxxy finalist will live on forever in film. Other memoriesólike that time you fractured some jerk Engineer's skull with an 8mm cameraówill live on forever in your heart.",
+				"item_description": "The memories you made as a Saxxy finalist will live on forever in film. Other memories‚Äîlike that time you fractured some jerk Engineer's skull with an 8mm camera‚Äîwill live on forever in your heart.",
 				"proper_name": true,
 				"item_slot": "melee",
 				"model_player": "models\/weapons\/c_models\/c_8mm_camera\/c_8mm_camera.mdl",
@@ -33211,7 +33213,7 @@
 				"item_class": "tf_wearable",
 				"item_type_name": "Hat",
 				"item_name": "Soldier's Slope Scopers",
-				"item_description": "These extreme pro ski goggles let folks know there're be no bunny slopes for this guy. Not with YOUR middling-to-average ski skills. No, YOU'LL be skiing on all the intermediate slopes you can find, thank you very muchóhunting out those tasty gradual inclines.",
+				"item_description": "These extreme pro ski goggles let folks know there're be no bunny slopes for this guy. Not with YOUR middling-to-average ski skills. No, YOU'LL be skiing on all the intermediate slopes you can find, thank you very much‚Äîhunting out those tasty gradual inclines.",
 				"proper_name": false,
 				"item_slot": "head",
 				"model_player": "models\/player\/items\/soldier\/soldier_skihat.mdl",
@@ -33464,7 +33466,7 @@
 				"item_class": "tf_wearable",
 				"item_type_name": "Hair",
 				"item_name": "Mutton Mann",
-				"item_description": "Enjoy the absolute cutting edge of nineteenth century sideburn fashion with these lustrous, face-hugging muttons. There's no meat in these chops, ladiesóbut there's plenty of beefcake.",
+				"item_description": "Enjoy the absolute cutting edge of nineteenth century sideburn fashion with these lustrous, face-hugging muttons. There's no meat in these chops, ladies‚Äîbut there's plenty of beefcake.",
 				"proper_name": true,
 				"item_slot": "misc",
 				"model_player": "models\/player\/items\/all_class\/winter_sideburns_sniper.mdl",
@@ -33970,7 +33972,7 @@
 				"item_class": "tf_weapon_medigun",
 				"item_type_name": "Vaccinator",
 				"item_name": "Vaccinator",
-				"item_description": "‹berCharge provides 75% resistance to a selected damage type. You are healed for 25% of the matched incoming damage on your heal target.",
+				"item_description": "√úberCharge provides 75% resistance to a selected damage type. You are healed for 25% of the matched incoming damage on your heal target.",
 				"proper_name": true,
 				"item_slot": "secondary",
 				"model_player": "models\/weapons\/c_models\/c_medigun_defense\/c_medigun_defense.mdl",
@@ -34708,7 +34710,7 @@
 				"defindex": 1014,
 				"item_class": "tf_wearable",
 				"item_type_name": "Hair",
-				"item_name": "Br¸tal Bouffant",
+				"item_name": "Br√ºtal Bouffant",
 				"item_description": "This brutally heavy all-class sideburns and mullet combo was hand-sheared from the manes of Icelandic headbangers, woven with sigil-encrusted knitting needles of occult significance, and air-mailed straight out of hell.",
 				"proper_name": true,
 				"item_slot": "head",
@@ -34891,6 +34893,7 @@
 				"craft_class": "hat",
 				"craft_material_type": "hat",
 				"capabilities": {
+					"paintable": true,
 					"nameable": true,
 					"can_craft_if_purchased": true,
 					"can_gift_wrap": true,
@@ -34948,7 +34951,7 @@
 				"item_class": "tf_wearable",
 				"item_type_name": "Hat",
 				"item_name": "Doe-Boy",
-				"item_description": "Protect the important thoughts in your head -- ones like \"liberty\" and \"freedom\" and \"democracy\" -- with good, honest, hat-shaped American steel. This helmet won't run (until heated to 2500∞F)!",
+				"item_description": "Protect the important thoughts in your head -- ones like \"liberty\" and \"freedom\" and \"democracy\" -- with good, honest, hat-shaped American steel. This helmet won't run (until heated to 2500¬∞F)!",
 				"proper_name": true,
 				"item_slot": "head",
 				"model_player": "models\/player\/items\/soldier\/bio_soldier_founders_cover.mdl",
@@ -35210,11 +35213,11 @@
 				"image_url_large": "http:\/\/media.steampowered.com\/apps\/440\/icons\/pn2_knife_lunchbox_large.6be06c0112df75dfb8c7f264ce908ec957245c54.png",
 				"drop_type": "none",
 				"craft_class": "",
-				"craft_material_type": "hat",
+				"craft_material_type": "",
 				"capabilities": {
 					"nameable": true,
 					"can_craft_if_purchased": true,
-					"can_craft_count": true,
+					"can_gift_wrap": true,
 					"can_craft_mark": true,
 					"can_be_restored": true,
 					"strange_parts": true,
@@ -35232,14 +35235,6 @@
 				,
 				"used_by_classes": [
 					"Heavy"
-				]
-				,
-				"attributes": [
-					{
-						"name": "cannot trade",
-						"class": "cannot_trade",
-						"value": 1.000000
-					}
 				]
 				
 			},
@@ -35261,11 +35256,11 @@
 				"image_url_large": "http:\/\/media.steampowered.com\/apps\/440\/icons\/pn2_samhat_spy_large.7662fecfcd90ebf6d6fc18f74b7455d67484ef37.png",
 				"drop_type": "none",
 				"craft_class": "",
-				"craft_material_type": "hat",
+				"craft_material_type": "",
 				"capabilities": {
 					"nameable": true,
 					"can_craft_if_purchased": true,
-					"can_craft_count": true,
+					"can_gift_wrap": true,
 					"can_craft_mark": true,
 					"can_be_restored": true,
 					"strange_parts": true,
@@ -35275,14 +35270,6 @@
 				"used_by_classes": [
 					"Sniper",
 					"Spy"
-				]
-				,
-				"attributes": [
-					{
-						"name": "cannot trade",
-						"class": "cannot_trade",
-						"value": 1.000000
-					}
 				]
 				
 			},
@@ -35304,11 +35291,11 @@
 				"image_url_large": "http:\/\/media.steampowered.com\/apps\/440\/icons\/pn2_mask_large.4c403b6a97338f5034a528f830ce10993f3dcbca.png",
 				"drop_type": "none",
 				"craft_class": "",
-				"craft_material_type": "hat",
+				"craft_material_type": "",
 				"capabilities": {
 					"nameable": true,
 					"can_craft_if_purchased": true,
-					"can_craft_count": true,
+					"can_gift_wrap": true,
 					"can_craft_mark": true,
 					"can_be_restored": true,
 					"strange_parts": true,
@@ -35317,14 +35304,6 @@
 				},
 				"used_by_classes": [
 					"Spy"
-				]
-				,
-				"attributes": [
-					{
-						"name": "cannot trade",
-						"class": "cannot_trade",
-						"value": 1.000000
-					}
 				]
 				
 			},
@@ -35346,11 +35325,11 @@
 				"image_url_large": "http:\/\/media.steampowered.com\/apps\/440\/icons\/pn2_evilash_large.366f560cfbff2fab674527a721306e94b4e4d7c8.png",
 				"drop_type": "none",
 				"craft_class": "",
-				"craft_material_type": "hat",
+				"craft_material_type": "",
 				"capabilities": {
 					"nameable": true,
 					"can_craft_if_purchased": true,
-					"can_craft_count": true,
+					"can_gift_wrap": true,
 					"can_craft_mark": true,
 					"can_be_restored": true,
 					"strange_parts": true,
@@ -35359,14 +35338,6 @@
 				},
 				"used_by_classes": [
 					"Pyro"
-				]
-				,
-				"attributes": [
-					{
-						"name": "cannot trade",
-						"class": "cannot_trade",
-						"value": 1.000000
-					}
 				]
 				
 			},
@@ -35388,11 +35359,11 @@
 				"image_url_large": "http:\/\/media.steampowered.com\/apps\/440\/icons\/pn2_longfall_large.89454e19fa4ad8e9f2696590f7c8050ea84c4f30.png",
 				"drop_type": "none",
 				"craft_class": "",
-				"craft_material_type": "hat",
+				"craft_material_type": "",
 				"capabilities": {
 					"nameable": true,
 					"can_craft_if_purchased": true,
-					"can_craft_count": true,
+					"can_gift_wrap": true,
 					"can_craft_mark": true,
 					"can_be_restored": true,
 					"strange_parts": true,
@@ -35401,14 +35372,6 @@
 				},
 				"used_by_classes": [
 					"Scout"
-				]
-				,
-				"attributes": [
-					{
-						"name": "cannot trade",
-						"class": "cannot_trade",
-						"value": 1.000000
-					}
 				]
 				
 			},
@@ -35465,7 +35428,7 @@
 				"image_url_large": "http:\/\/media.steampowered.com\/apps\/440\/icons\/all_class_reddit_demo_large.562b7a09878a2f7a9458af6d4ad950bba3196555.png",
 				"drop_type": "none",
 				"craft_class": "",
-				"craft_material_type": "hat",
+				"craft_material_type": "",
 				"capabilities": {
 					"paintable": true,
 					"nameable": true,
@@ -35514,7 +35477,7 @@
 				"image_url_large": "http:\/\/media.steampowered.com\/apps\/440\/icons\/all_class_reddit_alt_demo_large.c9ead3c4cba0fb1a2a34fefb930dad473f0f26b9.png",
 				"drop_type": "none",
 				"craft_class": "",
-				"craft_material_type": "hat",
+				"craft_material_type": "",
 				"capabilities": {
 					"paintable": true,
 					"nameable": true,
@@ -35645,7 +35608,7 @@
 				"item_class": "map_token",
 				"item_type_name": "Map Stamp",
 				"item_name": "Map Stamp - Fastlane",
-				"item_description": "A Control Point Map\n\nMade by Arttu 'SK' M‰ki\n\nPurchasing this item directly supports the creator of the Fastlane community map.  Show your support today!",
+				"item_description": "A Control Point Map\n\nMade by Arttu 'SK' M√§ki\n\nPurchasing this item directly supports the creator of the Fastlane community map.  Show your support today!",
 				"proper_name": false,
 				"model_player": null,
 				"item_quality": 6,
@@ -35834,7 +35797,7 @@
 				"item_class": "map_token",
 				"item_type_name": "Map Stamp",
 				"item_name": "Map Stamp - Yukon",
-				"item_description": "A Control Point Map\n\nMade by Patrick 'MangyCarface' Mulholland and Joachim 'Acegikmo' HolmÈr\n\nPurchasing this item directly supports the creators of the Yukon community map.  Show your support today!",
+				"item_description": "A Control Point Map\n\nMade by Patrick 'MangyCarface' Mulholland and Joachim 'Acegikmo' Holm√©r\n\nPurchasing this item directly supports the creators of the Yukon community map.  Show your support today!",
 				"proper_name": false,
 				"model_player": null,
 				"item_quality": 6,
@@ -40817,7 +40780,7 @@
 				"item_class": "supply_crate",
 				"item_type_name": "TF_LockedCrate",
 				"item_name": "Festive Winter Crate",
-				"item_description": "This crate is unusually festive.\nIts contents are unknown and\nnormal keys don't fit the lock.\n\nYou'd better hold onto it.\nThere'll probably be a way to open it later.",
+				"item_description": "This crate is unusually festive.\nIts contents are unknown and\nnormal keys don't fit the lock.\n\nYou'd better hold onto it.\nThere will probably be a way to open it later.",
 				"proper_name": false,
 				"model_player": null,
 				"item_quality": 6,
@@ -41585,7 +41548,7 @@
 				"item_class": "supply_crate",
 				"item_type_name": "TF_LockedCrate",
 				"item_name": "Refreshing Summer Cooler",
-				"item_description": "This cooler's contents are unknown and\nnormal keys don't fit the lock.\n\nYou'd better hold onto it.\nThere'll probably be a way to open it later.",
+				"item_description": "This cooler's contents are unknown and\nnormal keys don't fit the lock.\n\nYou'd better hold onto it.\nThere will probably be a way to open it later.",
 				"proper_name": false,
 				"model_player": null,
 				"item_quality": 6,
@@ -43459,6 +43422,48 @@
 				
 			},
 			{
+				"name": "Robo Crate 2013",
+				"defindex": 5635,
+				"item_class": "supply_crate",
+				"item_type_name": "TF_LockedCrate",
+				"item_name": "RoboCrate",
+				"item_description": "This crate is special.\nIts contents are unknown and\nnormal keys don't fit the lock.\n\nYou'd better hold onto it.\nThere will probably be a way to open it later.",
+				"proper_name": false,
+				"model_player": null,
+				"item_quality": 6,
+				"image_inventory": "backpack\/player\/items\/crafting\/robo_crate",
+				"min_ilevel": 13,
+				"max_ilevel": 13,
+				"image_url": "http:\/\/media.steampowered.com\/apps\/440\/icons\/robo_crate.2813f8a94d1773dea9f3cf091eca301748ba11a3.png",
+				"image_url_large": "http:\/\/media.steampowered.com\/apps\/440\/icons\/robo_crate_large.eee4a49ff0cc034d3a9bdd5cb3412656803e2895.png",
+				"craft_class": "supply_crate",
+				"craft_material_type": "supply_crate",
+				"capabilities": {
+					"decodable": true,
+					"can_craft_mark": true,
+					"can_be_restored": true,
+					"strange_parts": true,
+					"can_card_upgrade": true,
+					"can_strangify": true
+				},
+				"tool": {
+					"type": "",
+					"restriction": "robo2013"
+				},
+				"used_by_classes": [
+
+				]
+				,
+				"attributes": [
+					{
+						"name": "set supply crate series",
+						"class": "supply_crate_series",
+						"value": 58.000000
+					}
+				]
+				
+			},
+			{
 				"name": "Strange Part (Armory)",
 				"defindex": 5999,
 				"item_class": "tool",
@@ -44644,8 +44649,8 @@
 				"defindex": 6037,
 				"item_class": "tool",
 				"item_type_name": "TF_StrangePart",
-				"item_name": "Strange Part: Kills While ‹bercharged",
-				"item_description": "Adding this Strange Part to a Strange-quality weapon will enable it to track the number of enemies you kill while you're under the effect of a Medic's ‹bercharge.",
+				"item_name": "Strange Part: Kills While √úbercharged",
+				"item_description": "Adding this Strange Part to a Strange-quality weapon will enable it to track the number of enemies you kill while you're under the effect of a Medic's √úbercharge.",
 				"proper_name": false,
 				"model_player": null,
 				"item_quality": 6,
@@ -55791,7 +55796,7 @@
 				"item_class": "tool",
 				"item_type_name": "TF_SpellTool",
 				"item_name": "Halloween Spell: Soldier's Booming Bark",
-				"item_description": "These spells make the Merc's voices 4% sexier and 130% spookier ñ except for Scout's, which is -5% sexier.\nThis spell can be applied to a Soldier hat.",
+				"item_description": "These spells make the Merc's voices 4% sexier and 130% spookier ‚Äì except for Scout's, which is -5% sexier.\nThis spell can be applied to a Soldier hat.",
 				"proper_name": false,
 				"model_player": null,
 				"item_quality": 6,
@@ -55833,7 +55838,7 @@
 				"item_class": "tool",
 				"item_type_name": "TF_SpellTool",
 				"item_name": "Halloween Spell: Scout's Spectral Snarl",
-				"item_description": "These spells make the Merc's voices 4% sexier and 130% spookier ñ except for Scout's, which is -5% sexier.\nThis spell can be applied to a Scout hat.",
+				"item_description": "These spells make the Merc's voices 4% sexier and 130% spookier ‚Äì except for Scout's, which is -5% sexier.\nThis spell can be applied to a Scout hat.",
 				"proper_name": false,
 				"model_player": null,
 				"item_quality": 6,
@@ -55875,7 +55880,7 @@
 				"item_class": "tool",
 				"item_type_name": "TF_SpellTool",
 				"item_name": "Halloween Spell: Sniper's Deep Downunder Drawl",
-				"item_description": "These spells make the Merc's voices 4% sexier and 130% spookier ñ except for Scout's, which is -5% sexier.\nThis spell can be applied to a Sniper hat.",
+				"item_description": "These spells make the Merc's voices 4% sexier and 130% spookier ‚Äì except for Scout's, which is -5% sexier.\nThis spell can be applied to a Sniper hat.",
 				"proper_name": false,
 				"model_player": null,
 				"item_quality": 6,
@@ -55917,7 +55922,7 @@
 				"item_class": "tool",
 				"item_type_name": "TF_SpellTool",
 				"item_name": "Halloween Spell: Engineers's Gravelly Growl",
-				"item_description": "These spells make the Merc's voices 4% sexier and 130% spookier ñ except for Scout's, which is -5% sexier.\nThis spell can be applied to a Engineer hat.",
+				"item_description": "These spells make the Merc's voices 4% sexier and 130% spookier ‚Äì except for Scout's, which is -5% sexier.\nThis spell can be applied to a Engineer hat.",
 				"proper_name": false,
 				"model_player": null,
 				"item_quality": 6,
@@ -55959,7 +55964,7 @@
 				"item_class": "tool",
 				"item_type_name": "TF_SpellTool",
 				"item_name": "Halloween Spell: Heavy's Bottomless Bass",
-				"item_description": "These spells make the Merc's voices 4% sexier and 130% spookier ñ except for Scout's, which is -5% sexier.\nThis spell can be applied to a Heavy hat.",
+				"item_description": "These spells make the Merc's voices 4% sexier and 130% spookier ‚Äì except for Scout's, which is -5% sexier.\nThis spell can be applied to a Heavy hat.",
 				"proper_name": false,
 				"model_player": null,
 				"item_quality": 6,
@@ -56001,7 +56006,7 @@
 				"item_class": "tool",
 				"item_type_name": "TF_SpellTool",
 				"item_name": "Halloween Spell: Demoman's Cadaverous Croak",
-				"item_description": "These spells make the Merc's voices 4% sexier and 130% spookier ñ except for Scout's, which is -5% sexier.\nThis spell can be applied to a Demoman hat.",
+				"item_description": "These spells make the Merc's voices 4% sexier and 130% spookier ‚Äì except for Scout's, which is -5% sexier.\nThis spell can be applied to a Demoman hat.",
 				"proper_name": false,
 				"model_player": null,
 				"item_quality": 6,
@@ -56043,7 +56048,7 @@
 				"item_class": "tool",
 				"item_type_name": "TF_SpellTool",
 				"item_name": "Halloween Spell: Pyro's Muffled Moan",
-				"item_description": "These spells make the Merc's voices 4% sexier and 130% spookier ñ except for Scout's, which is -5% sexier.\nThis spell can be applied to a Pyro hat.",
+				"item_description": "These spells make the Merc's voices 4% sexier and 130% spookier ‚Äì except for Scout's, which is -5% sexier.\nThis spell can be applied to a Pyro hat.",
 				"proper_name": false,
 				"model_player": null,
 				"item_quality": 6,
@@ -56085,7 +56090,7 @@
 				"item_class": "tool",
 				"item_type_name": "TF_SpellTool",
 				"item_name": "Halloween Spell: Spy's Creepy Croon",
-				"item_description": "These spells make the Merc's voices 4% sexier and 130% spookier ñ except for Scout's, which is -5% sexier.\nThis spell can be applied to a Spy hat.",
+				"item_description": "These spells make the Merc's voices 4% sexier and 130% spookier ‚Äì except for Scout's, which is -5% sexier.\nThis spell can be applied to a Spy hat.",
 				"proper_name": false,
 				"model_player": null,
 				"item_quality": 6,
@@ -56127,7 +56132,7 @@
 				"item_class": "tool",
 				"item_type_name": "TF_SpellTool",
 				"item_name": "Halloween Spell: Medic's Blood-curdling Bellow",
-				"item_description": "These spells make the Merc's voices 4% sexier and 130% spookier ñ except for Scout's, which is -5% sexier.\nThis spell can be applied to a Medic hat.",
+				"item_description": "These spells make the Merc's voices 4% sexier and 130% spookier ‚Äì except for Scout's, which is -5% sexier.\nThis spell can be applied to a Medic hat.",
 				"proper_name": false,
 				"model_player": null,
 				"item_quality": 6,
@@ -56754,7 +56759,7 @@
 				"name": "ubercharge rate penalty",
 				"defindex": 9,
 				"attribute_class": "mult_medigun_uberchargerate",
-				"description_string": "%s1% ‹berCharge rate",
+				"description_string": "%s1% √úberCharge rate",
 				"description_format": "value_is_percentage",
 				"effect_type": "negative",
 				"hidden": false,
@@ -56764,7 +56769,7 @@
 				"name": "ubercharge rate bonus",
 				"defindex": 10,
 				"attribute_class": "mult_medigun_uberchargerate",
-				"description_string": "+%s1% ‹berCharge rate",
+				"description_string": "+%s1% √úberCharge rate",
 				"description_format": "value_is_percentage",
 				"effect_type": "positive",
 				"hidden": false,
@@ -56834,7 +56839,7 @@
 				"name": "add uber charge on hit",
 				"defindex": 17,
 				"attribute_class": "add_onhit_ubercharge",
-				"description_string": "On Hit: %s1% ‹berCharge added",
+				"description_string": "On Hit: %s1% √úberCharge added",
 				"description_format": "value_is_additive_percentage",
 				"effect_type": "positive",
 				"hidden": false,
@@ -56844,7 +56849,7 @@
 				"name": "medigun charge is crit boost",
 				"defindex": 18,
 				"attribute_class": "set_charge_type",
-				"description_string": "‹berCharge grants 100% critical chance",
+				"description_string": "√úberCharge grants 100% critical chance",
 				"description_format": "value_is_additive",
 				"effect_type": "neutral",
 				"hidden": false,
@@ -58528,7 +58533,7 @@
 				"name": "preserve ubercharge",
 				"defindex": 188,
 				"attribute_class": "preserve_ubercharge",
-				"description_string": "On death up to %s1% of your stored\n‹berCharge is retained",
+				"description_string": "On death up to %s1% of your stored\n√úberCharge is retained",
 				"description_format": "value_is_additive",
 				"effect_type": "positive",
 				"hidden": false,
@@ -58916,7 +58921,7 @@
 				"name": "medigun charge is megaheal",
 				"defindex": 231,
 				"attribute_class": "set_charge_type",
-				"description_string": "‹berCharge increases healing by 300% and grants immunity to movement-impairing effects",
+				"description_string": "√úberCharge increases healing by 300% and grants immunity to movement-impairing effects",
 				"description_format": "value_is_additive",
 				"effect_type": "neutral",
 				"hidden": false,
@@ -58996,7 +59001,7 @@
 				"name": "ubercharge rate bonus for healer",
 				"defindex": 239,
 				"attribute_class": "mult_uberchargerate_for_healer",
-				"description_string": "+%s1% ‹berCharge rate for the medic healing you\nThis effect does not work in the respawn room",
+				"description_string": "+%s1% √úberCharge rate for the medic healing you\nThis effect does not work in the respawn room",
 				"description_format": "value_is_percentage",
 				"effect_type": "positive",
 				"hidden": false,
@@ -59336,7 +59341,7 @@
 				"name": "ubercharge",
 				"defindex": 274,
 				"attribute_class": "ubercharge",
-				"description_string": "Consumable: Become ‹bercharged for 5 seconds\n(and shield your sentry from damage)",
+				"description_string": "Consumable: Become √úbercharged for 5 seconds\n(and shield your sentry from damage)",
 				"description_format": "value_is_additive",
 				"effect_type": "positive",
 				"hidden": false,
@@ -59701,7 +59706,7 @@
 				"name": "uber duration bonus",
 				"defindex": 314,
 				"attribute_class": "add_uber_time",
-				"description_string": "‹ber duration increased %s1 seconds",
+				"description_string": "√úber duration increased %s1 seconds",
 				"description_format": "value_is_additive",
 				"effect_type": "positive",
 				"hidden": false,
@@ -63287,7 +63292,7 @@
 			},
 			{
 				"type": 49,
-				"type_name": "Kills While Invuln ‹berCharged",
+				"type_name": "Kills While Invuln √úberCharged",
 				"level_data": "KillEaterRank"
 			},
 			{

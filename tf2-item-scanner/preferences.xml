@@ -11,7 +11,7 @@
           <map/>
           <node name="gui">
             <map>
-              <entry key="STARTING_ID" value="76561197992203636"/>
+              <entry key="STARTING_ID" value="STEAM_0:1:123456"/>
               <entry key="SELECTED" value="Bonesaw;Unique;8;http://media.steampowered.com/apps/440/icons/c_bonesaw.3ea746d98dc8e42f2a0b85c8381cebd775eb97be.png$Shotgun;Unique;10;http://media.steampowered.com/apps/440/icons/w_shotgun.1d9c8ea9d8b2b14b331ae22427c5e624f6d5d60c.png$Fire Axe;Unique;2;http://media.steampowered.com/apps/440/icons/c_fireaxe_pyro.f1743d06c5ad3ed4cccbfb1a5ff844c6ef84ac3f.png$Kritzkrieg;Strange;35;http://media.steampowered.com/apps/440/icons/c_overhealer.b5ed539b534216652b45694e19c78d2aaebcfe5e.png$"/>
               <entry key="PROFILES_COUNT" value="100"/>
               <entry key="PRICE" value="0"/>

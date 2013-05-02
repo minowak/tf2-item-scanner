@@ -141,7 +141,7 @@ public class ListUpdater extends Thread {
 				if((ss - (ss - wasOnline*DAY) > ss-user.lastOnline()*1000)
 						&& (maxVal == 0.0 || bpValue <= maxVal)
 						&& (itemsCount == 0 || itemsCount >= user.bpSize())
-						&& !(medals && user.hasMedals())) {
+						&& (!medals || !user.hasMedals())) {
 					if(user.hasUnusual()) {
 						found = true;
 						searchedFor.add(new TF2Item("UNUSUAL", 0, ItemQuality.UNUSUAL));

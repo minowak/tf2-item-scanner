@@ -66,6 +66,7 @@ import javax.swing.event.DocumentListener;
 import com.minowak.scanner.engine.SteamProfile;
 import com.minowak.scanner.schema.ItemQuality;
 import com.minowak.scanner.schema.SchemaParser;
+import com.minowak.scanner.schema.SchemaUpdater;
 import com.minowak.scanner.schema.TF2Item;
 import com.minowak.scanner.utils.Configuration;
 import com.minowak.scanner.utils.QualityCellRenderer;
@@ -141,6 +142,7 @@ public class MainWindow extends JFrame {
 	private JMenu helpMenu;
 	private JMenuItem webApiItem;
 	private JMenuItem aboutItem;
+	private JMenuItem schemaItem;
 
 	private static MainWindow instance = null;
 
@@ -160,7 +162,7 @@ public class MainWindow extends JFrame {
 		try {
 			fileTxt = new FileHandler("scanner.log");
 		} catch (Exception e) {
-			LOGGER.severe(e.getMessage());
+			LOGGER.info(e.getMessage());
 		}
 		fileTxt.setFormatter(new SimpleFormatter());
 		LOGGER.addHandler(fileTxt);
@@ -170,7 +172,7 @@ public class MainWindow extends JFrame {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 			ToolTipManager.sharedInstance().setInitialDelay(0);
 		} catch (Exception e) {
-			LOGGER.severe(e.getMessage());
+			LOGGER.info(e.getMessage());
 		}
 
 		items = getItemsFromSchema();
@@ -204,7 +206,7 @@ public class MainWindow extends JFrame {
 			BufferedReader br = new BufferedReader(new FileReader(new File("steamapi")));
 			Configuration.API_KEY = br.readLine();
 		} catch(Exception e) {
-			LOGGER.severe(e.getMessage() + "");
+			LOGGER.info(e.getMessage() + "");
 		}
 
 		panel = new JPanel();
@@ -221,6 +223,7 @@ public class MainWindow extends JFrame {
 
 		idTextField = new JTextField(20);
 		idTextField.setText("76561197992203636");
+		idTextField.setToolTipText("Type steam id, steam id 64 or vanity url");
 		idLabel = new JLabel("Starting STEAM_ID64");
 		itemListLabel = new JLabel("Select Items");
 
@@ -274,7 +277,7 @@ public class MainWindow extends JFrame {
 
 		            selected.setSelectedIndex(index);
 		            selectedListModel.removeElement(selected.getSelectedValue());
-		            selectedItems.remove(itemList.getSelectedValue());
+		            selectedItems.remove(selected.getSelectedValue());
 		            selected.validate();
 		        }
 		    }
@@ -297,6 +300,7 @@ public class MainWindow extends JFrame {
 
 		filterLabel = new JLabel("Filter: ");
 		filterTextField = new JTextField(20);
+		filterTextField.setToolTipText("Start typing item name");
 		filterTextField.getDocument().addDocumentListener(new DocumentListener() {
 			@Override
 			public void removeUpdate(DocumentEvent arg0) {
@@ -338,14 +342,17 @@ public class MainWindow extends JFrame {
 		timeLabel = new JLabel("Played no more than");
 		timeTextField = new JTextField(3);
 		timeTextField.setText("0");
+		timeTextField.setToolTipText("Overall time spent in TF2. It doesn't work 100% of the time. Steam APIs fault");
 
 		wasOnlineLabels = new JLabel[2];
 		wasOnlineLabels[0] = new JLabel("Online");
 		wasOnlineLabels[1] = new JLabel("days ago");
 		wasOnlineText = new JTextField(3);
 		wasOnlineText.setText("7");
+		wasOnlineText.setToolTipText("Was online no more than ... days ago");
 
 		ignoreMedalsCB = new JCheckBox("Ignore medals");
+		ignoreMedalsCB.setToolTipText("Ignores profiles with ETF2L and UGC medals");
 
 		timePanel.add(timeLabel);
 		timePanel.add(timeTextField);
@@ -452,13 +459,16 @@ public class MainWindow extends JFrame {
 		profilesToScan = new JLabel("Profiles to scan");
 		profilesCount = new JTextField(3);
 		profilesCount.setText("100");
+		profilesCount.setToolTipText("To be safe do not scan more than 10k profiles a day");
 
 		valueTextField = new JTextField(3);
 		valueTextField.setText("0");
+		valueTextField.setToolTipText("Search for profiles with given maximum value. 1 refined = 0.35$");
 		valueLabel = new JLabel("Maximum BP value ");
 
 		itemsCount = new JLabel("Items count ");
 		itemCountTextField = new JTextField(4);
+		itemCountTextField.setToolTipText("Maximum nr of items in backpack. Standard premium is 2000");
 
 		controlPanel.add(searchBtn);
 		controlPanel.add(stopBtn);
@@ -684,6 +694,7 @@ public class MainWindow extends JFrame {
 		menuBar.add(helpMenu);
 		aboutItem = new JMenuItem("About");
 		webApiItem = new JMenuItem("Set API key");
+		schemaItem = new JMenuItem("Update schema");
 		webApiItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -716,14 +727,29 @@ public class MainWindow extends JFrame {
 		aboutItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				JPanel panel = new JPanel();
-				JLabel label = new JLabel("Writen by News. Enjoy!");
-				panel.add(label);
 				showInfoDialog("Written by News. Enjoy!");
 			}
 		});
 
+		schemaItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					SchemaUpdater.getInstance().updateSchema();
+					items = getItemsFromSchema();
+					listModel.removeAllElements();
+					for(TF2Item item : items) {
+						listModel.addElement(item);
+					}
+					showInfoDialog("Schema updated.");
+				} catch(IOException e) {
+					showInfoDialog("Error while updating schema.");
+				}
+			}
+		});
+
 		fileMenu.add(webApiItem);
+		fileMenu.add(schemaItem);
 		helpMenu.add(aboutItem);
 
 		setJMenuBar(menuBar);
@@ -735,7 +761,7 @@ public class MainWindow extends JFrame {
 				.parse();
 		} catch (Exception e) {
 			LOGGER.severe(e.getMessage() + "");
-			showErrorDialog(e.getMessage() + "");
+			showInfoDialog(e.getMessage() + "");
 		}
 		return null;
 	}
@@ -745,7 +771,7 @@ public class MainWindow extends JFrame {
                 Desktop.getDesktop().browse(new URI(url));
         } catch (URISyntaxException | IOException ex) {
         	LOGGER.severe(ex.getMessage() + "");
-        	showErrorDialog(ex.getMessage() + "");
+        	showInfoDialog(ex.getMessage() + "");
         }
     }
 
