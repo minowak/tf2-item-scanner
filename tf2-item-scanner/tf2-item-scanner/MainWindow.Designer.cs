@@ -32,8 +32,9 @@ namespace tf2_item_scanner
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
@@ -46,6 +47,9 @@ namespace tf2_item_scanner
             this.label1 = new System.Windows.Forms.Label();
             this.startingIdTextBox = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.label8 = new System.Windows.Forms.Label();
+            this.itemsCountTextBox = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.apiTextBox = new System.Windows.Forms.TextBox();
             this.stopBtn = new System.Windows.Forms.Button();
@@ -58,9 +62,10 @@ namespace tf2_item_scanner
             this.valueTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.profilesCountTextBox = new System.Windows.Forms.TextBox();
-            this.gridView = new System.Windows.Forms.DataGridView();
-            this.column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.column2 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.selectedDataGrid = new System.Windows.Forms.DataGridView();
+            this.selectedColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.nameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.imageColumn = new System.Windows.Forms.DataGridViewImageColumn();
             this.stockColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.strangeColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.vintageColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
@@ -72,22 +77,24 @@ namespace tf2_item_scanner
             this.searchTextBox = new System.Windows.Forms.TextBox();
             this.leftListBox = new System.Windows.Forms.ListBox();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
+            this.schemaUpdaterWorker = new System.ComponentModel.BackgroundWorker();
+            this.scanningWorker = new System.ComponentModel.BackgroundWorker();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.itemsTab = new System.Windows.Forms.TabPage();
+            this.deleteButton = new System.Windows.Forms.Button();
+            this.clearBtn = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.resultsDataGrid = new System.Windows.Forms.DataGridView();
+            this.clearResultsBtn = new System.Windows.Forms.Button();
             this.Column13 = new System.Windows.Forms.DataGridViewImageColumn();
             this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column14 = new System.Windows.Forms.DataGridViewLinkColumn();
-            this.itemsCountTextBox = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.selectedDataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.itemsTab.SuspendLayout();
@@ -102,7 +109,7 @@ namespace tf2_item_scanner
             this.toolStripProgressBar1});
             this.statusStrip1.Location = new System.Drawing.Point(0, 518);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(772, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(801, 22);
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -126,7 +133,7 @@ namespace tf2_item_scanner
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(772, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(801, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -185,6 +192,7 @@ namespace tf2_item_scanner
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.linkLabel1);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.itemsCountTextBox);
             this.groupBox1.Controls.Add(this.label7);
@@ -203,10 +211,39 @@ namespace tf2_item_scanner
             this.groupBox1.Controls.Add(this.startingIdTextBox);
             this.groupBox1.Location = new System.Drawing.Point(12, 27);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(750, 104);
+            this.groupBox1.Size = new System.Drawing.Size(773, 104);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Settings";
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.LinkArea = new System.Windows.Forms.LinkArea(25, 29);
+            this.linkLabel1.Location = new System.Drawing.Point(459, 45);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(157, 17);
+            this.linkLabel1.TabIndex = 18;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "You can get your API key here";
+            this.linkLabel1.UseCompatibleTextRendering = true;
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(386, 74);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(62, 13);
+            this.label8.TabIndex = 17;
+            this.label8.Text = "Items count";
+            // 
+            // itemsCountTextBox
+            // 
+            this.itemsCountTextBox.Location = new System.Drawing.Point(462, 70);
+            this.itemsCountTextBox.Name = "itemsCountTextBox";
+            this.itemsCountTextBox.Size = new System.Drawing.Size(69, 20);
+            this.itemsCountTextBox.TabIndex = 16;
             // 
             // label7
             // 
@@ -221,15 +258,15 @@ namespace tf2_item_scanner
             // 
             this.apiTextBox.Location = new System.Drawing.Point(462, 19);
             this.apiTextBox.Name = "apiTextBox";
-            this.apiTextBox.Size = new System.Drawing.Size(260, 20);
+            this.apiTextBox.Size = new System.Drawing.Size(283, 20);
             this.apiTextBox.TabIndex = 14;
             this.apiTextBox.Text = global::tf2_item_scanner.Properties.Settings.Default.ApiKey;
             // 
             // stopBtn
             // 
-            this.stopBtn.Location = new System.Drawing.Point(659, 49);
+            this.stopBtn.Location = new System.Drawing.Point(657, 67);
             this.stopBtn.Name = "stopBtn";
-            this.stopBtn.Size = new System.Drawing.Size(63, 42);
+            this.stopBtn.Size = new System.Drawing.Size(89, 26);
             this.stopBtn.TabIndex = 13;
             this.stopBtn.Text = "Stop";
             this.stopBtn.UseVisualStyleBackColor = true;
@@ -237,9 +274,9 @@ namespace tf2_item_scanner
             // 
             // startBtn
             // 
-            this.startBtn.Location = new System.Drawing.Point(591, 49);
+            this.startBtn.Location = new System.Drawing.Point(563, 67);
             this.startBtn.Name = "startBtn";
-            this.startBtn.Size = new System.Drawing.Size(62, 42);
+            this.startBtn.Size = new System.Drawing.Size(88, 26);
             this.startBtn.TabIndex = 12;
             this.startBtn.Text = "Start";
             this.startBtn.UseVisualStyleBackColor = true;
@@ -313,16 +350,17 @@ namespace tf2_item_scanner
             this.profilesCountTextBox.TabIndex = 4;
             this.profilesCountTextBox.Text = "100";
             // 
-            // gridView
+            // selectedDataGrid
             // 
-            this.gridView.AllowUserToAddRows = false;
-            this.gridView.AllowUserToResizeRows = false;
-            this.gridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridView.BackgroundColor = System.Drawing.SystemColors.Window;
-            this.gridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.column1,
-            this.column2,
+            this.selectedDataGrid.AllowUserToAddRows = false;
+            this.selectedDataGrid.AllowUserToResizeRows = false;
+            this.selectedDataGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.selectedDataGrid.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.selectedDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.selectedDataGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.selectedColumn,
+            this.nameColumn,
+            this.imageColumn,
             this.stockColumn,
             this.strangeColumn,
             this.vintageColumn,
@@ -330,36 +368,47 @@ namespace tf2_item_scanner
             this.genuineColumn,
             this.unusualColumn,
             this.hauntedColumn});
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.gridView.DefaultCellStyle = dataGridViewCellStyle3;
-            this.gridView.Location = new System.Drawing.Point(220, 45);
-            this.gridView.Name = "gridView";
-            this.gridView.RowHeadersVisible = false;
-            this.gridView.Size = new System.Drawing.Size(513, 303);
-            this.gridView.TabIndex = 4;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.selectedDataGrid.DefaultCellStyle = dataGridViewCellStyle1;
+            this.selectedDataGrid.Location = new System.Drawing.Point(220, 45);
+            this.selectedDataGrid.Name = "selectedDataGrid";
+            this.selectedDataGrid.RowHeadersVisible = false;
+            this.selectedDataGrid.Size = new System.Drawing.Size(543, 303);
+            this.selectedDataGrid.TabIndex = 4;
+            this.selectedDataGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.selectedCell_ContentClick);
             // 
-            // column1
+            // selectedColumn
             // 
-            this.column1.FillWeight = 134.7716F;
-            this.column1.HeaderText = "Name";
-            this.column1.Name = "column1";
+            this.selectedColumn.FalseValue = "false";
+            this.selectedColumn.FillWeight = 26.28842F;
+            this.selectedColumn.HeaderText = "";
+            this.selectedColumn.IndeterminateValue = "false";
+            this.selectedColumn.Name = "selectedColumn";
+            this.selectedColumn.TrueValue = "true";
             // 
-            // column2
+            // nameColumn
             // 
-            this.column2.FillWeight = 30.45685F;
-            this.column2.HeaderText = "Image";
-            this.column2.Name = "column2";
+            this.nameColumn.FillWeight = 194.7304F;
+            this.nameColumn.HeaderText = "Name";
+            this.nameColumn.Name = "nameColumn";
+            this.nameColumn.ReadOnly = true;
+            // 
+            // imageColumn
+            // 
+            this.imageColumn.FillWeight = 44.00686F;
+            this.imageColumn.HeaderText = "Image";
+            this.imageColumn.Name = "imageColumn";
             // 
             // stockColumn
             // 
             this.stockColumn.FalseValue = "false";
-            this.stockColumn.FillWeight = 25F;
+            this.stockColumn.FillWeight = 36.1223F;
             this.stockColumn.HeaderText = "STK";
             this.stockColumn.IndeterminateValue = "false";
             this.stockColumn.Name = "stockColumn";
@@ -367,42 +416,42 @@ namespace tf2_item_scanner
             // 
             // strangeColumn
             // 
-            this.strangeColumn.FillWeight = 25F;
+            this.strangeColumn.FillWeight = 36.1223F;
             this.strangeColumn.HeaderText = "STR";
             this.strangeColumn.IndeterminateValue = "false";
             this.strangeColumn.Name = "strangeColumn";
             // 
             // vintageColumn
             // 
-            this.vintageColumn.FillWeight = 25F;
+            this.vintageColumn.FillWeight = 36.1223F;
             this.vintageColumn.HeaderText = "VTG";
             this.vintageColumn.IndeterminateValue = "false";
             this.vintageColumn.Name = "vintageColumn";
             // 
             // uniqueColumn
             // 
-            this.uniqueColumn.FillWeight = 25F;
+            this.uniqueColumn.FillWeight = 36.1223F;
             this.uniqueColumn.HeaderText = "UNQ";
             this.uniqueColumn.IndeterminateValue = "false";
             this.uniqueColumn.Name = "uniqueColumn";
             // 
             // genuineColumn
             // 
-            this.genuineColumn.FillWeight = 25F;
+            this.genuineColumn.FillWeight = 36.1223F;
             this.genuineColumn.HeaderText = "GEN";
             this.genuineColumn.IndeterminateValue = "false";
             this.genuineColumn.Name = "genuineColumn";
             // 
             // unusualColumn
             // 
-            this.unusualColumn.FillWeight = 25F;
+            this.unusualColumn.FillWeight = 36.1223F;
             this.unusualColumn.HeaderText = "UNU";
             this.unusualColumn.IndeterminateValue = "false";
             this.unusualColumn.Name = "unusualColumn";
             // 
             // hauntedColumn
             // 
-            this.hauntedColumn.FillWeight = 25F;
+            this.hauntedColumn.FillWeight = 36.1223F;
             this.hauntedColumn.HeaderText = "HAU";
             this.hauntedColumn.IndeterminateValue = "false";
             this.hauntedColumn.Name = "hauntedColumn";
@@ -438,18 +487,18 @@ namespace tf2_item_scanner
             this.errorProvider.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
             this.errorProvider.ContainerControl = this;
             // 
-            // backgroundWorker1
+            // schemaUpdaterWorker
             // 
-            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
-            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
+            this.schemaUpdaterWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            this.schemaUpdaterWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
             // 
-            // backgroundWorker2
+            // scanningWorker
             // 
-            this.backgroundWorker2.WorkerReportsProgress = true;
-            this.backgroundWorker2.WorkerSupportsCancellation = true;
-            this.backgroundWorker2.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker2_DoWork);
-            this.backgroundWorker2.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker2_ProgressChanged);
-            this.backgroundWorker2.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker2_RunWorkerCompleted);
+            this.scanningWorker.WorkerReportsProgress = true;
+            this.scanningWorker.WorkerSupportsCancellation = true;
+            this.scanningWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker2_DoWork);
+            this.scanningWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker2_ProgressChanged);
+            this.scanningWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker2_RunWorkerCompleted);
             // 
             // tabControl1
             // 
@@ -458,32 +507,56 @@ namespace tf2_item_scanner
             this.tabControl1.Location = new System.Drawing.Point(12, 135);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(754, 380);
+            this.tabControl1.Size = new System.Drawing.Size(777, 380);
             this.tabControl1.TabIndex = 5;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabColtrol1_SelectedIndexChanged);
             // 
             // itemsTab
             // 
             this.itemsTab.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.itemsTab.Controls.Add(this.gridView);
+            this.itemsTab.Controls.Add(this.deleteButton);
+            this.itemsTab.Controls.Add(this.clearBtn);
+            this.itemsTab.Controls.Add(this.selectedDataGrid);
             this.itemsTab.Controls.Add(this.leftListBox);
             this.itemsTab.Controls.Add(this.searchTextBox);
             this.itemsTab.Controls.Add(this.label6);
             this.itemsTab.Location = new System.Drawing.Point(4, 22);
             this.itemsTab.Name = "itemsTab";
             this.itemsTab.Padding = new System.Windows.Forms.Padding(3);
-            this.itemsTab.Size = new System.Drawing.Size(746, 354);
+            this.itemsTab.Size = new System.Drawing.Size(769, 354);
             this.itemsTab.TabIndex = 0;
             this.itemsTab.Text = "Items";
+            // 
+            // deleteButton
+            // 
+            this.deleteButton.Enabled = false;
+            this.deleteButton.Location = new System.Drawing.Point(598, 6);
+            this.deleteButton.Name = "deleteButton";
+            this.deleteButton.Size = new System.Drawing.Size(75, 23);
+            this.deleteButton.TabIndex = 6;
+            this.deleteButton.Text = "Delete";
+            this.deleteButton.UseVisualStyleBackColor = true;
+            this.deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
+            // 
+            // clearBtn
+            // 
+            this.clearBtn.Location = new System.Drawing.Point(688, 6);
+            this.clearBtn.Name = "clearBtn";
+            this.clearBtn.Size = new System.Drawing.Size(75, 23);
+            this.clearBtn.TabIndex = 5;
+            this.clearBtn.Text = "Clear";
+            this.clearBtn.UseVisualStyleBackColor = true;
+            this.clearBtn.Click += new System.EventHandler(this.clearBtn_Click);
             // 
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabPage2.Controls.Add(this.clearResultsBtn);
             this.tabPage2.Controls.Add(this.resultsDataGrid);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(746, 354);
+            this.tabPage2.Size = new System.Drawing.Size(769, 354);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Results";
             // 
@@ -498,89 +571,94 @@ namespace tf2_item_scanner
             this.Column13,
             this.Column11,
             this.Column12,
+            this.stateColumn,
             this.Column14});
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.Transparent;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Transparent;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.resultsDataGrid.DefaultCellStyle = dataGridViewCellStyle4;
-            this.resultsDataGrid.Location = new System.Drawing.Point(3, 3);
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Transparent;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Transparent;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.resultsDataGrid.DefaultCellStyle = dataGridViewCellStyle2;
+            this.resultsDataGrid.Location = new System.Drawing.Point(3, 29);
             this.resultsDataGrid.Name = "resultsDataGrid";
             this.resultsDataGrid.ReadOnly = true;
             this.resultsDataGrid.RowHeadersVisible = false;
-            this.resultsDataGrid.Size = new System.Drawing.Size(740, 348);
+            this.resultsDataGrid.Size = new System.Drawing.Size(766, 322);
             this.resultsDataGrid.TabIndex = 0;
             this.resultsDataGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.cellContent_Click);
             // 
+            // clearResultsBtn
+            // 
+            this.clearResultsBtn.Location = new System.Drawing.Point(688, 3);
+            this.clearResultsBtn.Name = "clearResultsBtn";
+            this.clearResultsBtn.Size = new System.Drawing.Size(75, 23);
+            this.clearResultsBtn.TabIndex = 1;
+            this.clearResultsBtn.Text = "Clear";
+            this.clearResultsBtn.UseVisualStyleBackColor = true;
+            this.clearResultsBtn.Click += new System.EventHandler(this.clearResultsBtn_Click);
+            // 
             // Column13
             // 
-            this.Column13.FillWeight = 40.60914F;
+            this.Column13.FillWeight = 19.77071F;
             this.Column13.HeaderText = "Item found";
             this.Column13.Name = "Column13";
             this.Column13.ReadOnly = true;
             // 
             // Column11
             // 
-            this.Column11.FillWeight = 119.797F;
+            this.Column11.FillWeight = 80F;
             this.Column11.HeaderText = "Name";
             this.Column11.Name = "Column11";
             this.Column11.ReadOnly = true;
             // 
             // Column12
             // 
-            this.Column12.FillWeight = 119.797F;
+            this.Column12.FillWeight = 20F;
             this.Column12.HeaderText = "Value";
             this.Column12.Name = "Column12";
             this.Column12.ReadOnly = true;
             // 
+            // stateColumn
+            // 
+            this.stateColumn.FillWeight = 16.5784F;
+            this.stateColumn.HeaderText = "State";
+            this.stateColumn.Name = "stateColumn";
+            this.stateColumn.ReadOnly = true;
+            // 
             // Column14
             // 
-            this.Column14.FillWeight = 119.797F;
+            this.Column14.FillWeight = 42.0031F;
             this.Column14.HeaderText = "Profile";
             this.Column14.Name = "Column14";
             this.Column14.ReadOnly = true;
             this.Column14.Text = "Backpack.tf";
-            // 
-            // itemsCountTextBox
-            // 
-            this.itemsCountTextBox.Location = new System.Drawing.Point(462, 45);
-            this.itemsCountTextBox.Name = "itemsCountTextBox";
-            this.itemsCountTextBox.Size = new System.Drawing.Size(100, 20);
-            this.itemsCountTextBox.TabIndex = 16;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(386, 49);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(62, 13);
-            this.label8.TabIndex = 17;
-            this.label8.Text = "Items count";
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.MenuBar;
-            this.ClientSize = new System.Drawing.Size(772, 540);
+            this.ClientSize = new System.Drawing.Size(801, 540);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "MainWindow";
             this.Text = "News Scanner";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.formClosing);
+            this.Load += new System.EventHandler(this.MainWindow_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.selectedDataGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.itemsTab.ResumeLayout(false);
@@ -619,31 +697,37 @@ namespace tf2_item_scanner
         private System.Windows.Forms.ListBox leftListBox;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox searchTextBox;
-        private System.Windows.Forms.DataGridView gridView;
+        private System.Windows.Forms.DataGridView selectedDataGrid;
         private System.Windows.Forms.ErrorProvider errorProvider;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox apiTextBox;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private System.ComponentModel.BackgroundWorker backgroundWorker2;
+        private System.ComponentModel.BackgroundWorker schemaUpdaterWorker;
+        private System.ComponentModel.BackgroundWorker scanningWorker;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage itemsTab;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.DataGridView resultsDataGrid;
-        private System.Windows.Forms.DataGridViewTextBoxColumn column1;
-        private System.Windows.Forms.DataGridViewImageColumn column2;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn stockColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn strangeColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn vintageColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn uniqueColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn genuineColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn unusualColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn hauntedColumn;
+        private Label label8;
+        private TextBox itemsCountTextBox;
+        private Button clearBtn;
+        private DataGridViewCheckBoxColumn selectedColumn;
+        private DataGridViewTextBoxColumn nameColumn;
+        private DataGridViewImageColumn imageColumn;
+        private DataGridViewCheckBoxColumn stockColumn;
+        private DataGridViewCheckBoxColumn strangeColumn;
+        private DataGridViewCheckBoxColumn vintageColumn;
+        private DataGridViewCheckBoxColumn uniqueColumn;
+        private DataGridViewCheckBoxColumn genuineColumn;
+        private DataGridViewCheckBoxColumn unusualColumn;
+        private DataGridViewCheckBoxColumn hauntedColumn;
+        private Button deleteButton;
+        private LinkLabel linkLabel1;
+        private Button clearResultsBtn;
         private DataGridViewImageColumn Column13;
         private DataGridViewTextBoxColumn Column11;
         private DataGridViewTextBoxColumn Column12;
+        private DataGridViewTextBoxColumn stateColumn;
         private DataGridViewLinkColumn Column14;
-        private Label label8;
-        private TextBox itemsCountTextBox;
     }
 }
 

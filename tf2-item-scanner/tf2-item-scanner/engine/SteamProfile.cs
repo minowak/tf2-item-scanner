@@ -10,11 +10,16 @@ namespace tf2_item_scanner.engine
         private string _name;
         private string _id;
         private double _value;
-        private bool _visited;
         private bool _f2p;
         private TF2Item _itemFound;
+        private string _state;
 
         #region PROPERTIES
+
+        public string State
+        {
+            get { return _state; }
+        }
 
         public string Name
         {
@@ -38,11 +43,6 @@ namespace tf2_item_scanner.engine
 
         #endregion
 
-        public void visit() 
-        {
-            _visited = true;
-        }
-
         #region CONSTRUCTORS
 
         public SteamProfile(string name, string id)
@@ -51,14 +51,14 @@ namespace tf2_item_scanner.engine
             _id = id;
         }
 
-        public SteamProfile(string name, string id, bool visited, bool f2p, double value, TF2Item itemFound)
+        public SteamProfile(string name, string id, bool f2p, double value, TF2Item itemFound, string state)
         {
             _name = name;
             _id = id;
-            _visited = visited;
             _f2p = f2p;
             _value = value;
             _itemFound = itemFound;
+            _state = state;
         }
 
         #endregion
@@ -74,23 +74,18 @@ namespace tf2_item_scanner.engine
 
         public string Serialize()
         {
-            return _name + ";" + _id + ";" + _visited;
+            return _name + ";" + _id + ";" + _state;
         }
 
         public static SteamProfile Deserialize(string serialized)
         {
             string[] ss = serialized.Split(';');
-            return new SteamProfile(ss[0], ss[1], Boolean.Parse(ss[2]), false, 0.0, null);
+            return new SteamProfile(ss[0], ss[1], Boolean.Parse(ss[2]), 0.0, null, ss[2]);
         }
 
         public bool IsF2P()
         {
             return _f2p;
-        }
-
-        public bool IsVisited()
-        {
-            return _visited;
         }
     }
 }

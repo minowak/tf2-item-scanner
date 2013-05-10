@@ -18,6 +18,7 @@ namespace tf2_item_scanner.engine
         private long _lastOnline;
         private List<string> _friends = new List<string>();
         private string _name;
+        private string _state;
 
         public SteamUser(string id)
         {
@@ -87,6 +88,16 @@ namespace tf2_item_scanner.engine
                 JObject player = (JObject)((JArray)response["players"])[0];
                 _lastOnline = (long)player["lastlogoff"];
                 _name = (string)player["personaname"];
+                switch ((int)player["personastate"])
+                {
+                    case 0: _state = "Offline"; break;
+                    case 5:
+                    case 6:
+                    case 1: _state = "Online"; break;
+                    case 2: _state = "Busy"; break;
+                    case 3: _state = "Away"; break;
+                    case 4: _state = "Snooze"; break;
+                }
 
                 json = Utils.GetJson(_apiUrl3);
 
@@ -115,6 +126,11 @@ namespace tf2_item_scanner.engine
         public List<string> FriendsIds
         {
             get { return _friends; }
+        }
+
+        public string State
+        {
+            get { return _state; }
         }
 
         public double Value

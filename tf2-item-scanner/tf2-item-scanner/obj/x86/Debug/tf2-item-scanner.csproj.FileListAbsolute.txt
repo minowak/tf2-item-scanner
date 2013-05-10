@@ -15,3 +15,14 @@ C:\Users\News\Documents\GitHub\mobile-de\tf2-item-scanner\tf2-item-scanner\obj\x
 C:\Users\News\Documents\GitHub\tf2-item-scanner\tf2-item-scanner\tf2-item-scanner\bin\Debug\tf2-item-scanner.exe.config
 C:\Users\News\Documents\GitHub\tf2-item-scanner\tf2-item-scanner\tf2-item-scanner\obj\x86\Debug\tf2-item-scanner.exe
 C:\Users\News\Documents\GitHub\tf2-item-scanner\tf2-item-scanner\tf2-item-scanner\obj\x86\Debug\tf2-item-scanner.pdb
+C:\Users\News\Documents\GitHub\tf2-item-scanner\tf2-item-scanner\tf2-item-scanner\bin\Debug\tf2-item-scanner.exe.manifest
+C:\Users\News\Documents\GitHub\tf2-item-scanner\tf2-item-scanner\tf2-item-scanner\bin\Debug\tf2-item-scanner.application
+C:\Users\News\Documents\GitHub\tf2-item-scanner\tf2-item-scanner\tf2-item-scanner\bin\Debug\tf2-item-scanner.exe
+C:\Users\News\Documents\GitHub\tf2-item-scanner\tf2-item-scanner\tf2-item-scanner\bin\Debug\tf2-item-scanner.pdb
+C:\Users\News\Documents\GitHub\tf2-item-scanner\tf2-item-scanner\tf2-item-scanner\bin\Debug\Newtonsoft.Json.dll
+C:\Users\News\Documents\GitHub\tf2-item-scanner\tf2-item-scanner\tf2-item-scanner\obj\x86\Debug\tf2-item-scanner.csprojResolveAssemblyReference.cache
+C:\Users\News\Documents\GitHub\tf2-item-scanner\tf2-item-scanner\tf2-item-scanner\obj\x86\Debug\tf2_item_scanner.MainWindow.resources
+C:\Users\News\Documents\GitHub\tf2-item-scanner\tf2-item-scanner\tf2-item-scanner\obj\x86\Debug\tf2_item_scanner.Properties.Resources.resources
+C:\Users\News\Documents\GitHub\tf2-item-scanner\tf2-item-scanner\tf2-item-scanner\obj\x86\Debug\tf2-item-scanner.csproj.GenerateResource.Cache
+C:\Users\News\Documents\GitHub\tf2-item-scanner\tf2-item-scanner\tf2-item-scanner\obj\x86\Debug\tf2-item-scanner.exe.manifest
+C:\Users\News\Documents\GitHub\tf2-item-scanner\tf2-item-scanner\tf2-item-scanner\obj\x86\Debug\tf2-item-scanner.application
