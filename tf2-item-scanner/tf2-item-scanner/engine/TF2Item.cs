@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using tf2_item_scanner.utils;
+using System.Runtime.Serialization;
 
 namespace tf2_item_scanner.engine
 {
-    class TF2Item
+    [Serializable()]
+    class TF2Item : ISerializable
     {
         private string _name;
         private long _defIndex;
@@ -43,6 +45,14 @@ namespace tf2_item_scanner.engine
 
         #region CONSTRUCTORS
 
+        public TF2Item(SerializationInfo info, StreamingContext ctx)
+        {
+            _name = (string)info.GetValue("Name", typeof(string));
+            _defIndex = (long)info.GetValue("DefinitionIndex", typeof(long));
+            _quality = (ItemQuality)info.GetValue("Quality", typeof(ItemQuality));
+            _imgUrl = (string)info.GetValue("ImgUrl", typeof(string));
+        }
+
         public TF2Item(string name, long defIndex, ItemQuality quality)
         {
             _name = name;
@@ -55,6 +65,7 @@ namespace tf2_item_scanner.engine
             _name = copy.Name;
             _defIndex = copy.DefinitionIndex;
             _quality = copy.Quality;
+            _imgUrl = copy.Image;
         }
 
         #endregion
@@ -100,6 +111,18 @@ namespace tf2_item_scanner.engine
             item.Image = attrs[3];
 
             return item;
+        }
+
+        #endregion
+
+        #region SERIALIZATION
+
+        public void GetObjectData(SerializationInfo info, StreamingContext ctx)
+        {
+            info.AddValue("Name", _name);
+            info.AddValue("DefinitionIndex", _defIndex);
+            info.AddValue("Quality", _quality);
+            info.AddValue("ImgUrl", _imgUrl);
         }
 
         #endregion

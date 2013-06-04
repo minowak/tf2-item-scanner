@@ -14,10 +14,10 @@
     <Setting Name="Value" Type="System.Double" Scope="User">
       <Value Profile="(Default)">1000</Value>
     </Setting>
-    <Setting Name="Playtime" Type="System.Int64" Scope="User">
+    <Setting Name="Playtime" Type="System.Double" Scope="User">
       <Value Profile="(Default)">1000</Value>
     </Setting>
-    <Setting Name="Online" Type="System.Int64" Scope="User">
+    <Setting Name="Online" Type="System.Double" Scope="User">
       <Value Profile="(Default)">1000</Value>
     </Setting>
     <Setting Name="ItemsCount" Type="System.Int64" Scope="User">

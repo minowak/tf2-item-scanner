@@ -74,9 +74,9 @@ namespace tf2_item_scanner.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1000")]
-        public long Playtime {
+        public double Playtime {
             get {
-                return ((long)(this["Playtime"]));
+                return ((double)(this["Playtime"]));
             }
             set {
                 this["Playtime"] = value;
@@ -86,9 +86,9 @@ namespace tf2_item_scanner.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1000")]
-        public long Online {
+        public double Online {
             get {
-                return ((long)(this["Online"]));
+                return ((double)(this["Online"]));
             }
             set {
                 this["Online"] = value;

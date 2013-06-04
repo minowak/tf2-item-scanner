@@ -6,6 +6,9 @@ using System.Net;
 using System.IO;
 using System.Windows.Forms;
 using Newtonsoft.Json.Linq;
+using tf2_item_scanner.engine;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.InteropServices;
 
 namespace tf2_item_scanner.utils
 {
@@ -140,6 +143,54 @@ namespace tf2_item_scanner.utils
             {
                 return vanity;
             }
+        }
+
+        #endregion
+
+        #region SAVING
+
+        public static void SaveScan(string filename, List<TF2Item> items, List<SteamProfile> results, List<string> scanned)
+        {
+            ScanResults scan = new ScanResults(items, results, scanned);
+            Stream stream = File.Open(filename, FileMode.Create);
+            BinaryFormatter bf = new BinaryFormatter();
+
+            bf.Serialize(stream, scan);
+            stream.Close();
+        }
+
+        public static void LoadScan(string filename, out List<TF2Item> items, out List<SteamProfile> results, out List<string> scanned)
+        {
+            Stream stream = File.Open(filename, FileMode.Open);
+            BinaryFormatter bf = new BinaryFormatter();
+            ScanResults sr = (ScanResults)bf.Deserialize(stream);
+            stream.Close();
+
+            items = sr.SelectedItems;
+            results = sr.ProfilesFound;
+            scanned = sr.Scanned;
+        }
+
+        #endregion
+
+        #region STATUS
+
+        public static List<string> GetUsersFromStatus(string status)
+        {
+            List<string> users = new List<string>();
+
+            string[] lines = status.Split('\n');
+            foreach (string line in lines)
+            {
+                int index = line.IndexOf("STEAM_0:");
+                if (index != -1)
+                {
+                    string user = line.Substring(index, 18);
+                    users.Add(user);
+                }
+            }
+
+            return users;
         }
 
         #endregion

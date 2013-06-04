@@ -3,10 +3,10 @@
   <PropertyGroup>
     <PublishUrlHistory>publish\</PublishUrlHistory>
     <InstallUrlHistory>http://student.agh.edu.pl/~minowak/.scanner/|http://student.agh.edu.pl/~minowak/</InstallUrlHistory>
-    <SupportUrlHistory />
+    <SupportUrlHistory>http://steamcommunity.com/groups/NewsScanner/discussions/0/828935672601976029/</SupportUrlHistory>
     <UpdateUrlHistory />
     <BootstrapperUrlHistory />
-    <ErrorReportUrlHistory />
+    <ErrorReportUrlHistory>http://steamcommunity.com/groups/NewsScanner/discussions/0/828935672602515768/</ErrorReportUrlHistory>
     <FallbackCulture>en-US</FallbackCulture>
     <VerifyUploadedFiles>false</VerifyUploadedFiles>
   </PropertyGroup>
