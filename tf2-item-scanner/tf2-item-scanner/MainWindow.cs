@@ -189,7 +189,7 @@ namespace tf2_item_scanner
                 if (((DataGridViewCheckBoxCell)row.Cells["unusualColumn"]).Value != null && (bool)((DataGridViewCheckBoxCell)row.Cells["unusualColumn"]).Value)
                 {
                     TF2Item qualityItem = new TF2Item(rootItem);
-                    qualityItem.Quality = ItemQuality.Genuine;
+                    qualityItem.Quality = ItemQuality.Unusual;
                     tmpList.Add(qualityItem);
                 }
                 if (((DataGridViewCheckBoxCell)row.Cells["hauntedColumn"]).Value != null && (bool)((DataGridViewCheckBoxCell)row.Cells["hauntedColumn"]).Value)
@@ -733,7 +733,7 @@ namespace tf2_item_scanner
                         switch(item.Quality)
                         {
                             case ItemQuality.Normal:
-                                row.Cells["normalColumn"].Value = true;
+                                row.Cells["stockColumn"].Value = true;
                                 break;
                             case ItemQuality.Unique:
                                 row.Cells["uniqueColumn"].Value = true;
@@ -787,7 +787,7 @@ namespace tf2_item_scanner
                 switch (item.Quality)
                 {
                     case ItemQuality.Normal:
-                        addedRow.Cells["normalColumn"].Value = true;
+                        addedRow.Cells["stockColumn"].Value = true;
                         break;
                     case ItemQuality.Unique:
                         addedRow.Cells["uniqueColumn"].Value = true;
