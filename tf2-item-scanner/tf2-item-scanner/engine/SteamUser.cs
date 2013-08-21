@@ -19,13 +19,16 @@ namespace tf2_item_scanner.engine
         private List<string> _friends = new List<string>();
         private string _name;
         private string _state;
+        private Utils utils;
 
-        public SteamUser(string id)
+        public SteamUser(string id, Utils utils)
         {
             _id = id;
-            _apiUrl = Utils.OwnedGamesUrl + id;
-            _apiUrl2 = Utils.SummariesUrl + id;
-            _apiUrl3 = Utils.FriendsUrl + id;
+            _apiUrl = utils.OwnedGamesUrl + id;
+            _apiUrl2 = utils.SummariesUrl + id;
+            _apiUrl3 = utils.FriendsUrl + id;
+
+            this.utils = utils;
         }
 
         #region PROPERTIES
@@ -61,7 +64,7 @@ namespace tf2_item_scanner.engine
         {
             try
             {
-                string json = Utils.GetJson(_apiUrl);
+                string json = utils.GetJson(_apiUrl);
                 JObject o = JObject.Parse(json);
 
                 JObject response = (JObject)o["response"];
@@ -73,7 +76,7 @@ namespace tf2_item_scanner.engine
                     for (int i = 0; i < games.Count; i++)
                     {
                         JObject game = (JObject)games[i];
-                        if ((string)game["appid"] == "440")
+                        if ((string)game["appid"] == utils.AppId)
                         {
                             _timePlayed = (long)game["playtime_forever"];
                             break;
@@ -81,7 +84,7 @@ namespace tf2_item_scanner.engine
                     }
                 }
 
-                json = Utils.GetJson(_apiUrl2);
+                json = utils.GetJson(_apiUrl2);
                 o = JObject.Parse(json);
 
                 response = (JObject)o["response"];
@@ -99,7 +102,7 @@ namespace tf2_item_scanner.engine
                     case 4: _state = "Snooze"; break;
                 }
 
-                json = Utils.GetJson(_apiUrl3);
+                json = utils.GetJson(_apiUrl3);
 
                 o = JObject.Parse(json);
                 response = (JObject)o["friendslist"];
@@ -111,7 +114,7 @@ namespace tf2_item_scanner.engine
                     _friends.Add((string)friend["steamid"]);
                 }
 
-                _backpack = new Backpack(_id);
+                _backpack = new Backpack(_id, utils);
 
                 return _backpack.Init();
             }

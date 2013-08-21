@@ -10,9 +10,9 @@ namespace tf2_item_scanner.schema
 {
     class SchemaUpdater
     {
-        public static void UpdateSchema()
+        public static void UpdateSchema(Utils utils)
         {
-            WebRequest request = WebRequest.Create(Utils.SchemaUrl);
+            WebRequest request = WebRequest.Create(utils.SchemaUrl);
             WebResponse response = request.GetResponse();
             Stream data = response.GetResponseStream();
             string schema = String.Empty;
@@ -23,7 +23,7 @@ namespace tf2_item_scanner.schema
 
             if (schema != String.Empty)
             {
-                File.WriteAllText(Utils.SchemaFilename, schema);
+                File.WriteAllText(utils.SchemaFilename, schema);
             }
         }
     }

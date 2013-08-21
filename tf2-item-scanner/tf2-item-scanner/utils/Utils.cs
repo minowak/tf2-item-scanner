@@ -12,17 +12,18 @@ using System.Runtime.InteropServices;
 
 namespace tf2_item_scanner.utils
 {
-    static class Utils
+    /**
+     * Default utils.
+     */
+    class Utils
     {
-        public static string SchemaFilename
-        {
-            get { return "item_schema.txt"; }
-        }
+        public virtual string SchemaFilename { get; set; }
+
         #region APIKEY
 
-        private static string _apiKey;
+        protected string _apiKey;
 
-        public static string ApiKey
+        public string ApiKey
         {
             get { return _apiKey; }
             set { _apiKey = value; }
@@ -30,34 +31,29 @@ namespace tf2_item_scanner.utils
 
         #endregion
 
+        public virtual string AppId { get; set; }
+
+        public virtual string AppName { get; set; }
+
         #region URLS
 
-        public static string SchemaUrl
-        {
-            get { return "http://git.optf2.com/schema-tracking/plain/Team%20Fortress%202%20Schema?h=teamfortress2"; }
-        }
+        public virtual string SchemaUrl { get; set; }
 
-        public static string BackpackUrl
-        {
-            get { return "http://api.steampowered.com/IEconItems_440/GetPlayerItems/v0001/?key=" + _apiKey + "&format=json&SteamID="; }
-        }
+        public virtual string BackpackUrl { get; set; }
 
-        public static string ValueUrl
-        {
-            get { return "http://backpack.tf/api/IGetUsers/v2/?format=json&steamids="; }
-        }
+        public virtual string ValueUrl { get; set; }
 
-        public static string OwnedGamesUrl
+        public string OwnedGamesUrl
         {
             get { return "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + _apiKey + "&format=json&SteamID="; }
         }
 
-        public static string SummariesUrl
+        public string SummariesUrl
         {
             get { return "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=" + _apiKey + "&steamids="; }
         }
 
-        public static string FriendsUrl
+        public string FriendsUrl
         {
             get
             {
@@ -69,12 +65,12 @@ namespace tf2_item_scanner.utils
 
         #region MORESTUFF
 
-        public static double RefPrice
+        public double RefPrice
         {
             get { return 0.35; }
         }
 
-        public static string GetJson(string url)
+        public string GetJson(string url)
         {
             WebRequest request = WebRequest.Create(url);
             WebResponse response = request.GetResponse();
@@ -92,7 +88,7 @@ namespace tf2_item_scanner.utils
 
         #region STEAMIDCONVERT
 
-        public static string GetId(String id)
+        public string GetId(String id)
         {
             if (id.StartsWith("STEAM"))
             {
@@ -111,7 +107,7 @@ namespace tf2_item_scanner.utils
             }
         }
 
-        private static string fromVanity(string vanity)
+        private string fromVanity(string vanity)
         {
             string apiUrl = "http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key=" + _apiKey + "&vanityurl=" + vanity;
             string json = null;
@@ -149,7 +145,7 @@ namespace tf2_item_scanner.utils
 
         #region SAVING
 
-        public static void SaveScan(string filename, List<TF2Item> items, List<SteamProfile> results, List<string> scanned)
+        public void SaveScan(string filename, List<TF2Item> items, List<SteamProfile> results, List<string> scanned)
         {
             ScanResults scan = new ScanResults(items, results, scanned);
             Stream stream = File.Open(filename, FileMode.Create);
@@ -159,7 +155,7 @@ namespace tf2_item_scanner.utils
             stream.Close();
         }
 
-        public static void LoadScan(string filename, out List<TF2Item> items, out List<SteamProfile> results, out List<string> scanned)
+        public void LoadScan(string filename, out List<TF2Item> items, out List<SteamProfile> results, out List<string> scanned)
         {
             Stream stream = File.Open(filename, FileMode.Open);
             BinaryFormatter bf = new BinaryFormatter();
@@ -175,7 +171,7 @@ namespace tf2_item_scanner.utils
 
         #region STATUS
 
-        public static List<string> GetUsersFromStatus(string status)
+        public List<string> GetUsersFromStatus(string status)
         {
             List<string> users = new List<string>();
 

@@ -14,21 +14,23 @@ namespace tf2_item_scanner.engine
         private string _id;
         private long _size;
         private string _apiUrl;
+        private Utils utils;
 
         private List<TF2Item> _items;
 
-        public Backpack(string id)
+        public Backpack(string id, Utils utils)
         {
-            _apiUrl = Utils.BackpackUrl + id;
+            _apiUrl = utils.BackpackUrl + id;
             _items = new List<TF2Item>();
             _id = id;
+            this.utils = utils;
         }
 
         public bool Init()
         {
             try
             {
-                string json = Utils.GetJson(_apiUrl);
+                string json = utils.GetJson(_apiUrl);
 
                 JObject o = JObject.Parse(json);
                 JObject result = (JObject)o["result"];
@@ -93,8 +95,8 @@ namespace tf2_item_scanner.engine
         {
             get
             {
-                string api = Utils.ValueUrl + _id;
-                string json = Utils.GetJson(api);
+                string api = utils.ValueUrl + _id;
+                string json = utils.GetJson(api);
 
                 try
                 {
@@ -103,7 +105,7 @@ namespace tf2_item_scanner.engine
                     JObject players = (JObject)result["players"];
                     JObject player = (JObject)players["0"];
 
-                    return ((double)player["backpack_value"]) * Utils.RefPrice;
+                    return ((double)player["backpack_value"]) * utils.RefPrice;
                 }
                 catch (Exception e)
                 {

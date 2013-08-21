@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Runtime.Serialization;
+using tf2_item_scanner.utils;
 
 namespace tf2_item_scanner.engine
 {
@@ -16,6 +17,7 @@ namespace tf2_item_scanner.engine
         private TF2Item _itemFound;
         private string _state;
         private long _played;
+        private Utils utils;
 
         #region PROPERTIES
 
@@ -53,13 +55,14 @@ namespace tf2_item_scanner.engine
 
         #region CONSTRUCTORS
 
-        public SteamProfile(string name, string id)
+        public SteamProfile(string name, string id, Utils utils)
         {
             _name = name;
             _id = id;
+            this.utils = utils;
         }
 
-        public SteamProfile(SerializationInfo info, StreamingContext ctx)
+        public SteamProfile(SerializationInfo info, StreamingContext ctx, Utils utils)
         {
             _name = (string)info.GetValue("Name", typeof(string));
             _id = (string)info.GetValue("Id", typeof(string));
@@ -67,10 +70,12 @@ namespace tf2_item_scanner.engine
             _f2p = (bool)info.GetValue("F2P", typeof(bool));
             _itemFound = (TF2Item)info.GetValue("ItemFound", typeof(TF2Item));
 
-            _state = new SteamUser(_id).State;
+            _state = new SteamUser(_id, utils).State;
+
+            this.utils = utils;
         }
 
-        public SteamProfile(string name, string id, bool f2p, double value, TF2Item itemFound, string state, long played)
+        public SteamProfile(string name, string id, bool f2p, double value, TF2Item itemFound, string state, long played, Utils utils)
         {
             _name = name;
             _id = id;
@@ -79,6 +84,7 @@ namespace tf2_item_scanner.engine
             _itemFound = itemFound;
             _state = state;
             _played = played;
+            this.utils = utils;
         }
 
         #endregion
@@ -96,7 +102,7 @@ namespace tf2_item_scanner.engine
 
         public bool IsF2P()
         {
-            return _f2p;
+            return utils.AppId == "400" ? _f2p : false;
         }
 
         #endregion

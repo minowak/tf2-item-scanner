@@ -22,12 +22,16 @@ namespace tf2_item_scanner
 
         private List<TF2Item> schemaList;
 
+        private Utils utils;
+
         public MainWindow()
         {
             InitializeComponent();
 
             openFileDialog1.Filter = "Scan Result files (.ns) |*.ns|All files (*.*)|*.*";
             saveFileDialog1.Filter = openFileDialog1.Filter;
+
+            utils = new TF2Utils();
 
             // get schema
             LoadSchema();
@@ -49,9 +53,11 @@ namespace tf2_item_scanner
 
         private void LoadSchema()
         {
-            SchemaParser parser = new SchemaParser(Utils.SchemaFilename);
+            SchemaParser parser = new SchemaParser(utils.SchemaFilename);
             schemaList = parser.Parse();
             leftList = schemaList;
+
+            groupBox1.Text = "Settings (" + utils.AppName + ")";
         }
 
         long longTmp, profilesCount, itemsCount;
@@ -79,12 +85,12 @@ namespace tf2_item_scanner
                 }
             }
 
-            Utils.ApiKey = apiTextBox.Text;
+            utils.ApiKey = apiTextBox.Text;
 
             // If status scanning
             if (statusRadio.Checked)
             {
-                scanFromStatus = Utils.GetUsersFromStatus(statusTextBox.Text.Trim());
+                scanFromStatus = utils.GetUsersFromStatus(statusTextBox.Text.Trim());
             }
             else // or depth
             {
@@ -221,7 +227,7 @@ namespace tf2_item_scanner
             }
             else
             {
-                startingId = Utils.GetId(startingIdTextBox.Text);
+                startingId = utils.GetId(startingIdTextBox.Text);
                 if (!scanningWorker.IsBusy)
                 {
                     scanningWorker.RunWorkerAsync();
@@ -312,7 +318,7 @@ namespace tf2_item_scanner
 
         private bool IsRegistered()
         {
-            string keys = Utils.GetJson("http://student.agh.edu.pl/~minowak/keys");
+            string keys = utils.GetJson("http://student.agh.edu.pl/~minowak/keys");
             return keys.Contains(apiTextBox.Text.Trim());
         }
 
@@ -321,7 +327,7 @@ namespace tf2_item_scanner
         // update schema
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            SchemaUpdater.UpdateSchema();
+            SchemaUpdater.UpdateSchema(utils);
         }
 
         private void updateSchemaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -359,7 +365,7 @@ namespace tf2_item_scanner
                     return;
                 }
 
-                SteamUser user = new SteamUser(Utils.GetId(id));
+                SteamUser user = new SteamUser(utils.GetId(id), utils);
                 if (!user.Init())
                 {
                     continue;
@@ -393,7 +399,7 @@ namespace tf2_item_scanner
 
                 if (found)
                 {
-                    SteamProfile sp = new SteamProfile(user.Name, user.Id, !user.IsPremium(), user.Value, itemFound, user.State, user.PlayTime);
+                    SteamProfile sp = new SteamProfile(user.Name, user.Id, !user.IsPremium(), user.Value, itemFound, user.State, user.PlayTime, utils);
                     worker.ReportProgress(-1, sp);
                     found = false;
                 }
@@ -431,7 +437,7 @@ namespace tf2_item_scanner
                     profilesCount--;
                     bool initialized = false;
 
-                    user = new SteamUser(currId);
+                    user = new SteamUser(currId, utils);
 
                     if (initialized = user.Init())
                     {
@@ -484,7 +490,7 @@ namespace tf2_item_scanner
                         dateOnline = dateOnline.AddSeconds(user.LastOnline);
 
                         if (DateTime.Compare(dateDesired, dateOnline) <= 0 &&
-                           (value == 0 || bpValue <= value) &&
+                           ((value == 0 || utils.AppId != "440")|| bpValue <= value) &&
                            (itemsCount == 0 || itemsCount >= user.ItemsCount))
                         {
                             // checking item
@@ -509,7 +515,7 @@ namespace tf2_item_scanner
 
                     if (found)
                     {
-                        SteamProfile sp = new SteamProfile(user.Name, user.Id, !user.IsPremium(), user.Value, itemFound, user.State, user.PlayTime);
+                        SteamProfile sp = new SteamProfile(user.Name, user.Id, !user.IsPremium(), user.Value, itemFound, user.State, user.PlayTime, utils);
                         worker.ReportProgress(-1, sp);
                         found = false;
                     }
@@ -540,7 +546,7 @@ namespace tf2_item_scanner
             var appPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             string dirPath = Path.Combine(appPath, _workspace, DateTime.Now.ToShortDateString().Replace('/','-'));
             Directory.CreateDirectory(dirPath);
-            Utils.SaveScan(Path.Combine(dirPath, DateTime.Now.ToLongTimeString().Replace(':', '_') + ".ns"), rightList, profilesFound, scanned);
+            utils.SaveScan(Path.Combine(dirPath, DateTime.Now.ToLongTimeString().Replace(':', '_') + ".ns"), rightList, profilesFound, scanned);
 
             LoadWorkspace(_workspace, true);
         }
@@ -685,7 +691,7 @@ namespace tf2_item_scanner
             {
                 StatusLabel.Text = "Saving";
                 toolStripProgressBar1.Value = 50;
-                Utils.SaveScan(saveFileDialog1.FileName, rightList, profilesFound, scanned);
+                utils.SaveScan(saveFileDialog1.FileName, rightList, profilesFound, scanned);
                 StatusLabel.Text = "Saved";
                 toolStripProgressBar1.Value = 100;
             }
@@ -700,7 +706,7 @@ namespace tf2_item_scanner
                 List<TF2Item> itemList = new List<TF2Item>();
                 List<SteamProfile> profiles = new List<SteamProfile>();
                 List<string> sc = new List<string>();
-                Utils.LoadScan(openFileDialog1.FileName, out itemList, out profiles, out sc);
+                utils.LoadScan(openFileDialog1.FileName, out itemList, out profiles, out sc);
 
                 FinishLoading(sc, profiles, itemList);
             }
@@ -837,10 +843,18 @@ namespace tf2_item_scanner
             LinkLabel.Link linkData = new LinkLabel.Link();
 
             LinkLabel link = new LinkLabel();
-            linkData.LinkData = "http://backpack.tf/id/" + sp.Id;
+            if (utils.AppId == "440")
+            {
+                linkData.LinkData = "http://backpack.tf/id/" + sp.Id;
+            }
+            else
+            {
+                linkData.LinkData = "http://steamcommunity.com/profile/" + sp.Id;
+            }
             link.Links.Add(linkData);
 
-            int index = resultsDataGrid.Rows.Add((Image)(new Bitmap(img, new Size(50, 50))), sp.Name, (Math.Truncate(sp.Value * 100) / 100) + "$",
+            int index = resultsDataGrid.Rows.Add((Image)(new Bitmap(img, new Size(50, 50))), sp.Name, 
+                utils.AppId == "400" ? (Math.Truncate(sp.Value * 100) / 100) + "$" : "--",
                 (sp.Played / 60) + "h", sp.State, link);
             resultsDataGrid.Rows[index].Cells[0].Selected = false;
             if (sp.IsF2P())
@@ -856,7 +870,14 @@ namespace tf2_item_scanner
                 case "Away":
                 case "Snooze": resultsDataGrid.Rows[index].Cells[4].Style.ForeColor = Color.Blue; break;
             }
-            resultsDataGrid.Rows[index].Cells[5].Value = "http://backpack.tf/id/" + sp.Id;
+            if (utils.AppId == "440")
+            {
+                resultsDataGrid.Rows[index].Cells[5].Value = "http://backpack.tf/id/" + sp.Id;
+            }
+            else
+            {
+                resultsDataGrid.Rows[index].Cells[5].Value = "http://steamcommunity.com/profile/" + sp.Id;
+            }
             foundCount++;
             tabControl1.TabPages[1].Text = "Results (" + foundCount + ")";
         }
@@ -959,7 +980,7 @@ namespace tf2_item_scanner
 
                 var appPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
-                Utils.LoadScan(Path.Combine(appPath, _workspace, treeView1.SelectedNode.Parent.Text , 
+                utils.LoadScan(Path.Combine(appPath, _workspace, treeView1.SelectedNode.Parent.Text , 
                     treeView1.SelectedNode.Text + ".ns"), out itemList, out profiles, out sc);
 
                 FinishLoading(sc, profiles, itemList);
@@ -970,6 +991,52 @@ namespace tf2_item_scanner
         {
             Directory.Delete(_workspace, true);
             Directory.CreateDirectory(_workspace);
+
+            LoadWorkspace(_workspace, true);
+        }
+
+        private void teamFortress2ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            utils = new TF2Utils();
+            valueTextBox.Enabled = true;
+            label3.Enabled = true;
+
+            LoadSchema();
+            leftListBox.DataSource = leftList;
+            rightList = new List<TF2Item>();
+
+            profilesCountTextBox.Text = Properties.Settings.Default.ProfilesCount.ToString();
+            onlineTextBox.Text = Properties.Settings.Default.Online.ToString();
+            valueTextBox.Text = Properties.Settings.Default.Value.ToString();
+            playtimeTextBox.Text = Properties.Settings.Default.Playtime.ToString();
+            itemsCountTextBox.Text = Properties.Settings.Default.ItemsCount.ToString();
+
+            selectedDataGrid.Refresh();
+
+            _title = Text;
+
+            LoadWorkspace(_workspace, true);
+        }
+
+        private void cSGOToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            utils = new CSGOUtils();
+            valueTextBox.Enabled = false;
+            label3.Enabled = false;
+
+            LoadSchema();
+            leftListBox.DataSource = leftList;
+            rightList = new List<TF2Item>();
+
+            profilesCountTextBox.Text = Properties.Settings.Default.ProfilesCount.ToString();
+            onlineTextBox.Text = Properties.Settings.Default.Online.ToString();
+            valueTextBox.Text = Properties.Settings.Default.Value.ToString();
+            playtimeTextBox.Text = Properties.Settings.Default.Playtime.ToString();
+            itemsCountTextBox.Text = Properties.Settings.Default.ItemsCount.ToString();
+
+            selectedDataGrid.Refresh();
+
+            _title = Text;
 
             LoadWorkspace(_workspace, true);
         }

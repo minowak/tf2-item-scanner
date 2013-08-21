@@ -73,6 +73,16 @@ namespace tf2_item_scanner
             this.label3 = new System.Windows.Forms.Label();
             this.playtimeTextBox = new System.Windows.Forms.TextBox();
             this.selectedDataGrid = new System.Windows.Forms.DataGridView();
+            this.selectedColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.nameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.imageColumn = new System.Windows.Forms.DataGridViewImageColumn();
+            this.stockColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.strangeColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.vintageColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.uniqueColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.genuineColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.unusualColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.hauntedColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.label6 = new System.Windows.Forms.Label();
             this.searchTextBox = new System.Windows.Forms.TextBox();
             this.leftListBox = new System.Windows.Forms.ListBox();
@@ -102,16 +112,9 @@ namespace tf2_item_scanner
             this.contextMenuTreeView = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.newProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusScanWorker = new System.ComponentModel.BackgroundWorker();
-            this.selectedColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.nameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.imageColumn = new System.Windows.Forms.DataGridViewImageColumn();
-            this.stockColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.strangeColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.vintageColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.uniqueColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.genuineColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.unusualColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.hauntedColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.gameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.teamFortress2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cSGOToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -167,6 +170,7 @@ namespace tf2_item_scanner
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.updateSchemaToolStripMenuItem,
+            this.gameToolStripMenuItem,
             this.toolStripMenuItem2,
             this.saveScanToolStripMenuItem,
             this.loadScanToolStripMenuItem,
@@ -504,6 +508,77 @@ namespace tf2_item_scanner
             this.selectedDataGrid.TabIndex = 4;
             this.selectedDataGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.selectedCell_ContentClick);
             // 
+            // selectedColumn
+            // 
+            this.selectedColumn.FalseValue = "false";
+            this.selectedColumn.FillWeight = 26.28842F;
+            this.selectedColumn.HeaderText = "";
+            this.selectedColumn.IndeterminateValue = "false";
+            this.selectedColumn.Name = "selectedColumn";
+            this.selectedColumn.TrueValue = "true";
+            // 
+            // nameColumn
+            // 
+            this.nameColumn.FillWeight = 194.7304F;
+            this.nameColumn.HeaderText = "Name";
+            this.nameColumn.Name = "nameColumn";
+            this.nameColumn.ReadOnly = true;
+            // 
+            // imageColumn
+            // 
+            this.imageColumn.FillWeight = 44.00686F;
+            this.imageColumn.HeaderText = "Image";
+            this.imageColumn.Name = "imageColumn";
+            // 
+            // stockColumn
+            // 
+            this.stockColumn.FillWeight = 36.1223F;
+            this.stockColumn.HeaderText = "STK";
+            this.stockColumn.IndeterminateValue = "false";
+            this.stockColumn.Name = "stockColumn";
+            // 
+            // strangeColumn
+            // 
+            this.strangeColumn.FillWeight = 36.1223F;
+            this.strangeColumn.HeaderText = "STR";
+            this.strangeColumn.IndeterminateValue = "false";
+            this.strangeColumn.Name = "strangeColumn";
+            // 
+            // vintageColumn
+            // 
+            this.vintageColumn.FillWeight = 36.1223F;
+            this.vintageColumn.HeaderText = "VTG";
+            this.vintageColumn.IndeterminateValue = "false";
+            this.vintageColumn.Name = "vintageColumn";
+            // 
+            // uniqueColumn
+            // 
+            this.uniqueColumn.FillWeight = 36.1223F;
+            this.uniqueColumn.HeaderText = "UNQ";
+            this.uniqueColumn.IndeterminateValue = "false";
+            this.uniqueColumn.Name = "uniqueColumn";
+            // 
+            // genuineColumn
+            // 
+            this.genuineColumn.FillWeight = 36.1223F;
+            this.genuineColumn.HeaderText = "GEN";
+            this.genuineColumn.IndeterminateValue = "false";
+            this.genuineColumn.Name = "genuineColumn";
+            // 
+            // unusualColumn
+            // 
+            this.unusualColumn.FillWeight = 36.1223F;
+            this.unusualColumn.HeaderText = "UNU";
+            this.unusualColumn.IndeterminateValue = "false";
+            this.unusualColumn.Name = "unusualColumn";
+            // 
+            // hauntedColumn
+            // 
+            this.hauntedColumn.FillWeight = 36.1223F;
+            this.hauntedColumn.HeaderText = "HAU";
+            this.hauntedColumn.IndeterminateValue = "false";
+            this.hauntedColumn.Name = "hauntedColumn";
+            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -755,76 +830,28 @@ namespace tf2_item_scanner
             this.statusScanWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker2_ProgressChanged);
             this.statusScanWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker2_RunWorkerCompleted);
             // 
-            // selectedColumn
+            // gameToolStripMenuItem
             // 
-            this.selectedColumn.FalseValue = "false";
-            this.selectedColumn.FillWeight = 26.28842F;
-            this.selectedColumn.HeaderText = "";
-            this.selectedColumn.IndeterminateValue = "false";
-            this.selectedColumn.Name = "selectedColumn";
-            this.selectedColumn.TrueValue = "true";
+            this.gameToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.teamFortress2ToolStripMenuItem,
+            this.cSGOToolStripMenuItem});
+            this.gameToolStripMenuItem.Name = "gameToolStripMenuItem";
+            this.gameToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.gameToolStripMenuItem.Text = "Game";
             // 
-            // nameColumn
+            // teamFortress2ToolStripMenuItem
             // 
-            this.nameColumn.FillWeight = 194.7304F;
-            this.nameColumn.HeaderText = "Name";
-            this.nameColumn.Name = "nameColumn";
-            this.nameColumn.ReadOnly = true;
+            this.teamFortress2ToolStripMenuItem.Name = "teamFortress2ToolStripMenuItem";
+            this.teamFortress2ToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.teamFortress2ToolStripMenuItem.Text = "Team Fortress 2";
+            this.teamFortress2ToolStripMenuItem.Click += new System.EventHandler(this.teamFortress2ToolStripMenuItem_Click);
             // 
-            // imageColumn
+            // cSGOToolStripMenuItem
             // 
-            this.imageColumn.FillWeight = 44.00686F;
-            this.imageColumn.HeaderText = "Image";
-            this.imageColumn.Name = "imageColumn";
-            // 
-            // stockColumn
-            // 
-            this.stockColumn.FillWeight = 36.1223F;
-            this.stockColumn.HeaderText = "STK";
-            this.stockColumn.IndeterminateValue = "false";
-            this.stockColumn.Name = "stockColumn";
-            // 
-            // strangeColumn
-            // 
-            this.strangeColumn.FillWeight = 36.1223F;
-            this.strangeColumn.HeaderText = "STR";
-            this.strangeColumn.IndeterminateValue = "false";
-            this.strangeColumn.Name = "strangeColumn";
-            // 
-            // vintageColumn
-            // 
-            this.vintageColumn.FillWeight = 36.1223F;
-            this.vintageColumn.HeaderText = "VTG";
-            this.vintageColumn.IndeterminateValue = "false";
-            this.vintageColumn.Name = "vintageColumn";
-            // 
-            // uniqueColumn
-            // 
-            this.uniqueColumn.FillWeight = 36.1223F;
-            this.uniqueColumn.HeaderText = "UNQ";
-            this.uniqueColumn.IndeterminateValue = "false";
-            this.uniqueColumn.Name = "uniqueColumn";
-            // 
-            // genuineColumn
-            // 
-            this.genuineColumn.FillWeight = 36.1223F;
-            this.genuineColumn.HeaderText = "GEN";
-            this.genuineColumn.IndeterminateValue = "false";
-            this.genuineColumn.Name = "genuineColumn";
-            // 
-            // unusualColumn
-            // 
-            this.unusualColumn.FillWeight = 36.1223F;
-            this.unusualColumn.HeaderText = "UNU";
-            this.unusualColumn.IndeterminateValue = "false";
-            this.unusualColumn.Name = "unusualColumn";
-            // 
-            // hauntedColumn
-            // 
-            this.hauntedColumn.FillWeight = 36.1223F;
-            this.hauntedColumn.HeaderText = "HAU";
-            this.hauntedColumn.IndeterminateValue = "false";
-            this.hauntedColumn.Name = "hauntedColumn";
+            this.cSGOToolStripMenuItem.Name = "cSGOToolStripMenuItem";
+            this.cSGOToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.cSGOToolStripMenuItem.Text = "CS : GO";
+            this.cSGOToolStripMenuItem.Click += new System.EventHandler(this.cSGOToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -949,6 +976,9 @@ namespace tf2_item_scanner
         private DataGridViewCheckBoxColumn genuineColumn;
         private DataGridViewCheckBoxColumn unusualColumn;
         private DataGridViewCheckBoxColumn hauntedColumn;
+        private ToolStripMenuItem gameToolStripMenuItem;
+        private ToolStripMenuItem teamFortress2ToolStripMenuItem;
+        private ToolStripMenuItem cSGOToolStripMenuItem;
     }
 }
 

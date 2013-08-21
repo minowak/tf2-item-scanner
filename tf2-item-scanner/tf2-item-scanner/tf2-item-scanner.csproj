@@ -32,8 +32,8 @@
     <PublisherName>Michal Nowak</PublisherName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>10</ApplicationRevision>
-    <ApplicationVersion>1.1.2.%2a</ApplicationVersion>
+    <ApplicationRevision>13</ApplicationRevision>
+    <ApplicationVersion>1.2.2.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -102,8 +102,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="schema\SchemaParser.cs" />
     <Compile Include="schema\SchemaUpdater.cs" />
+    <Compile Include="utils\CSGOUtils.cs" />
     <Compile Include="utils\ItemQuality.cs" />
     <Compile Include="utils\ScanResults.cs" />
+    <Compile Include="utils\TF2Utils.cs" />
     <Compile Include="utils\Utils.cs" />
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
@@ -154,10 +156,11 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="csgo_item_schema.txt" />
     <Content Include="icon.ico" />
-    <Content Include="item_schema.txt" />
     <Content Include="qmark.jpg" />
     <Content Include="team fortress 2.ico" />
+    <Content Include="tf2_item_schema.txt" />
     <None Include="Resources\calendar.png" />
   </ItemGroup>
   <ItemGroup>
