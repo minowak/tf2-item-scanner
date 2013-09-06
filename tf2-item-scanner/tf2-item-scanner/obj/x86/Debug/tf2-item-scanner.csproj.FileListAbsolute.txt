@@ -37,3 +37,4 @@ C:\Users\News\Documents\Visual Studio 2012\Projects\tf2-item-scanner\tf2-item-sc
 C:\Users\News\Documents\Visual Studio 2012\Projects\tf2-item-scanner\tf2-item-scanner\tf2-item-scanner\tf2-item-scanner\bin\Debug\tf2-item-scanner.pdb
 C:\Users\News\Documents\Visual Studio 2012\Projects\tf2-item-scanner\tf2-item-scanner\tf2-item-scanner\tf2-item-scanner\obj\x86\Debug\tf2-item-scanner.exe.manifest
 C:\Users\News\Documents\Visual Studio 2012\Projects\tf2-item-scanner\tf2-item-scanner\tf2-item-scanner\tf2-item-scanner\obj\x86\Debug\tf2-item-scanner.application
+C:\Users\News\Documents\Visual Studio 2012\Projects\tf2-item-scanner\tf2-item-scanner\tf2-item-scanner\tf2-item-scanner\obj\x86\Debug\tf2-item-scanner.csprojResolveAssemblyReference.cache

@@ -41,6 +41,9 @@ namespace tf2_item_scanner
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updateSchemaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.teamFortress2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cSGOToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.saveScanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadScanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,6 +57,7 @@ namespace tf2_item_scanner
             this.statusRadio = new System.Windows.Forms.RadioButton();
             this.statusGroup = new System.Windows.Forms.GroupBox();
             this.statusTextBox = new System.Windows.Forms.TextBox();
+            this.groupScanningRadio = new System.Windows.Forms.RadioButton();
             this.depthRadio = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -112,9 +116,9 @@ namespace tf2_item_scanner
             this.contextMenuTreeView = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.newProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusScanWorker = new System.ComponentModel.BackgroundWorker();
-            this.gameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.teamFortress2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cSGOToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.groupScanningGroup = new System.Windows.Forms.GroupBox();
+            this.groupNameTextBox = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -129,6 +133,7 @@ namespace tf2_item_scanner
             ((System.ComponentModel.ISupportInitialize)(this.resultsDataGrid)).BeginInit();
             this.treeViewGroupBox.SuspendLayout();
             this.contextMenuTreeView.SuspendLayout();
+            this.groupScanningGroup.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -136,7 +141,7 @@ namespace tf2_item_scanner
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.StatusLabel,
             this.toolStripProgressBar1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 606);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 704);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(980, 22);
             this.statusStrip1.TabIndex = 0;
@@ -186,6 +191,29 @@ namespace tf2_item_scanner
             this.updateSchemaToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.updateSchemaToolStripMenuItem.Text = "Update schema";
             this.updateSchemaToolStripMenuItem.Click += new System.EventHandler(this.updateSchemaToolStripMenuItem_Click);
+            // 
+            // gameToolStripMenuItem
+            // 
+            this.gameToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.teamFortress2ToolStripMenuItem,
+            this.cSGOToolStripMenuItem});
+            this.gameToolStripMenuItem.Name = "gameToolStripMenuItem";
+            this.gameToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.gameToolStripMenuItem.Text = "Game";
+            // 
+            // teamFortress2ToolStripMenuItem
+            // 
+            this.teamFortress2ToolStripMenuItem.Name = "teamFortress2ToolStripMenuItem";
+            this.teamFortress2ToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.teamFortress2ToolStripMenuItem.Text = "Team Fortress 2";
+            this.teamFortress2ToolStripMenuItem.Click += new System.EventHandler(this.teamFortress2ToolStripMenuItem_Click);
+            // 
+            // cSGOToolStripMenuItem
+            // 
+            this.cSGOToolStripMenuItem.Name = "cSGOToolStripMenuItem";
+            this.cSGOToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.cSGOToolStripMenuItem.Text = "CS : GO";
+            this.cSGOToolStripMenuItem.Click += new System.EventHandler(this.cSGOToolStripMenuItem_Click);
             // 
             // toolStripMenuItem2
             // 
@@ -253,12 +281,13 @@ namespace tf2_item_scanner
             // 
             this.groupBox1.Controls.Add(this.statusRadio);
             this.groupBox1.Controls.Add(this.statusGroup);
+            this.groupBox1.Controls.Add(this.groupScanningRadio);
             this.groupBox1.Controls.Add(this.depthRadio);
             this.groupBox1.Controls.Add(this.groupBox2);
             this.groupBox1.Controls.Add(this.depthGroup);
             this.groupBox1.Location = new System.Drawing.Point(197, 27);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(774, 227);
+            this.groupBox1.Size = new System.Drawing.Size(774, 284);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Settings";
@@ -271,7 +300,7 @@ namespace tf2_item_scanner
             this.statusRadio.Size = new System.Drawing.Size(14, 13);
             this.statusRadio.TabIndex = 22;
             this.statusRadio.UseVisualStyleBackColor = true;
-            this.statusRadio.CheckedChanged += new System.EventHandler(this.statusRadio_CheckedChanged);
+            this.statusRadio.Click += new System.EventHandler(this.statusRadio_CheckedChanged);
             // 
             // statusGroup
             // 
@@ -294,6 +323,18 @@ namespace tf2_item_scanner
             this.statusTextBox.TabIndex = 0;
             this.statusTextBox.Text = "Paste status here";
             // 
+            // groupScanningRadio
+            // 
+            this.groupScanningRadio.AutoSize = true;
+            this.groupScanningRadio.Checked = true;
+            this.groupScanningRadio.Location = new System.Drawing.Point(13, 247);
+            this.groupScanningRadio.Name = "groupScanningRadio";
+            this.groupScanningRadio.Size = new System.Drawing.Size(14, 13);
+            this.groupScanningRadio.TabIndex = 20;
+            this.groupScanningRadio.TabStop = true;
+            this.groupScanningRadio.UseVisualStyleBackColor = true;
+            this.groupScanningRadio.Click += new System.EventHandler(this.groupScanningRadio_CheckedChanged);
+            // 
             // depthRadio
             // 
             this.depthRadio.AutoSize = true;
@@ -304,7 +345,7 @@ namespace tf2_item_scanner
             this.depthRadio.TabIndex = 20;
             this.depthRadio.TabStop = true;
             this.depthRadio.UseVisualStyleBackColor = true;
-            this.depthRadio.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+            this.depthRadio.Click += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
             // groupBox2
             // 
@@ -504,7 +545,7 @@ namespace tf2_item_scanner
             this.selectedDataGrid.Location = new System.Drawing.Point(220, 45);
             this.selectedDataGrid.Name = "selectedDataGrid";
             this.selectedDataGrid.RowHeadersVisible = false;
-            this.selectedDataGrid.Size = new System.Drawing.Size(543, 264);
+            this.selectedDataGrid.Size = new System.Drawing.Size(543, 364);
             this.selectedDataGrid.TabIndex = 4;
             this.selectedDataGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.selectedCell_ContentClick);
             // 
@@ -601,7 +642,7 @@ namespace tf2_item_scanner
             this.leftListBox.FormattingEnabled = true;
             this.leftListBox.Location = new System.Drawing.Point(6, 45);
             this.leftListBox.Name = "leftListBox";
-            this.leftListBox.Size = new System.Drawing.Size(193, 264);
+            this.leftListBox.Size = new System.Drawing.Size(193, 368);
             this.leftListBox.TabIndex = 0;
             this.leftListBox.DoubleClick += new System.EventHandler(this.leftListBox_DoubleClick);
             // 
@@ -627,10 +668,10 @@ namespace tf2_item_scanner
             // 
             this.tabControl1.Controls.Add(this.itemsTab);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(197, 260);
+            this.tabControl1.Location = new System.Drawing.Point(197, 317);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(778, 338);
+            this.tabControl1.Size = new System.Drawing.Size(778, 384);
             this.tabControl1.TabIndex = 5;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabColtrol1_SelectedIndexChanged);
             // 
@@ -646,7 +687,7 @@ namespace tf2_item_scanner
             this.itemsTab.Location = new System.Drawing.Point(4, 22);
             this.itemsTab.Name = "itemsTab";
             this.itemsTab.Padding = new System.Windows.Forms.Padding(3);
-            this.itemsTab.Size = new System.Drawing.Size(770, 312);
+            this.itemsTab.Size = new System.Drawing.Size(770, 358);
             this.itemsTab.TabIndex = 0;
             this.itemsTab.Text = "Items";
             // 
@@ -679,7 +720,7 @@ namespace tf2_item_scanner
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(770, 312);
+            this.tabPage2.Size = new System.Drawing.Size(770, 358);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Results";
             // 
@@ -719,7 +760,7 @@ namespace tf2_item_scanner
             this.resultsDataGrid.Name = "resultsDataGrid";
             this.resultsDataGrid.ReadOnly = true;
             this.resultsDataGrid.RowHeadersVisible = false;
-            this.resultsDataGrid.Size = new System.Drawing.Size(766, 280);
+            this.resultsDataGrid.Size = new System.Drawing.Size(766, 326);
             this.resultsDataGrid.TabIndex = 0;
             this.resultsDataGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.cellContent_Click);
             // 
@@ -776,7 +817,7 @@ namespace tf2_item_scanner
             this.treeViewGroupBox.Controls.Add(this.treeView1);
             this.treeViewGroupBox.Location = new System.Drawing.Point(13, 27);
             this.treeViewGroupBox.Name = "treeViewGroupBox";
-            this.treeViewGroupBox.Size = new System.Drawing.Size(178, 571);
+            this.treeViewGroupBox.Size = new System.Drawing.Size(178, 674);
             this.treeViewGroupBox.TabIndex = 6;
             this.treeViewGroupBox.TabStop = false;
             this.treeViewGroupBox.Text = "History";
@@ -798,7 +839,7 @@ namespace tf2_item_scanner
             this.treeView1.Location = new System.Drawing.Point(6, 41);
             this.treeView1.Name = "treeView1";
             this.treeView1.SelectedImageIndex = 0;
-            this.treeView1.Size = new System.Drawing.Size(166, 523);
+            this.treeView1.Size = new System.Drawing.Size(166, 627);
             this.treeView1.TabIndex = 0;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             // 
@@ -830,35 +871,41 @@ namespace tf2_item_scanner
             this.statusScanWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker2_ProgressChanged);
             this.statusScanWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker2_RunWorkerCompleted);
             // 
-            // gameToolStripMenuItem
+            // groupScanningGroup
             // 
-            this.gameToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.teamFortress2ToolStripMenuItem,
-            this.cSGOToolStripMenuItem});
-            this.gameToolStripMenuItem.Name = "gameToolStripMenuItem";
-            this.gameToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
-            this.gameToolStripMenuItem.Text = "Game";
+            this.groupScanningGroup.Controls.Add(this.groupNameTextBox);
+            this.groupScanningGroup.Controls.Add(this.label9);
+            this.groupScanningGroup.Enabled = false;
+            this.groupScanningGroup.Location = new System.Drawing.Point(230, 260);
+            this.groupScanningGroup.Name = "groupScanningGroup";
+            this.groupScanningGroup.Size = new System.Drawing.Size(734, 45);
+            this.groupScanningGroup.TabIndex = 7;
+            this.groupScanningGroup.TabStop = false;
+            this.groupScanningGroup.Text = "Group scanning";
             // 
-            // teamFortress2ToolStripMenuItem
+            // groupNameTextBox
             // 
-            this.teamFortress2ToolStripMenuItem.Name = "teamFortress2ToolStripMenuItem";
-            this.teamFortress2ToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
-            this.teamFortress2ToolStripMenuItem.Text = "Team Fortress 2";
-            this.teamFortress2ToolStripMenuItem.Click += new System.EventHandler(this.teamFortress2ToolStripMenuItem_Click);
+            this.groupNameTextBox.Location = new System.Drawing.Point(83, 17);
+            this.groupNameTextBox.Name = "groupNameTextBox";
+            this.groupNameTextBox.Size = new System.Drawing.Size(245, 20);
+            this.groupNameTextBox.TabIndex = 1;
             // 
-            // cSGOToolStripMenuItem
+            // label9
             // 
-            this.cSGOToolStripMenuItem.Name = "cSGOToolStripMenuItem";
-            this.cSGOToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
-            this.cSGOToolStripMenuItem.Text = "CS : GO";
-            this.cSGOToolStripMenuItem.Click += new System.EventHandler(this.cSGOToolStripMenuItem_Click);
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(11, 20);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(65, 13);
+            this.label9.TabIndex = 0;
+            this.label9.Text = "Group name";
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.MenuBar;
-            this.ClientSize = new System.Drawing.Size(980, 628);
+            this.ClientSize = new System.Drawing.Size(980, 726);
+            this.Controls.Add(this.groupScanningGroup);
             this.Controls.Add(this.treeViewGroupBox);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.groupBox1);
@@ -892,6 +939,8 @@ namespace tf2_item_scanner
             ((System.ComponentModel.ISupportInitialize)(this.resultsDataGrid)).EndInit();
             this.treeViewGroupBox.ResumeLayout(false);
             this.contextMenuTreeView.ResumeLayout(false);
+            this.groupScanningGroup.ResumeLayout(false);
+            this.groupScanningGroup.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -979,6 +1028,10 @@ namespace tf2_item_scanner
         private ToolStripMenuItem gameToolStripMenuItem;
         private ToolStripMenuItem teamFortress2ToolStripMenuItem;
         private ToolStripMenuItem cSGOToolStripMenuItem;
+        private GroupBox groupScanningGroup;
+        private RadioButton groupScanningRadio;
+        private TextBox groupNameTextBox;
+        private Label label9;
     }
 }
 

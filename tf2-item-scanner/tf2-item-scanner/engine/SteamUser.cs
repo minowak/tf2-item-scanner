@@ -24,7 +24,7 @@ namespace tf2_item_scanner.engine
         public SteamUser(string id, Utils utils)
         {
             _id = id;
-            _apiUrl = utils.OwnedGamesUrl + id;
+            _apiUrl = utils.OwnedGamesUrl + id + "&include_played_free_games=true";
             _apiUrl2 = utils.SummariesUrl + id;
             _apiUrl3 = utils.FriendsUrl + id;
 

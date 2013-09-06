@@ -9,6 +9,7 @@ using Newtonsoft.Json.Linq;
 using tf2_item_scanner.engine;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.InteropServices;
+using System.Xml;
 
 namespace tf2_item_scanner.utils
 {
@@ -183,6 +184,62 @@ namespace tf2_item_scanner.utils
                 {
                     string user = line.Substring(index, 18);
                     users.Add(user);
+                }
+            }
+
+            return users;
+        }
+
+        public List<string> GetUsersFromGroup(string groupname)
+        {
+            List<string> users = new List<string>();
+
+            string apiUrl;
+            if (groupname.StartsWith("http"))
+            {
+                apiUrl = groupname + "/memberslistxml/?xml=1";
+            }
+            else
+            {
+                apiUrl = "http://steamcommunity.com/groups/" + groupname + "/memberslistxml/?xml=1";
+            }
+            string xmlContent;
+
+            try
+            {
+                xmlContent = GetJson(apiUrl);
+            }
+            catch (Exception e)
+            {
+                return users;
+            }
+
+            using (XmlReader reader = XmlReader.Create(new StringReader(xmlContent)))
+            {
+                XmlWriterSettings ws = new XmlWriterSettings();
+                ws.Indent = true;
+                bool steamid = false;
+                while (reader.Read())
+                {
+                    switch (reader.NodeType)
+                    {
+                        case XmlNodeType.Element:
+                            if (reader.Name == "steamID64")
+                            {
+                                steamid = true;
+                            };
+                            break;
+                        case XmlNodeType.Text:
+                            if (steamid)
+                            {
+                                users.Add(reader.Value);
+                            }
+                            break;
+                        case XmlNodeType.EndElement:
+                            steamid = false;
+                            break;
+                    }
+                    
                 }
             }
 

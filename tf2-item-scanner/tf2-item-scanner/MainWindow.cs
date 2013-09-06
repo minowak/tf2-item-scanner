@@ -69,7 +69,6 @@ namespace tf2_item_scanner
         // start btn
         private void StartBtn_Click(object sender, EventArgs e)
         {
-
             // API
             if (apiTextBox.Text == String.Empty)
             {
@@ -90,7 +89,29 @@ namespace tf2_item_scanner
             // If status scanning
             if (statusRadio.Checked)
             {
+                if (statusTextBox.Text == String.Empty)
+                {
+                    errorProvider.SetError(statusTextBox, "Paste status");
+                    return;
+                }
                 scanFromStatus = utils.GetUsersFromStatus(statusTextBox.Text.Trim());
+            }
+            else if (groupScanningRadio.Checked)
+            {
+                if (groupNameTextBox.Text == String.Empty)
+                {
+                    errorProvider.SetError(groupNameTextBox, "Paset group name");
+                    return;
+                }
+                try
+                {
+                    scanFromStatus = utils.GetUsersFromGroup(groupNameTextBox.Text.Trim());
+                }
+                catch (Exception ex)
+                {
+                    errorProvider.SetError(groupNameTextBox, "Cannot get group info");
+                    return;
+                }
             }
             else // or depth
             {
@@ -166,7 +187,9 @@ namespace tf2_item_scanner
             List <TF2Item> tmpList = new List<TF2Item>();
             foreach (DataGridViewRow row in selectedDataGrid.Rows)
             {
-                TF2Item rootItem = rightList.Where(x => x.Name == (string)row.Cells["nameColumn"].Value).First();
+                IEnumerable<TF2Item> list = rightList.Where(x => x.Name == (string)row.Cells["nameColumn"].Value);
+
+                TF2Item rootItem = list.First();
 
                 if (((DataGridViewCheckBoxCell)row.Cells["stockColumn"]).Value != null && (bool)((DataGridViewCheckBoxCell)row.Cells["stockColumn"]).Value)
                 {
@@ -218,7 +241,7 @@ namespace tf2_item_scanner
 
             StatusLabel.Text = "Scanning";
             tabControl1.SelectedTab = tabControl1.TabPages[1];
-            if (statusRadio.Checked)
+            if (statusRadio.Checked || groupScanningRadio.Checked)
             {
                 if (!statusScanWorker.IsBusy)
                 {
@@ -854,7 +877,7 @@ namespace tf2_item_scanner
             link.Links.Add(linkData);
 
             int index = resultsDataGrid.Rows.Add((Image)(new Bitmap(img, new Size(50, 50))), sp.Name, 
-                utils.AppId == "400" ? (Math.Truncate(sp.Value * 100) / 100) + "$" : "--",
+                utils.AppId == "440" ? (Math.Truncate(sp.Value * 100) / 100) + "$" : "--",
                 (sp.Played / 60) + "h", sp.State, link);
             resultsDataGrid.Rows[index].Cells[0].Selected = false;
             if (sp.IsF2P())
@@ -953,18 +976,39 @@ namespace tf2_item_scanner
         // depth
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            statusRadio.Checked = !depthRadio.Checked;
+            statusRadio.Checked = false;
+            groupScanningRadio.Checked = false;
+            depthRadio.Checked = true;
+
             depthGroup.Enabled = true;
             statusGroup.Enabled = false;
+            groupScanningGroup.Enabled = false;
         }
 
 
         // status
         private void statusRadio_CheckedChanged(object sender, EventArgs e)
         {
-            depthRadio.Checked = !statusRadio.Checked;
+            statusRadio.Checked = true;
+            groupScanningRadio.Checked = false;
+            depthRadio.Checked = false;
+
             depthGroup.Enabled = false;
             statusGroup.Enabled = true;
+            groupScanningGroup.Enabled = false;
+        }
+
+        // group
+        private void groupScanningRadio_CheckedChanged(object sender, EventArgs e)
+        {
+            
+            statusRadio.Checked = false;
+            groupScanningRadio.Checked = true;
+            depthRadio.Checked = false;
+
+            depthGroup.Enabled = false;
+            statusGroup.Enabled = false;
+            groupScanningGroup.Enabled = true;
         }
 
 

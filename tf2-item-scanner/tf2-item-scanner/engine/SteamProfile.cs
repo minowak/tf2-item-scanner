@@ -102,7 +102,7 @@ namespace tf2_item_scanner.engine
 
         public bool IsF2P()
         {
-            return utils.AppId == "400" ? _f2p : false;
+            return utils.AppId == "440" ? _f2p : false;
         }
 
         #endregion
